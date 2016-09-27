@@ -1,2 +1,2 @@
 # car-data-logger
-Responsible for collecting, storing car related data, and providing the data to other GENIVI compliance components and off-board servers
+The Car Data Logger (CDL) is responsible for collecting and storing car related data, providing data to other GENIVI components and off-board servers. CDL will also be responsible for the security and integrity of the data.
