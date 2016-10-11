@@ -1,0 +1,211 @@
+package com.ivis.MediaManager
+
+typeCollection MediaManagerTypes {
+
+	version {
+		major 1
+		minor 0
+	}
+	
+	enumeration PlaybackError{
+		ERROR
+	}
+
+	enumeration RepeatMode{
+		REPEAT_OFF
+		REPEAT_ALL
+		REPEAT_ONE_SONG
+	}
+	
+	enumeration PlayMode{
+		NORMAL
+		SUFFLE
+	}
+	
+	enumeration Action {
+		PLAY
+		PAUSE
+		STOP
+		FAST_FOWARD
+		FAST_FOWARD_AUTO
+		FAST_REWIND
+		FAST_REWIND_AUTO
+		NEXT_TRACK
+		PREV_TRACK
+		STEP_FOWARD
+		STEP_REWIND
+	}		
+	
+	typedef PlayState is Action
+	
+	struct PlayStateInfo{
+		UInt64 currentFid
+		PlayState ^state
+	}
+	
+	struct TimePositionInfo{
+		UInt64 currentFid
+		UInt32 currentTimePosition
+		UInt32 totalTimeLength		
+		UInt32 seekFactor
+	}
+	
+	struct TrackInfo{
+		UInt64 fid
+		UInt64 deviceId
+		UInt32 totalTimeLength
+		String title 
+		String artist 
+		String album
+		String genre
+		String albumArtPath
+		String filePath
+	}
+	
+	array Playlist of TrackInfo
+	
+	
+	
+	enumeration BrowserError{
+		BR_OK
+		BR_NO_RESULT
+		BR_INVALID_PARAMETER
+		BR_INVALID_QUERY
+		BR_UNKNOWN
+	}
+	
+	enumeration MetadataType{
+		TITLE  	// String
+		ARTIST 	// String
+		ALBUM 	// String		
+		GENRE 	// String
+//		FILEPATH // String
+		ALBUMART // String 
+		DURATION // UInt32
+	}
+	
+	enumeration MediaType{
+		INVALID = 128 // e.g. folder
+		AUDIO = 1
+		VIDEO = 2
+		IMAGE = 4
+	}
+	
+	array ResultTypeList of MetadataType
+
+	union Item{
+		String string
+		UInt64 value
+	}
+	
+	struct FilterItem {
+		MetadataType type
+		Item value
+	}
+	
+	array FilterList of FilterItem
+	
+	enumeration BrowsingStatus{
+		START
+		RUNNING
+		FINISHED
+	}
+	
+	struct BrowsingResult{
+		UInt64 sessionId	
+		BrowsingStatus status
+		UInt32 resultListCount
+		UInt64 deviceId
+		UInt32 mediaTypes
+	}
+	
+//	struct FilesystemBrowsingResult extends BrowsingResult{
+//		FilesystemItem currentItem
+//		String mountPath
+//	}
+//	
+//	struct MetadataBrowsingResult extends BrowsingResult{
+//		ResultTypeList resultTypeList
+//		FilterList filterList
+//	}
+//	
+	
+	struct FilesystemBrowsingResult{
+		BrowsingResult browsingResult
+		FilesystemItem currentItem
+		String mountPath
+	}
+	
+	struct MetadataBrowsingResult{
+		BrowsingResult browsingResult
+		ResultTypeList resultTypeList
+		FilterList filterList
+	}
+	
+	struct Metadata{
+		MetadataType type
+		UInt64 uniqueId
+		String value
+	}
+	
+	struct MetadataItem{
+		UInt64 uniqueId
+		MediaType mediaType
+		Metadata[] metadata
+		String path
+	}
+	
+	array MetadataList of MetadataItem
+
+	struct FilesystemItem{
+		Boolean isFolder
+		UInt64 uniqueId
+		UInt64 parentId
+		String name
+		String relativePath
+	}
+	
+	array FilesystemList of FilesystemItem
+
+	struct MatchCount{
+		MetadataType type
+		UInt32 count
+		UInt64 sessionId
+	}
+	
+	array MatchCountList of MatchCount
+	
+	// INDEXER
+		
+	struct DeviceSyncInformation {
+		UInt64 deviceId
+		SyncState ^state
+		SyncLevel level
+		String syncPath // database path
+		Boolean audioAvailable
+		Boolean videoAvailable
+	}
+	
+	array DeviceSyncList of DeviceSyncInformation
+	
+	enumeration IndexerState{
+		IDLE
+		RUNNING
+	}
+	
+	enumeration SyncState{
+		IDLE
+		RUNNING
+		PAUSE		
+		ERROR
+	}
+	
+	enumeration SyncLevel{
+		NONE
+		FILE
+		FILEANDMETADATA
+	}
+	
+	///////////////////////////////
+}
+

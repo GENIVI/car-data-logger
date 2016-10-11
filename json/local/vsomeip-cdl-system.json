@@ -1,0 +1,105 @@
+{
+	"unicast" : "127.0.0.1",
+    	"logging" :
+    	{
+        	"level" : "info",
+        	"console" : "true",
+	        "file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
+	        "dlt" : "false"
+	},
+    	"applications" :
+   	[
+        	{
+                	"name" : "cdl-daemon",
+                	"id" : "1000"
+        	},
+        	{
+                    "name" : "headunit-vehicle-data-consumer-climates",
+                	"id" : "5000"
+        	},
+        	{
+                    "name" : "headunit-vehicle-data-consumer-running-status",
+               		"id" : "6000"
+        	},
+        	{
+            		"name" : "av-information-service",
+            		"id" : "2000"
+        	},
+		{
+			"name" : "cluster-hmi-application",
+			"id" : "3000"
+		}
+    	],
+    	"services" :
+    	[
+        	{
+                	"service" : "1000",
+                	"instance" : "1100",
+                	"unreliable" : "30100",
+			"reliable" : "30101",
+                	"events" :
+                	[
+                    		{
+                          		"event" : "11100",
+                          		"is_field" : "true"
+                    		}
+                	],
+                	"eventgroups" :
+                	[
+                    		{
+                          		"eventgroup" : "11000",
+                          		"events" : [ "11100" ]
+                    		}
+                	]
+        	},
+		{
+                    	"service" : "2000",
+                    	"instance" : "2100",
+   		    	"unreliable" : "30200",
+			"reliable" : "30201",
+	   	    	"events" : 
+		    	[
+				{
+					"event" : "22101",
+					"is_field" : "true"
+				},
+				{
+					"event" : "22201",
+					"is_field" : "true"
+				},
+				{
+					"event" : "22301",
+					"is_field" : "true"
+				},
+				{
+					"event" : "22401",
+					"is_field" : "true"
+				},
+				{
+					"event" : "21100",
+					"is_field" : "true"
+				}
+		    	],
+		    	"eventgroups" :
+		    	[
+				{
+					"eventgroup" : "22000",
+					"events" : [ "22101", "22201", "22301", "22401" ]
+				},
+				{
+					"eventgroup" : "21000",
+					"events" : [ "21100" ]
+				}
+
+		    	]
+        	}
+    	],
+    	"routing" : "cdl-daemon",
+    	"service-discovery" :
+    	{
+        	"enable" : "true",
+        	"multicast" : "224.244.224.245",
+        	"port" : "30490",
+        	"protocol" : "udp"
+    	}
+}

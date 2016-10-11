@@ -1,0 +1,38 @@
+package com.ivis.CDL
+
+interface ClientAPILocal {
+	version {
+		major 1
+		minor 0
+	}
+	
+	method storeData {
+		in {
+			String domain
+			String subDomain
+			String id
+			ClientAPILocalTypes.CDLData data
+		}
+	}
+	
+	broadcast notifyData {
+		out {
+			String domain
+			String subDomain
+			String id
+			ClientAPILocalTypes.CDLData data
+		}
+	}
+}
+
+typeCollection ClientAPILocalTypes {
+	version { major 1 minor 0 }
+	
+	union CDLData {
+		Boolean boolValue
+		Int16 signedShortValue
+		UInt16 unsignedShortValue
+		UInt32 unsignedLongValue
+		String stringValue
+	}
+}

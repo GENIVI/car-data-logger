@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>Air Circulation.png</file>
+        <file>Air Direction_1.png</file>
+        <file>Air Direction_2.png</file>
+        <file>Air Direction_3.png</file>
+        <file>Air Direction_4.png</file>
+        <file>Air Direction_5.png</file>
+        <file>Air Volume_0.png</file>
+        <file>Air Volume_1.png</file>
+        <file>Air Volume_2.png</file>
+        <file>Air Volume_3.png</file>
+        <file>Air Volume_4.png</file>
+        <file>Air Volume_5.png</file>
+        <file>Air Volume_6.png</file>
+        <file>Air Volume_max.png</file>
+        <file>Front.png</file>
+        <file>SYNC.png</file>
+    </qresource>
+</RCC>

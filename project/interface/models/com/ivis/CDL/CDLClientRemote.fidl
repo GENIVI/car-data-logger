@@ -1,0 +1,38 @@
+package com.ivis.CDL
+
+interface ClientAPIRemote {
+	version {
+		major 1
+		minor 0
+	}
+		
+	method storeData {
+		in {
+			String domain
+			String subDomain
+			String id
+			ClientAPIRemoteTypes.CDLData data
+		}
+	}
+	
+	broadcast notifyData {
+		out {
+			String domain
+			String subDomain
+			String id
+			ClientAPIRemoteTypes.CDLData data
+		}
+	}
+}
+
+typeCollection ClientAPIRemoteTypes {
+	version { major 1 minor 0 }
+	
+	union CDLData {
+		Boolean boolValue
+		Int16 signedShortValue
+		UInt16 unsignedShortValue
+		UInt32 unsignedLongValue
+		String stringValue
+	}
+}

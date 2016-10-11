@@ -1,0 +1,17 @@
+package com.ivis.ClusterData
+
+interface ClusterData {
+	version {
+		major 1
+		minor 0
+	}
+	
+	<** @description : current vehicle speed. unit is km/h **>
+	attribute UInt16 vehicleSpeed
+	
+	<** @description : current engine speed. unit is RPM **>
+	attribute UInt16 engineSpeed	
+	
+	<** @description : current fuel level. unit is % **>
+	attribute UInt8 fuelLevel
+}

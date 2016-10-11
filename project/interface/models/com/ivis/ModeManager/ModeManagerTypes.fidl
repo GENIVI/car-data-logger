@@ -1,0 +1,48 @@
+package com.ivis.ModeManager
+
+typeCollection ModeManagerTypes {
+	version { major 1 minor 0 }
+	
+	struct ApplicationInfo{
+		UInt64 deviceId
+		DeviceType deviceType
+		ApplicationType app
+		SubApplicationType subApp
+	}
+	
+	enumeration DeviceType {
+		USB
+		IPOD
+		BLUETOOTH
+		AUX
+	}
+	
+	enumeration ApplicationType{
+		APP_NONE
+		APP_FM
+		APP_AM
+		APP_USB
+		APP_IPOD
+		APP_BLUETOOTH
+		APP_AUX
+	}
+	
+	enumeration SubApplicationType{
+		SUB_APP_NONE
+		SUB_APP_AUDIO
+		SUB_APP_VIDEO
+	}
+	
+	enumeration AppChangeRequester{
+		INVALID
+		BY_HMI
+		AUTOMATIC
+//		LAST_MEDIA		
+	}
+	
+	enumeration AppChangeResult{
+		RESULT_OK
+		RESULT_FAIL
+//		RESULT_INVALID_PARAMETER
+	}
+}

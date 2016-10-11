@@ -1,0 +1,33 @@
+package com.ivis.ModeManager
+
+import com.ivis.ModeManager.ModeManagerTypes.* from "ModeManagerTypes.fidl"
+
+interface ModeManager{
+	version { major 1 minor 0 }
+	
+	attribute ApplicationInfo activeApplication
+	
+	method requestChangeApplication{
+		in {
+			ApplicationType app
+			SubApplicationType subApp
+			AppChangeRequester requester
+		}
+	}
+	
+	broadcast responseChangeApplication{
+		out {
+			AppChangeResult result
+			ApplicationInfo currentAppInfo
+			ApplicationInfo requestAppInfo
+			AppChangeRequester requester
+		}
+	}
+	
+	broadcast activeApplicationChanged{
+		out {
+			ApplicationInfo appInfo
+			AppChangeRequester requester
+		}
+	}
+}

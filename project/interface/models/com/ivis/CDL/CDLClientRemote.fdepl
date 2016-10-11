@@ -1,0 +1,53 @@
+/* Copyright (C) 2015 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-SOMEIP_deployment_spec.fdepl"
+import "CDLClientRemote.fidl"
+
+define org.genivi.commonapi.someip.deployment for interface
+com.ivis.CDL.ClientAPIRemote {
+	SomeIpServiceID = 1000
+	
+	method storeData {
+		SomeIpMethodID = 10100
+		in {
+			domain {
+				SomeIpStringEncoding = utf16le
+			}
+			subDomain {
+				SomeIpStringEncoding = utf16le
+			}
+			id {
+				SomeIpStringEncoding = utf16le
+			}
+			data {
+				SomeIpArgUnionTypeWidth = 4
+				SomeIpArgUnionLengthWidth = 4
+			}
+		}
+	}
+	
+	broadcast notifyData {
+		SomeIpEventID = 11100
+		SomeIpMulticast = true
+		SomeIpEventGroups = { 11000 }
+		out {
+			data {
+				SomeIpArgUnionTypeWidth = 4
+				SomeIpArgUnionLengthWidth = 4
+			}
+		}
+	}
+}
+
+define org.genivi.commonapi.someip.deployment for provider Service {
+	instance com.ivis.CDL.ClientAPIRemote {
+		InstanceId = "com.ivis.CDL.ClientAPIRemote.SomeIp"
+		SomeIpInstanceID = 1100
+		
+		SomeIpUnicastAddress = "127.0.0.1"
+		SomeIpUnreliableUnicastPort = 30100
+		SomeIpReliableUnicastPort = 30101
+	}
+}

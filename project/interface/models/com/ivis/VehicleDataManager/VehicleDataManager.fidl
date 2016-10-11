@@ -1,0 +1,26 @@
+package com.ivis.VehicleDataManager
+
+import com.ivis.VehicleDataManager.VehicleDataManagerTypes.* from "VehicleDataManagerTypes.fidl"
+
+interface VehicleDataManager {
+	version { major 1 minor 1 }
+	
+	<** 
+		@description: This attribute contains the current speed of this vehicle. The unit of value is km/h or mph.
+    **>
+	attribute VehicleSpeed vehicleSpeed
+
+	<** 
+		@description: This attribute contains the VIN(Vehicle Identification Number as defined by ISO 3779) information for this vehicle. It's 17 bytes long characters.
+	**>
+	attribute String vin
+
+	<**
+		@description: This attribute contains the current status of transmission gear.
+    **>    
+	attribute TransmissionGearStatus transmissionGearStatus
+	
+	attribute Boolean drivingRestriction
+	
+	attribute Boolean lowFuelWarning
+}

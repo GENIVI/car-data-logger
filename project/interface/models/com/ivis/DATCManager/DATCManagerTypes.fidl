@@ -1,0 +1,103 @@
+package com.ivis.DATCManager
+
+typeCollection DATCManagerTypes {
+	version {
+		major 1
+		minor 0
+	}
+	
+	struct TemperatureRange {
+		Double minimum
+		Double maximum
+	}
+
+	struct TargetTemperature {
+		EAreaType areaType
+		Double temperature
+	}
+
+	struct FanDirection {
+		EAreaType areaType
+		EHvacFanDirection fanDirection
+	}
+
+	struct FanSpeedRange {
+		UInt16 minimum
+		UInt16 maximum
+	}
+
+	struct FanSpeed {
+		EAreaType areaType
+		UInt16 fanSpeed
+	}
+	
+	struct Defrost {
+		EDefrostTarget defrostTarget
+		Boolean ^on
+	}
+	
+	struct SeatHeater {
+		EAreaType areaType
+		Boolean ^on
+	}
+	
+	struct SeatCooler {
+		EAreaType areaType
+		Boolean ^on
+	}
+
+	array TargetTemperatures of TargetTemperature
+
+	array SupportedFanDirectionList of EHvacFanDirection
+
+	array FanDirections of FanDirection
+
+	array FanSpeeds of FanSpeed
+
+	array SupportedDefrostTargetList of EDefrostTarget
+	
+	array Defrosts of Defrost
+	
+	array SeatHeaters of SeatHeater
+	
+	array SeatCoolers of SeatCooler
+
+	enumeration ETemperatureMode {
+		CELSIUS // Default
+		FRENHEIT
+	}
+
+	enumeration EHvacFanDirection {
+		FRONT_PANEL
+		FLOOR_DUCT
+		FRONT_AND_FLOOR
+		DEFROSTER_AND_FLOOR
+		DEFROSTER
+		// AUTO_DEFROSTER
+	}
+
+	enumeration EDefrostTarget {
+		WIND_SHIELD
+		SIDE_MIRROR
+		REAR
+		WINDOW
+		// and so on ...
+	}
+
+	enumeration EAreaType {
+		DRIVER
+		PASSENGER
+		REAR_DRIVER
+		REAR_PASSENGER
+		// and so on ...
+	}
+
+	enumeration EDatcControlResult {
+		SUCCESS
+		FAIL_RANGE_OUT
+		FAIL_BUSY
+		FAIL_NO_TARGET
+		FAIL_UNKNOWN
+		// to be added ...
+	}
+}

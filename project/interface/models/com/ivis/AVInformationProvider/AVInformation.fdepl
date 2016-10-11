@@ -1,0 +1,78 @@
+/* Copyright (C) 2015 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-SOMEIP_deployment_spec.fdepl"
+import "AVInformation.fidl"
+
+define org.genivi.commonapi.someip.deployment for interface
+com.ivis.AVInformationProvider.AVInformation {
+	SomeIpServiceID = 2000
+	
+	attribute currentSource {
+		SomeIpGetterID = 22100
+		SomeIpNotifierID = 22101
+		SomeIpSetterID = 22102
+		SomeIpNotifierMulticast = true
+		SomeIpEventGroups = { 22000 }
+		SomeIpAttrEnumWidth = 4
+	}
+	
+	attribute metaData {
+		SomeIpGetterID = 22200
+		SomeIpNotifierID = 22201
+		SomeIpSetterID = 22202		
+		SomeIpNotifierMulticast = true
+		SomeIpEventGroups = { 22000 }
+		SomeIpAttrStructLengthWidth = 4		
+	}
+	
+	attribute playPosition {
+		SomeIpGetterID = 22300
+		SomeIpNotifierID = 22301
+		SomeIpSetterID = 22302
+		SomeIpNotifierMulticast = true
+		SomeIpEventGroups = { 22000 }
+		SomeIpAttrStructLengthWidth = 4
+	}
+	
+	attribute playStatus {
+		SomeIpGetterID = 22400
+		SomeIpNotifierID = 22401
+		SomeIpSetterID = 22402
+		SomeIpNotifierMulticast = true
+		SomeIpEventGroups = { 22000 }
+		SomeIpAttrEnumWidth = 4
+	}
+	
+	method requestAction {
+		SomeIpMethodID = 21100
+		in {
+			action {
+				SomeIpArgEnumWidth = 4
+			}
+		}
+	}
+	
+	broadcast notifyAlbumArt {
+		SomeIpEventID = 21100
+		SomeIpMulticast = true
+		SomeIpEventGroups = { 21000 }
+		out {			
+			imageData {
+				SomeIpArgArrayLengthWidth = 4
+			}
+		}
+	}
+}
+
+define org.genivi.commonapi.someip.deployment for provider Service {
+	instance com.ivis.AVInformationProvider.AVInformation {
+		InstanceId = "com.ivis.AVInformationProvider.AVInformation.SomeIp"
+		SomeIpInstanceID = 2100
+		
+		SomeIpUnicastAddress = "127.0.0.1"
+		SomeIpUnreliableUnicastPort = 30200
+		SomeIpReliableUnicastPort = 30201
+	}
+}

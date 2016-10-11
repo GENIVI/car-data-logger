@@ -1,0 +1,74 @@
+package com.ivis.AVInformationProvider
+
+interface AVInformation {
+	version {
+		major 1
+		minor 0
+	}
+	
+	attribute AVInformationTypes.Source currentSource
+	
+	attribute AVInformationTypes.MetaData metaData
+	
+	attribute AVInformationTypes.PlayPosition playPosition
+	
+	attribute AVInformationTypes.PlayStatus playStatus
+	
+	method requestAction {
+		in {
+			AVInformationTypes.Action action
+		}
+	}
+	
+	broadcast notifyAlbumArt {
+		out {
+			UInt32 totalSegmentCount
+			UInt32 currentIndex
+			UInt8 [] imageData
+		}
+	}
+}
+
+typeCollection AVInformationTypes{
+	version { major 1 minor 0 }
+	
+	enumeration Source {
+		FM
+		AM
+		USB_MUSIC
+		USB_VIDEO
+	}
+	
+	enumeration PlayStatus {
+		PLAY
+		PAUSE
+		STOP
+	}
+	
+	enumeration Action {
+		PLAY
+		PAUSE
+		NEXT
+		PREVIOUS
+	}
+	
+	struct MetaData {
+		<** @description : USB = title, Radio = Frequency **>
+		String title
+		
+		<** @description : USB = album, Radio = PS Name **>
+		String album
+		
+		<** @description : USB = artist, Radio = Preset Index **>
+		String artist
+		
+		<** @description : USB only **>
+		UInt32 totalTrackNumber
+		UInt32 currentTrackNumber
+	}
+	
+	struct PlayPosition {
+		UInt32 currentPosition
+		UInt32 duration
+	}
+} 

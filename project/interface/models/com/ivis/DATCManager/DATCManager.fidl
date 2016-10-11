@@ -1,0 +1,229 @@
+package com.ivis.DATCManager
+import com.ivis.DATCManager.DATCManagerTypes.* from "DATCManagerTypes.fidl"
+
+interface DATCManager {
+	version {
+		major 1
+		minor 1
+	}
+
+	attribute ETemperatureMode temperatureMode
+	
+	attribute Boolean dualMode
+	
+	attribute Boolean autoMode
+
+	attribute Boolean airConditionerRun
+
+	attribute Boolean heaterRun
+
+	attribute Double interiorTemperautre readonly
+
+	attribute Double exteriorTemperature readonly
+
+	attribute TargetTemperatures targetTemperatures
+
+	attribute FanDirections fanDirections
+	
+	attribute FanSpeeds fanSpeeds
+	
+	attribute Defrosts defrosts
+	
+	attribute Boolean airRecirculation
+	
+	attribute Boolean steeringWheelHeater
+	
+	attribute SeatHeaters seatHeaters
+	
+	attribute SeatCoolers seatCoolers
+
+	// TEMPERATURE	
+	method requestGetSupportedTemperatureRange {
+	}
+	
+	method requestSetTargetTemperature {
+		in {
+			EAreaType areaType
+			Double temperature
+		}
+	}
+	
+	method requestSetTargetTemperatureByDelta {
+		in {
+			EAreaType areaType
+			Double temperatureDelta
+		}
+	}
+	// ~TEMPERATURE
+
+
+	// FAN DIRECTION
+	method requestGetSupportedFanDirection {
+	}
+	// ~ FAN DIRECTION
+
+
+	// FAN SPEED
+	method requestGetSupportedFanSpeedRange {
+	}
+	
+	method requestSetFanSpeed {
+		in {
+			EAreaType areaType
+			UInt16 fanSpeed
+		}
+	}
+	
+	method requestSetFanSpeedByDelta {
+		in {
+			EAreaType areaType
+			UInt16 fanSpeedDelta
+		}
+	}
+	// ~ FAN SPEED
+
+
+	// DEFROST
+	method requestGetSupportedDefrostTarget {
+	}
+	// ~ DEFROST
+
+	// STEERING WHEEL HEATER
+	method requestGetSteeringWheelHeaterSupported {
+	}
+	// ~ STEERING WHEEL HEATER
+
+
+	// SEAT HEATER
+	method requestGetSeatHeaterSupported {
+	}
+	// ~ SEAT HEATER
+
+
+	// SEAT COOLER
+	method requestGetSeatCoolerSupported {
+	}
+	// ~ SEAT COOLER
+
+
+	// TEMPERATURE
+	broadcast responseGetSupportedTemperatureRange {
+		out {
+			TemperatureRange temperatureRange
+		}
+	}
+	
+	broadcast responseSetTargetTemperature {
+		out {
+			EDatcControlResult result
+			EAreaType areaType
+			Double temperature
+		}
+	}
+	// ~ TEMPERATURE
+
+
+	// FAN DIRECTION
+	broadcast responseGetSupportedFanDirection {
+		out {
+			SupportedFanDirectionList supportedFanDirectionList
+		}
+	}
+	
+	broadcast responseSetFanDirection {
+		out {
+			EDatcControlResult result
+			EAreaType areaType
+			EHvacFanDirection fanDirection
+		}
+	}
+	// ~ FAN DIRECTION
+
+
+	// FAN SPEED
+	broadcast responseGetSupportedFanSpeedRange {
+		out {
+			FanSpeedRange fanSpeedRange
+		}
+	}
+	
+	broadcast responseSetFanSpeed {
+		out {
+			EDatcControlResult result
+			EAreaType areaType
+			UInt16 fanSpeed
+		}
+	}
+	// ~ FAN SPEED
+
+
+	// DEFROST
+	broadcast responseGetSupportedDefrostTarget {
+		out {
+			SupportedDefrostTargetList supportedDefrostTargetList
+		}
+	}
+	// ~ DEFROST
+
+
+	// AIR RECIRCULATION
+	broadcast responseSetAirRecirculation {
+		out {
+			EDatcControlResult result
+			Boolean ^on
+		}
+	}
+	// ~ AIR RECIRCULATION
+
+
+	// STEERING WHEEL HEATER
+	broadcast responseGetSteeringWheelHeaterSupported {
+		out {
+			Boolean steeringWheelHeaterSupported
+		}
+	}
+	
+	broadcast responseSetSteeringWheelHeater {
+		out {
+			EDatcControlResult result
+			Boolean ^on
+		}
+	}
+	// ~ STEERING WHEEL HEATER
+
+
+	// SEAT HEATER
+	broadcast responseGetSeatHeaterSupported {
+		out {
+			Boolean seatHeaterSupported
+		}
+	}
+	
+	broadcast responseSetSeatHeater {
+		out {
+			EDatcControlResult result
+			EAreaType areaType
+			Boolean ^on
+			
+		}
+	}
+	// ~ SEAT HEATER
+
+
+	// SEAT COOLER
+	broadcast responseGetSeatCoolerSupported {
+		out {
+			Boolean seatCoolerSupported
+		}
+	}
+	
+	broadcast responseSetSeatCooler {
+		out {
+			EDatcControlResult result
+			EAreaType areaType
+			Boolean ^on
+		}
+	}
+	// ~ SEAT COOLER
+
+}

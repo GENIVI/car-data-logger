@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/home">
+        <file>HomeMain.qml</file>
+        <file>LowFuelWarningPopup.qml</file>
+        <file>image/Home_AVM.png</file>
+        <file>image/Home_Miracast.png</file>
+        <file>image/Home_Music.png</file>
+        <file>image/Home_Phone.png</file>
+        <file>image/Home_Radio.png</file>
+        <file>image/Home_Setup.png</file>
+        <file>image/Home_Video.png</file>
+        <file>image/Popup_BG_Normal.png</file>
+        <file>image/Popup_BackView.png</file>
+        <file>image/Popup_Button_Normal.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,87 @@
+package com.ivis.MediaManager
+
+import com.ivis.MediaManager.MediaManagerTypes.* from "MediaManagerTypes.fidl"
+
+interface PlaybackControl {
+	version { major 1 minor 0 }
+	
+	attribute RepeatMode repeatMode
+	attribute PlayMode playMode
+	attribute TrackInfo currentTrackInfo
+	attribute UInt32 currentTrackNumber
+	attribute UInt32 totalTrackNumber
+	attribute Boolean videoVisible
+	attribute PlayStateInfo playStateInfo
+
+	method requestAction{
+		in {
+			Action action
+			UInt64 value 
+		}
+	}
+
+	method requestPlay{
+		in {
+			UInt64 indexOfplaylist
+		}
+	}
+	
+	method requestPlayBrowsingSession{
+		in {
+			UInt64 browsingSessionId
+			UInt64 uniqueId
+		}
+	}
+	
+	method requestSetTimePosition{
+		in {
+			UInt32 time
+		}	
+	}
+	
+	method requestGetPlaylist{
+		in {
+			ResultTypeList resultTypes
+			UInt32 startIndex
+			Int32 amount // initial value -1
+		}
+	}
+	
+	method requestSetRepeatMode{
+		in {
+			RepeatMode mode // One song repeat
+		}
+	}
+	
+	method requestSetPlayMode{
+		in {
+			PlayMode mode
+		}
+	}
+
+	broadcast notifiyTimePositionInfoChanged{
+		out {
+			TimePositionInfo timePositionInfo
+		}
+	} 
+	
+	broadcast responseGetPlaylist{
+		out {
+			UInt32 startIndex
+			Int32 amount
+			Playlist playlist
+		}	
+	}
+	
+	broadcast notifyPlaylistChanged{ 
+		out {
+			// more infomation
+		}
+	}
+	
+	broadcast notifyPlaybackError{ 
+		out {
+			PlaybackError errType
+		}
+	}
+}

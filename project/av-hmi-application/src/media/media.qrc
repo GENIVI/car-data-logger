@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/media">
+        <file>MusicPlayer.qml</file>
+        <file>VideoPlayer.qml</file>
+        <file>DrivingRestriction.qml</file>
+        <file>image/Media_Icon_Music_List_Default.png</file>
+        <file>image/Media_Icon_Video_List_Play.png</file>
+        <file>image/Media_Icon_Warning.png</file>
+        <file>image/Media_Player_Next_Pressed.png</file>
+        <file>image/Media_Player_Next.png</file>
+        <file>image/Media_Player_Pause_Pressed.png</file>
+        <file>image/Media_Player_Pause.png</file>
+        <file>image/Media_Player_Play_Pressed.png</file>
+        <file>image/Media_Player_Play.png</file>
+        <file>image/Media_Player_Previous_Pressed.png</file>
+        <file>image/Media_Player_Previous.png</file>
+        <file>image/Media_Player_Repeat_1Song.png</file>
+        <file>image/Media_Player_Repeat.png</file>
+        <file>image/Media_Player_Shuffle.png</file>
+        <file>image/Media_ProgressBar_Control_Normal.png</file>
+        <file>image/Media_ProgressBar_Control_Pressed.png</file>
+        <file>image/OutputScreen_Info_BG.png</file>
+        <file>image/video_player_bg_botton.png</file>
+        <file>image/video_player_bg_top.png</file>
+        <file>image/warning_bg.png</file>
+        <file>image/Music_BG_Layer.png</file>
+        <file>image/1.jpg</file>
+        <file>image/2.jpg</file>
+        <file>image/3.jpg</file>
+        <file>image/4.jpg</file>
+        <file>image/5.jpg</file>
+    </qresource>
+</RCC>

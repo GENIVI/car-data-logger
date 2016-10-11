@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/setup">
+        <file>SetupClimate.qml</file>
+        <file>CommonClimate.qml</file>
+        <file>image/DATC/SYNC.png</file>
+        <file>image/DATC/Rear.png</file>
+        <file>image/DATC/Front.png</file>
+        <file>image/DATC/Climate_car.png</file>
+        <file>image/DATC/Climate_bg.png</file>
+        <file>image/DATC/Air Volume_max.png</file>
+        <file>image/DATC/Air Volume_6.png</file>
+        <file>image/DATC/Air Volume_5.png</file>
+        <file>image/DATC/Air Volume_4.png</file>
+        <file>image/DATC/Air Volume_3.png</file>
+        <file>image/DATC/Air Volume_2.png</file>
+        <file>image/DATC/Air Volume_1.png</file>
+        <file>image/DATC/Air Volume_0.png</file>
+        <file>image/DATC/Air Direction_5.png</file>
+        <file>image/DATC/Air Direction_4.png</file>
+        <file>image/DATC/Air Direction_3.png</file>
+        <file>image/DATC/Air Direction_2.png</file>
+        <file>image/DATC/Air Direction_1.png</file>
+        <file>image/DATC/Air Circulation.png</file>
+    </qresource>
+</RCC>

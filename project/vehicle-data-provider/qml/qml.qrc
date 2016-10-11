@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>simulator.qml</file>
+        <file>SampleButton.qml</file>
+        <file>VehicleDataSimulator.qml</file>
+        <file>HVACSimulator.qml</file>
+        <file>Slider.qml</file>
+    </qresource>
+</RCC>
