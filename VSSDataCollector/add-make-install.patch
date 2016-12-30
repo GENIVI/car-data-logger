@@ -1,0 +1,40 @@
+diff --git a/Makefile b/Makefile
+index 9186e7a..acceb72 100644
+--- a/Makefile
++++ b/Makefile
+@@ -13,7 +13,7 @@
+ 
+ SUBDIRS = core api
+ 
+-TARGETS = all docs clean distclean
++TARGETS = all docs clean distclean install
+ $(TARGETS): subdirs
+ 
+ .PHONY: subdirs $(SUBDIRS)
+diff --git a/api/Makefile b/api/Makefile
+index 333f20e..21b73bd 100644
+--- a/api/Makefile
++++ b/api/Makefile
+@@ -129,3 +129,10 @@ rebuild:
+ clean distclean:
+ 	echo "Deleting all derived files..."; \
+ 	rm -rf *.o *~ libvsi.so html latex sample importVSS core
++
++install:
++	cp libvsi.so /usr/local/lib
++	@test -d /usr/local/include/vsi || mkdir -p /usr/local/include/vsi
++	cp $(INCLUDES) /usr/local/include/vsi
++	@test -d /usr/local/lib/pkgconfig || mkdir -p /usr/local/lib/pkgconfig
++	cp vsi.pc /usr/local/lib/pkgconfig/
+diff --git a/core/Makefile b/core/Makefile
+index 48dce72..a954a33 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -175,3 +175,7 @@ distclean:
+ 	echo "Compiling $?";  \
+ 	gcc $(CFLAGS) $(DEFINES) -c $?
+ 
++install:
++	@test -d /usr/local/include/vsi || mkdir /usr/local/include/vsi
++	cp $(INCLUDES) /usr/local/include/vsi
++	cp libvsi-core.so /usr/local/lib

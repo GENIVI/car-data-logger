@@ -1,0 +1,18 @@
+diff --git a/api/vsi.pc b/api/vsi.pc
+new file mode 100644
+index 0000000..9e67bba
+--- /dev/null
++++ b/api/vsi.pc
+@@ -0,0 +1,12 @@
++prefix=/usr/local
++exec_prefix=/usr/local
++libdir=${exec_prefix}/lib
++includedir=${exec_prefix}/include
++
++Name: VSI
++Description: Vehicle Signal Interface Library 
++Version: 
++Requires: 
++Libs: -L${libdir} -lvsi -lvsi-core
++Cflags: -I${includedir}/vsi
++
