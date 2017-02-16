@@ -1,0 +1,7 @@
+{
+    "DataStoreLocation": "./log",
+    "MaxFileSize": "100",                     //unit : kByte
+    "MaxStorageSize": "10000",                //unit : kByte
+    "MaxFileExpirePeriod": "300",             //unit : minutes
+    "TransactionBufferSize": "100"            //unit : counts
+}

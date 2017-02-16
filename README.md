@@ -5,7 +5,7 @@ This is trial integration of CDL with RVI (components)
 The goal of this implementation is to implement the function of collecting, storing and providing data using various components of GENIVI.
 So the following functions will be implemented:
 * collect vehicle data defined in VSS format using VSI
-* store collected data to Database (SQlite)
+* store collected data to file
 * provide data to clients running on-board using CommonAPI (DBus and SOME/IP)
 * transfer data to off-board server using RVI
 
@@ -15,7 +15,8 @@ The software platform level requirements collected while implementing the functi
 
 ### Implemented Modules
 * VSS Data Collector : please refer to VSSDataCollector page for more detail
+* Data Store         : please refer to DataStore page for more detail
 
 ### Todo
-* Data storing module using SQLite
+* Implement on-board data providing module
 
