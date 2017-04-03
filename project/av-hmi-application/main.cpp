@@ -36,5 +36,7 @@ int main(int argc, char *argv[])
 
     mainwindow.setGeometry(0, 0, 800, 480);
 
+
+
     return app.exec();
 }

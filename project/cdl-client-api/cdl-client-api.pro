@@ -40,7 +40,11 @@ INCLUDEPATH += include
 
 DESTDIR     = $$_PRO_FILE_PWD_/lib/$$CPU_ARCH
 
-target.path = ../../deploy/$$BUILD_DIR/lib
+*-arm-*|*-oe-* {
+    target.path = /opt/cdl/lib
+} else {
+    target.path = ../../deploy/$$BUILD_DIR/lib
+}
 
 INSTALLS += target
 

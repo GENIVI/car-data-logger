@@ -43,7 +43,7 @@ INCLUDEPATH += $$INTERFACE_DIR/src-gen/v1
 INCLUDEPATH += $$INTERFACE_DIR/src-gen/v2
 INCLUDEPATH += src
 
-*-arm-* {
+*-arm-*|*-oe-* {
     CPU_ARCH=arm
 } else {
     CPU_ARCH=x86

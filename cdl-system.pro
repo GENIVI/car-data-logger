@@ -63,13 +63,38 @@ vehicle-data-provider.depends                           = lib-cdl-client-api
 
 include(common-config.pri)
 
-json.path = deploy/$$BUILD_DIR
-json.files = json
+*-arm-*|*-oe-* {
+    json.path = /opt/cdl/json
+    json.files = json/remote/*
+} else {
+    json.path = deploy/$$BUILD_DIR/json
+    json.files = json/local/*
 
-commonapi-ini.path = deploy/$$BUILD_DIR
+    json-for-vehicle-data-standalone.path = deploy/$$BUILD_DIR/json
+    json-for-vehicle-data-standalone.files = json/remote/vsomeip-vehicle-data-provider.json
+
+    INSTALLS += json-for-vehicle-data-standalone
+}
+
+*-arm-*|*-oe-* {
+    commonapi-ini.path = /opt/cdl
+} else {
+    commonapi-ini.path = deploy/$$BUILD_DIR
+}
+
 commonapi-ini.files = env/commonapi.ini
 
-script.path = deploy/$$BUILD_DIR
-script.files = script/*
+*-arm-*|*-oe-* {
+    script.path = /opt/cdl
+    script.files = script/remote/*
+} else {
+    script.path = deploy/$$BUILD_DIR
+    script.files = script/local/*
+}
 
 INSTALLS += json commonapi-ini script
+
+OTHER_FILES += script/local/* script/local/script/*
+OTHER_FILES += script/remote/* script/remote/script/*
+
+OTHER_FILES += json/remote/* json/local/*

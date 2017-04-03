@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
     view.setHeight(480);
     view.setMinimumSize(QSize(800,480));
 
+    view.setProperty("IVI-Surface-ID", 210);
+
     view.rootContext()->setContextProperty("Cluster", Cluster::instance());
     view.rootContext()->setContextProperty("AVDataManager", AVDataManager::instance());
     view.engine()->addImageProvider("AlbumArtProvider",AlbumArtProvider::instance());

@@ -32,8 +32,14 @@ include(../../common-config.pri)
 
 INCLUDEPATH += src/playback
 
-target.path = ../../deploy/$$BUILD_DIR/bin
-cover_art.path = ../../deploy/$$BUILD_DIR
+*-arm-*|*-oe-* {
+    target.path = /opt/cdl/bin
+    cover_art.path = /opt/cdl
+} else {
+    target.path = ../../deploy/$$BUILD_DIR/bin
+    cover_art.path = ../../deploy/$$BUILD_DIR
+}
+
 cover_art.files = cover-art
 
 INSTALLS += target

@@ -2,3 +2,5 @@ Makefile*
 deploy/
 debug/
 release/
+*.pro.user*
+pkg-config_wrapper.sh

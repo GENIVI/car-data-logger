@@ -1,0 +1,26 @@
+{
+    "unicast" : "192.168.0.200",
+    "logging" :
+    {
+        "level" : "info",
+        "console" : "true",
+        "file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
+        "dlt" : "false"
+    },
+    "applications" :
+        [
+        {
+            "name" : "vehicle-data-provider",
+            "id" : "4000"
+        }
+    ],
+    "routing" : "vehicle-data-provider",
+    "service-discovery" :
+    {
+        "enable" : "true",
+        "multicast" : "224.244.224.245",
+        "port" : "30491",
+        "protocol" : "udp",
+        "ttl" : "1000"
+    }
+}

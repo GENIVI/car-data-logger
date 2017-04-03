@@ -46,6 +46,9 @@ MainWindow::MainWindow(QWindow *parent)
     init();
 
     setSource(QUrl("qrc:/home/HomeMain.qml"));
+
+    setProperty("IVI-Surface-ID", 200);
+
     this->show();    
 }
 

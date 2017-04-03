@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
     view.setMinimumSize(QSize(800,480));
     view.setGeometry(900, 500, 800, 480);
 
+    view.setProperty("IVI-Surface-ID", 220);
+
     DLT_REGISTER_APP("vdp", "Vehicle Data Provider");
 
     VehicleDataProvider::instance();

@@ -1,52 +1,52 @@
 {
-    	"unicast" : "192.168.0.100",
-    	"logging" :
-    	{
-        	"level" : "info",
-        	"console" : "true",
-        	"file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
-        	"dlt" : "false"
-    	},
-    	"applications" :
-    	[
-        	{
-                	"name" : "cdl-daemon",
-                	"id" : "1000"
-        	},
-        	{
-            		"name" : "cluster-hmi-application",
-            		"id" : "3000"
-        	}
-    	],
-    	"services" :
-    	[
-         	{
-             		"service" : "1000",
-             		"instance" : "1100",
-             		"unreliable" : "30100",
-             		"reliable" : "30101",
-              		"events" :
-              		[
-                  		{
-                       			"event" : "11100",
-                       			"is_field" : "true"
-                  		}
-              		],
-              		"eventgroups" :
-              		[
-                  		{
-                       			"eventgroup" : "11000",
-                       			"events" : [ "11100" ]
-                  		}
-              		]
-          	}
-    	],
-    	"routing" : "cdl-daemon",
-    	"service-discovery" :
-    	{
-        	"enable" : "true",
-        	"multicast" : "224.244.224.245",
-        	"port" : "30491",
-        	"protocol" : "udp"
-    	}
+    "unicast" : "192.168.0.100",
+    "logging" :
+    {
+        "level" : "info",
+        "console" : "true",
+        "file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
+        "dlt" : "false"
+    },
+    "applications" :
+        [
+        {
+            "name" : "cdl-daemon",
+            "id" : "1000"
+        },
+        {
+            "name" : "cluster-hmi-application",
+            "id" : "3000"
+        }
+    ],
+    "services" :
+        [
+        {
+            "service" : "1000",
+            "instance" : "1100",
+            "unreliable" : "30100",
+            "events" :
+                [
+                {
+                    "event" : "11100",
+                    "is_field" : "true"
+                }
+            ],
+            "eventgroups" :
+                [
+                {
+                    "eventgroup" : "11000",
+                    "events" : [ "11100" ]
+                }
+            ]
+        }
+    ],
+    "routing" : "cdl-daemon",
+    "service-discovery" :
+    {
+        "enable" : "true",
+        "multicast" : "224.244.224.245",
+        "port" : "30491",
+        "protocol" : "udp",
+        "ttl" : "1000"
+    }
 }

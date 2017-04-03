@@ -51,7 +51,7 @@ VehicleDataProvider::VehicleDataProvider()
 {
     DLT_REGISTER_CONTEXT( mContext, "vedp", "Vehicle Data Provider");
 
-    CDL::initClientAPI( CDL::CDLRuntimeType::RUNTIME_DBUS );
+    CDL::initClientAPI( CDL::CDLRuntimeType::RUNTIME_SOMEIP );
 
     connect( HardWareSimulator::VehicleDataSimulator::instance(), SIGNAL(notifyFuelLevelData(quint16)), this, SLOT(responseNotifyFuelLevelDataParsed(quint16)));
     connect( HardWareSimulator::VehicleDataSimulator::instance(), SIGNAL(notifyVehicleSpeedData(quint16)), this, SLOT(responseNotifyVehicleSpeedDataParsed(quint16)));

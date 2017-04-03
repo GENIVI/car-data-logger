@@ -29,7 +29,11 @@ include(../../common-config.pri)
 
 include(src/src.pri)
 
-target.path = ../../deploy/$$BUILD_DIR/bin
+*-arm-*|*-oe-* {
+    target.path = /opt/cdl/bin
+} else {
+    target.path = ../../deploy/$$BUILD_DIR/bin
+}
 
 INSTALLS += target
 

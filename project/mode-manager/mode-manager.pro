@@ -31,7 +31,11 @@ INTERFACE_DIR = ../interface
 
 include(../../common-config.pri)
 
-target.path = ../../deploy/$$BUILD_DIR/bin
+*-arm-*|*-oe-* {
+    target.path = /opt/cdl/bin
+} else {
+    target.path = ../../deploy/$$BUILD_DIR/bin
+}
 
 INSTALLS += target
 

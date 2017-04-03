@@ -34,7 +34,11 @@ INCLUDEPATH += ../cdl-client-api/include
 
 LIBS += -L$$_PRO_FILE_PWD_/../cdl-client-api/lib/$$CPU_ARCH -lCDLClientAPI -ldl
 
-target.path = ../../deploy/$$BUILD_DIR/bin
+*-arm-*|*-oe-* {
+    target.path = /opt/cdl/bin
+} else {
+    target.path = ../../deploy/$$BUILD_DIR/bin
+}
 
 INSTALLS += target
 
@@ -45,7 +49,7 @@ SOURCES += main.cpp \
     $$INTERFACE_DIR/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusDeployment.cpp \
     $$INTERFACE_DIR/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusStubAdapter.cpp \
     src/VehicleDataProvider.cpp \
-    src/Simulator.cpp
+    src/Simulator.cpp \
 
 HEADERS += \
     $$INTERFACE_DIR/src-gen/v1/com/ivis/ClusterData/ClusterDataStubDefault.hpp \
@@ -55,7 +59,7 @@ HEADERS += \
     $$INTERFACE_DIR/src-gen/v1/com/ivis/CDL/ClientAPIRemoteTypes.hpp \
     src/VehicleDataProvider.h \
     src/Simulator.h \
-    src/CommonEnum.h
+    src/CommonEnum.h \
 
 RESOURCES += \
     qml/qml.qrc \
