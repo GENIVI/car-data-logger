@@ -37,10 +37,10 @@ AVInformationProvider::AVInformationProvider(QObject * parent)
     mAVInformation = std::make_shared<AVInformationStubDefault>();
     auto runtime = CommonAPI::Runtime::get();
 
-    runtime->registerService("local", "com.ivis.AVInformationProvider.AVInformation.SomeIp", mAVInformation);
+    mModeManager = runtime->buildProxy<ModeManagerProxy>("local", "com.ivis.ModeManager.ModeManager");
+    mPlayback = runtime->buildProxy<PlaybackControlProxy>("local", "com.ivis.MediaManager.PlaybackControl");
 
-    mModeManager = runtime->buildProxy<ModeManagerProxy>("local", ModeManager::getInterface());
-    mPlayback = runtime->buildProxy<PlaybackControlProxy>("local", PlaybackControl::getInterface());
+    runtime->registerService("local", "com.ivis.AVInformationProvider.AVInformation.SomeIp", mAVInformation);
 
     mModeManager->getActiveApplicationAttribute().getChangedEvent().subscribe(
                 std::bind(&AVInformationProvider::activeApplicationChanged, this, std::placeholders::_1));

@@ -29,9 +29,9 @@ com.ivis.CDL.ClientAPIRemote {
 	}
 	
 	broadcast notifyData {
-		SomeIpEventID = 11100
+		SomeIpEventID = 51100
 		SomeIpMulticast = true
-		SomeIpEventGroups = { 11000 }
+		SomeIpEventGroups = { 51000 }
 		out {
 			data {
 				SomeIpArgUnionTypeWidth = 4

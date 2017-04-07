@@ -37,13 +37,13 @@ int main(int argc, char *argv[])
     DLT_ENABLE_LOCAL_PRINT();
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    runtime->registerService("local", DATCManager::getInterface(), DATCManagerService::instance());
+    runtime->registerService("local", "com.ivis.DATCManager.DATCManager", DATCManagerService::instance());
 
     DATCManagerService::instance()->initService();
 
     int result = a.exec();
 
-    runtime->unregisterService("local", DATCManager::getInterface(), DATCManager::getInterface());
+    runtime->unregisterService("local", DATCManager::getInterface(), "com.ivis.DATCManager.DATCManager");
 
     // clean up DLT
     DATCManagerService::finalize();

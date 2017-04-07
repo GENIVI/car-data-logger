@@ -52,7 +52,7 @@ void VehicleDataManagerHelper::init()
     qCDebug(vehicleDataManagerHelper) << "";
 
     auto runtime = CommonAPI::Runtime::get();
-    mClusterDataProxy = runtime->buildProxy<ClusterDataProxy>("local", ClusterData::getInterface());
+    mClusterDataProxy = runtime->buildProxy<ClusterDataProxy>("local", "com.ivis.ClusterData.ClusterData");
 
     mClusterDataProxy->getVehicleSpeedAttribute().getChangedEvent().subscribe(
                 std::bind(&VehicleDataManagerHelper::onVehicleSpeedChanged, this, std::placeholders::_1));

@@ -52,7 +52,7 @@ VehicleDataConsumerCluster::~VehicleDataConsumerCluster()
 {
     auto runtime = CommonAPI::Runtime::get();
 
-    runtime->unregisterService("local", ClusterData::getInterface(), ClusterData::getInterface());
+    runtime->unregisterService("local", ClusterData::getInterface(), "com.ivis.ClusterData.ClusterData");
 
     DLT_UNREGISTER_CONTEXT(mContext);
 }
@@ -85,7 +85,7 @@ void VehicleDataConsumerCluster::initClusterDataService()
     mClusterDataService = std::make_shared<ClusterDataStubDefault>();
 
     auto runtime = CommonAPI::Runtime::get();
-    if ( runtime->registerService("local", ClusterData::getInterface(), mClusterDataService) )
+    if ( runtime->registerService("local", "com.ivis.ClusterData.ClusterData", mClusterDataService) )
     {
         DLT_LOG(mContext, DLT_LOG_INFO, DLT_STRING("register cluster data service done!!"));
     }

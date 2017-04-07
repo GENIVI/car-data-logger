@@ -48,11 +48,11 @@ int main( int argc, char *argv[] )
     DLT_REGISTER_CONTEXT(ContextModeManager, "mms", "Mode Manager Service");
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    runtime->registerService( "local", ModeManager::getInterface(), ModeManageService::getInstance() );
+    runtime->registerService( "local", "com.ivis.ModeManager.ModeManager", ModeManageService::getInstance() );
 
     int result = a.exec();
 
-    runtime->unregisterService("local", ModeManager::getInterface(), ModeManager::getInterface());
+    runtime->unregisterService("local", ModeManager::getInterface(), "com.ivis.ModeManager.ModeManager");
 
     DLT_UNREGISTER_CONTEXT(ContextModeManager);
     DLT_UNREGISTER_APP();

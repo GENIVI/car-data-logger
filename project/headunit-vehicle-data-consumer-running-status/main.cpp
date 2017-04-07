@@ -15,13 +15,13 @@ int main(int argc, char *argv[])
     DLT_ENABLE_LOCAL_PRINT();
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    runtime->registerService("local", VehicleDataManager::getInterface(), VehicleManagerService::instance());
+    runtime->registerService("local", "com.ivis.VehicleDataManager.VehicleDataManager", VehicleManagerService::instance());
 
     VehicleManagerService::instance()->initService();
 
     int result = a.exec();
 
-    runtime->unregisterService("local", VehicleDataManager::getInterface(), VehicleDataManager::getInterface());
+    runtime->unregisterService("local", VehicleDataManager::getInterface(), "com.ivis.VehicleDataManager.VehicleDataManager");
 
     VehicleManagerService::finalize();
 

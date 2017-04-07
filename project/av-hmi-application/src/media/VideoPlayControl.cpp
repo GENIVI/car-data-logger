@@ -60,7 +60,7 @@ void VideoPlayControl::init()
 {
     auto runtime = CommonAPI::Runtime::get();
 
-    mPlayBackProxy = runtime->buildProxy<PlaybackControlProxy>("local", PlaybackControl::getInterface());
+    mPlayBackProxy = runtime->buildProxy<PlaybackControlProxy>("local", "com.ivis.MediaManager.PlaybackControl");
 
     mPlayBackProxy->getCurrentTrackInfoAttribute().getChangedEvent().subscribe(
                 std::bind(&VideoPlayControl::onTrackInfoChanged, this, std::placeholders::_1));

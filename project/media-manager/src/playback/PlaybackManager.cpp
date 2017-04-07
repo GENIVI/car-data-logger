@@ -35,7 +35,7 @@ void PlaybackManager::init()
     LOG_DEBUG("");
 
     auto runtime = CommonAPI::Runtime::get();
-    mModeManagerProxy = runtime->buildProxy<ModeManagerProxy>("local", ModeManager::getInterface());
+    mModeManagerProxy = runtime->buildProxy<ModeManagerProxy>("local", "com.ivis.ModeManager.ModeManager");
 
     mModeManagerProxy->getActiveApplicationAttribute().getChangedEvent().subscribe(
                 std::bind(&PlaybackManager::onActiveApplicationChanged, this, std::placeholders::_1));

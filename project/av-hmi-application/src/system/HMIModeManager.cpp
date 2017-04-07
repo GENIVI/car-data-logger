@@ -54,8 +54,8 @@ void HMIModeManager::init()
 
     auto runtime = CommonAPI::Runtime::get();
 
-    mModeManagerProxy = runtime->buildProxy<ModeManagerProxy>("local", ModeManager::getInterface());
-    mVehicleDataManagerProxy = runtime->buildProxy<VehicleDataManagerProxy>("local", VehicleDataManager::getInterface());
+    mModeManagerProxy = runtime->buildProxy<ModeManagerProxy>("local", "com.ivis.ModeManager.ModeManager");
+    mVehicleDataManagerProxy = runtime->buildProxy<VehicleDataManagerProxy>("local", "com.ivis.VehicleDataManager.VehicleDataManager");
 
     mModeManagerProxy->getActiveApplicationAttribute().getChangedEvent().subscribe(
                 std::bind(&HMIModeManager::onActiveApplicationChanged, this, std::placeholders::_1));

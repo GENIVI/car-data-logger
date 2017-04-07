@@ -55,9 +55,9 @@ com.ivis.AVInformationProvider.AVInformation {
 	}
 	
 	broadcast notifyAlbumArt {
-		SomeIpEventID = 21100
+		SomeIpEventID = 41100
 		SomeIpMulticast = true
-		SomeIpEventGroups = { 21000 }
+		SomeIpEventGroups = { 41000 }
 		out {			
 			imageData {
 				SomeIpArgArrayLengthWidth = 4

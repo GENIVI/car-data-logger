@@ -45,11 +45,11 @@ int main(int argc, char *argv[])
     DLT_REGISTER_CONTEXT(ContextPlayback, "pb", "Media Playback");
 
     auto runtime = CommonAPI::Runtime::get();
-    runtime->registerService("local", PlaybackControl::getInterface(), PlaybackService::getInstance());
+    runtime->registerService("local", "com.ivis.MediaManager.PlaybackControl", PlaybackService::getInstance());
 
     int result = a.exec();
 
-    runtime->unregisterService("local", PlaybackControl::getInterface(), PlaybackControl::getInterface());
+    runtime->unregisterService("local", PlaybackControl::getInterface(), "com.ivis.MediaManager.PlaybackControl");
 
     // clean up DLT
     DLT_UNREGISTER_CONTEXT(ContextPlayback);

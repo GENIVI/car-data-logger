@@ -51,7 +51,7 @@ void DatcControl::init()
 {
     auto runtime = CommonAPI::Runtime::get();
 
-    mDatcManagerProxy = runtime->buildProxy<DATCManagerProxy>("local", DATCManager::getInterface());
+    mDatcManagerProxy = runtime->buildProxy<DATCManagerProxy>("local", "com.ivis.DATCManager.DATCManager");
 
     mDatcManagerProxy->getDualModeAttribute().getChangedEvent().subscribe(
                 std::bind(&DatcControl::onSyncModeChanged, this, std::placeholders::_1) );

@@ -74,13 +74,17 @@ int main(int argc, char *argv[])
     DLT_ENABLE_LOCAL_PRINT();
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    runtime->registerService("local",ClientAPILocal::getInterface(), CDLLocalAPIHandler::getInstance());
+
     runtime->registerService("local", "com.ivis.CDL.ClientAPIRemote.SomeIp", CDLRemoteAPIHandler::getInstance());
+    runtime->registerService("local", "com.ivis.CDL.ClientAPILocal", CDLLocalAPIHandler::getInstance());
 
     int result = a.exec();
 
     CDLLocalAPIHandler::finalize();
     CDLRemoteAPIHandler::finalize();
+
+    runtime->unregisterService("local", ClientAPIRemote::getInterface(), "com.ivis.CDL.ClientAPIRemote.SomeIp");
+    runtime->unregisterService("local", ClientAPILocal::getInterface(), "com.ivis.CDL.ClientAPILocal");
 
     DLT_UNREGISTER_APP();
 

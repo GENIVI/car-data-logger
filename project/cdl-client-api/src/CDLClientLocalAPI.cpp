@@ -44,7 +44,7 @@ std::shared_ptr<CDLClientLocalAPI> &CDLClientLocalAPI::getInstance()
 void CDLClientLocalAPI::init()
 {
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    m_clientProxy = runtime->buildProxy<ClientAPILocalProxy>("local", v1_0::com::ivis::CDL::ClientAPILocal::getInterface());
+    m_clientProxy = runtime->buildProxy<ClientAPILocalProxy>("local", "com.ivis.CDL.ClientAPILocal");
 }
 
 CDL::CDLError CDLClientLocalAPI::storeData(std::string domain, std::string subDomain, std::string id, CDL::CDLData data)

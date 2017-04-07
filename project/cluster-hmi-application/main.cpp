@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
     view.show();
     view.setGeometry(900, 0, 800, 480);
 
-    AVInformationProviderHelper::getInstance();
     VehicleDataManagerHelper::getInstance();
+    AVInformationProviderHelper::getInstance();
 
     int result = app.exec();
 

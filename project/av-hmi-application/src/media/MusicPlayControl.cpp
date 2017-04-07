@@ -58,7 +58,7 @@ void MusicPlayControl::init()
 {
     auto runtime = CommonAPI::Runtime::get();
 
-    mPlaybackProxy = runtime->buildProxy<PlaybackControlProxy>("local", PlaybackControl::getInterface());
+    mPlaybackProxy = runtime->buildProxy<PlaybackControlProxy>("local", "com.ivis.MediaManager.PlaybackControl");
 
     mPlaybackProxy->getCurrentTrackInfoAttribute().getChangedEvent().subscribe(
                 std::bind(&MusicPlayControl::onTrackInfoChanged, this, std::placeholders::_1));
