@@ -23,7 +23,7 @@
 #include <CommonAPI/SomeIP/StubAdapter.hpp>
 #include <CommonAPI/SomeIP/Factory.hpp>
 #include <CommonAPI/SomeIP/Types.hpp>
-#include <CommonAPI/SomeIP/Config.hpp>
+#include <CommonAPI/SomeIP/Constants.hpp>
 
 #undef COMMONAPI_INTERNAL_COMPILATION
 
