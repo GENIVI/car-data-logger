@@ -22,13 +22,15 @@
 #ifndef VSSITEM_H
 #define VSSITEM_H
 
+#include "../../../common/cdlcommondefine.h"
+
 #include <unordered_map>
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <boost/variant.hpp>
+#include <vector>
 
-#include "commonlogheader.h"
 
 using namespace std;
 
@@ -42,25 +44,7 @@ typedef unsigned long long  UInt64_t;
 typedef signed long long    Int64_t;
 typedef string              String_t;
 typedef boost::variant<UInt8_t, Int8_t, UInt16_t, Int16_t, UInt32_t, Int32_t, UInt64_t, Int64_t, bool, float, double, String_t> VssData_Variant;
-
-typedef enum _JsonEnumType{
-    branch=0,
-    UInt8,      //1
-    Int8,       //2
-    UInt16,     //3
-    Int16,      //4
-    UInt32,     //5
-    Int32,      //6
-    UInt64,     //7
-    Int64,      //8
-    Boolean,    //9
-    Float,      //10
-    Double,     //11
-    String,     //12
-    ByteBuffer, //13
-
-    Data_Type_Max
-}VssData_Type_e;
+typedef vector<uint8_t> ByteBuffer;
 
 /**
  *
@@ -90,7 +74,7 @@ public:
      *
      * @param data
      */
-    string convertToValueString(const char * data);
+    string convertToValueString(const char * data, unsigned long dataLength = 0);
     bool validateData(const char * data);
 
 public:
@@ -110,7 +94,7 @@ public:
     void setEnumValue(int enumValue);
 
     string getName();
-    VssData_Type_e getType();
+    CDLDataTypes getType();
     string getUnit();
     uint32_t getID();
     string getDefaultValue();
@@ -125,11 +109,11 @@ public:
     int getEnumValue();
 
 private:
-    VssData_Type_e convertDataTypeToEnum(string type);
+    CDLDataTypes convertDataTypeToEnum(string type);
 
 private:
     string m_name;
-    VssData_Type_e m_type;
+    CDLDataTypes m_type;
     string m_unit;
     uint32_t m_id;
     string m_defaultValue;

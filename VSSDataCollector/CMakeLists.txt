@@ -8,17 +8,18 @@ set(PREFIX ${CMAKE_INSTALL_PREFIX})
 set(SRCS
 	${SRC_DIR}/vssdatacollector.cpp
 	${SRC_DIR}/DataConfigService/dataconfigparser.cpp
-        ${SRC_DIR}/VssJsonService/nametoidconvertor.cpp
+	${SRC_DIR}/VssJsonService/nametoidconvertor.cpp
 	${SRC_DIR}/VssJsonService/vssitem.cpp
 	${SRC_DIR}/VssJsonService/vssitemmanager.cpp
 	${SRC_DIR}/VssJsonService/vssjsonparser.cpp
-        ${SRC_DIR}/VSIWatcher/cycledatatimer.cpp
-        ${SRC_DIR}/VSIWatcher/vsiwatcher.cpp )
+	${SRC_DIR}/VSIWatcher/cycledatatimer.cpp
+	${SRC_DIR}/VSIWatcher/vsiwatcher.cpp )
 
-include_directories(${SRC_DIR}
+include_directories(
+	${SRC_DIR}
 	${SRC_DIR}/VssJsonService
 	${SRC_DIR}/DataConfigService
-        ${SRC_DIR}/VSIWatcher )
+	${SRC_DIR}/VSIWatcher )
 
 add_definitions(-DBOOST_LOG_DYN_LINK)
 

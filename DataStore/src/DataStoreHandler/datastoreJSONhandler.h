@@ -22,6 +22,9 @@
 #ifndef DATASTOREHANDLER_H
 #define DATASTOREHANDLER_H
 
+#include "storemanager.h"
+#include "../../common/cdlcommondefine.h"
+
 #include <string>
 #include <vector>
 #include <boost/filesystem.hpp>
@@ -46,20 +49,10 @@ class StorageManager;
  *
  */
 
+typedef StoreManager::CDL_DATA CDL_DATA;
+
 class DataStoreJSONHandler
 {
-public:
-    struct CDL_DATA
-    {
-        string id;
-        string value;
-        string name;
-        string type;
-        string unit;
-        string valid_state;
-        string time_stamp;
-    };
-
 public:
     DataStoreJSONHandler(FileManager * fileManager, StorageManager * storageManager);
     virtual ~DataStoreJSONHandler();
@@ -80,6 +73,10 @@ public:
      */
     void stop();
 
+    string convertValueToString(const char* value, CDLDataTypes type);
+
+    void registerCompleteDataStoreCallBack(completeDataStoreCallBack callback);
+
 private:
     bool writeData(const string filePath, string cdlJSONData);
     string convertToJSON(vector<CDL_DATA> * cdlDataList);
@@ -93,6 +90,8 @@ private:
     StorageManager * m_storageManager;
 
     string m_latestFileName;
+
+    completeDataStoreCallBack onCompleteDataStoreCalllback;
 };
 
 #endif // DATASTOREHANDLER_H

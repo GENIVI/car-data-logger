@@ -1,0 +1,47 @@
+{
+    "unicast" : "127.0.0.1",
+    "logging" :
+    {
+        "level" : "info",
+        "console" : "true",
+        "file" : { "enable" : "false", "path" : "/tmp/vsomeip.log" },
+        "dlt" : "false"
+    },
+    "applications" :
+        [
+        {
+            "name" : "onboard-provider",
+            "id" : "1000"
+        }
+    ],
+    "services" :
+        [
+        {
+            "service" : "1000",
+            "instance" : "1100",
+            "unreliable" : "30101",
+            "events" :
+                [
+                {
+                    "event" : "20001",
+                    "is_field" : "true"
+                }
+            ],
+            "eventgroups" :
+                [
+                {
+                    "eventgroup" : "20000",
+                    "events" : [ "20001" ]
+                }
+            ]
+        }
+    ],
+    "routing" : "onboard-provider",
+    "service-discovery" :
+    {
+        "enable" : "true",
+        "multicast" : "224.244.224.245",
+        "port" : "30490",
+        "protocol" : "udp"
+    }
+}

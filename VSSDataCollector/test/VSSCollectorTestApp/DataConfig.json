@@ -1,34 +1,22 @@
 {
     "Cycle":
     {
-        "1000":
+        "200":
         [
             "Signal.Drivetrain.Transmission.Speed",
-            "Signal.Chassis.SteeringWheel.Angle",
-            "Signal.Chassis.SteeringWheel.Extension",
-            "Signal.Drivetrain.FuelSystem.AverageConsumption"
-        ],
-        "2000":
-        [
-            "Signal.Drivetrain.InternalCombustionEngine.Torque",
-            "Signal.Drivetrain.InternalCombustionEngine.TPS",
-            "Signal.Chassis.Accelerator.PedalPosition",
-            "Signal.Chassis.Brake.PedalPosition"
-        ],
-        "3000":
-        [
-            "Signal.Chassis.Axle.Row1.Wheel.Right.Tire.Pressure",
-            "Signal.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
-            "Signal.Chassis.Axle.Row1.Wheel.Right.Tire.Temperature",
-            "Signal.Chassis.Axle.Row2.Wheel.Right.Tire.PressureLow",
-            "Signal.Drivetrain.InternalCombustionEngine.Power"
+            "Signal.Drivetrain.InternalCombustionEngine.RPM",
+	    "Attribute.Drivetrain.Transmission.DriveType"
         ]
     },
     "Event":
     [
-        "Signal.Drivetrain.Transmission.Gear",
-        "Signal.Body.Mirrors.Left.Heater.Status",
-        "Vehicle.Light.Front.Left",
-        "Vehicle.Light.Front.Right"
+        "Signal.Cabin.HVAC.IsAirConditioningActive",
+        "Signal.Cabin.HVAC.Row1.Recirculation",
+        "Signal.Cabin.HVAC.IsFrontDefrosterActive",
+        "Signal.Cabin.HVAC.Row1.LeftTemperature",
+        "Signal.Cabin.HVAC.Row1.RightTemperature",
+        "Signal.Cabin.HVAC.IsDualModeActive",
+        "Signal.Cabin.HVAC.Row1.AirDistribution",
+        "Signal.Cabin.HVAC.Row1.FanSpeed"
     ]
 }

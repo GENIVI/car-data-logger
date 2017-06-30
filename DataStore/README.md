@@ -1,8 +1,10 @@
 # Data Store
+
 Data Store is module storing the CDL data from VSSDataCollector.
 
-#Installation
-###Tested Environment
+# Installation
+
+### Tested Environment
 Data Store is implemented and tested on:
 * VMWare Workstation 12 Player (12.1.1 build-3770994)
 * Ubuntu 14.04 64bit
@@ -10,9 +12,9 @@ Data Store is implemented and tested on:
 
 ### Precondition
 To build Data Store, following package are required
-* sqlite3 3.15.0
+* sqlite3 3.8.2 (or later)
 * Boost 1.54 (or later)
- -  system, thread, filesystem, date_time
+    * system, system, thread, log, filesystem, date_time
 
 ### Clone Source Codes
 Clone source codes from GENIVI GitHub using following command in the terminal window:
@@ -53,29 +55,28 @@ Before run test application, add library search path for `DataStoreManager` libr
 
 Run Data Store Test application on terminal
 
-        $ cd ../deploy
         $ ./DataStoreTestApp
         
-The DataStoreTestApp generates cdl sample sata randomly, and call the storeData function located in DataStoreManager.
-On DataStoreManager side, you can check the created json file and db file which manages the lists of files in the storage.
+The DataStoreTestApp generates cdl sample data randomly, and call the storeData function in DataStoreManager.
+On the DataStoreManager side, you can check the created json file and database file which manages the lists of files in the storage.
 
 ### Configuration file for data store
 Configuration file element explanation:
 * DataStoreLocation 
- - Insert a full path to store the needed files in DataStore module(Storage Path).
+    * Absolute path to store the collected data as file
 * MaxFileSize
- - Insert a size that can store the maximum amount of data in the file.
+    * The maximum file size
 * MaxSotrageSize
- - Insert a size that can store the maximum amount of file in the storage.
+    * The maximum storage size
 * MaxFileExpirePeriod
- - Insert the maximum expiration period for files that can be stored in the storage.
+     * The file will be deleted after specified amount of time
 * TransactionBufferSize
- - Insert the size of data to be stored in file at once.
+     * Number of data to be stored in file at once
 
 Example
 
     {
-         "DataStoreLocation": "/tmp/cdl-log",
+         "DataStoreLocation": "/tmp/cdl/StoreCDLDataFile",
          "MaxFileSize": "15",                     //unit : kByte
          "MaxStorageSize": "100",                 //unit : kByte
          "MaxFileExpirePeriod": "60",             //unit : minutes
@@ -84,6 +85,6 @@ Example
 
 ### Environment variables
 Data Store needs a environment variable for run such as configuration file for data store.
-* STORE_CONFIG_FILE
- - user defined configuration file for data store (e.g store_config_file.json)
+* **STORE_CONFIG_FILE**
+    * user defined configuration file for data store (e.g store_config_file.json)
 

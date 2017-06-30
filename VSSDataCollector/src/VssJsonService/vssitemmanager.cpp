@@ -20,6 +20,7 @@
 */
 
 #include "vssitemmanager.h"
+#include "../../common/log.h"
 
 VssItemManager::VssItemManager()
 {
@@ -48,7 +49,7 @@ void VssItemManager::addVssItem(uint32_t id, VssItem *vssItem)
     }
     else
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "Data is Already Saved" );
+        LOGW() << "Data is Already Saved ( id : " << id << " )";
     }
 }
 
@@ -64,7 +65,7 @@ VssItem *VssItemManager::getVSSItem( uint32_t id )
     }
     else
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "<< VssItemManager::getVSSItem >> No Data in vssItemList" );
+        LOGW() << "<< VssItemManager::getVSSItem >> No Data in vssItemList";
     }
 
     return vssItem;

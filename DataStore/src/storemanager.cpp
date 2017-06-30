@@ -1,10 +1,34 @@
+/*
+* Copyright (C) 2017, IVIS
+*
+* This file is part of GENIVI Project CDL - Car Data Logger.
+*
+* This Source Code Form is subject to the terms of the
+* Mozilla Public License (MPL), v. 2.0.
+* If a copy of the MPL was not distributed with this file,
+* You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+* For further information see http://www.genivi.org/.
+*/
+
+/*!
+* \author Seok-Heum Choi <seokheum.choi@ivisolution.com>
+*
+* \copyright Copyright (c) 2017, IVIS \n
+* License MPL-2.0: Mozilla Public License version 2.0 http://mozilla.org/MPL/2.0/.
+*
+*/
+
 #include "storemanager.h"
 #include "configuration.h"
 #include "fileinfodbhandler.h"
 #include "filemanager.h"
 #include "storagemanager.h"
+#include "datastoreJSONhandler.h"
 
-#include "commonlogheader.h"
+#include "../../common/log.h"
+
+#define UNUSED(x) (void)(x)
 
 StoreManager::StoreManager()
     :m_cdlDataList(NULL), m_dataBufferMaxSize(0), m_dataStoreThread(NULL), m_eventLock(m_eventMutex)
@@ -55,6 +79,8 @@ bool StoreManager::init()
 
     m_dataStoreThread = new boost::thread(std::bind(&StoreManager::dataStoreThread, this));
 
+    LOGD() << "Succeed to create DataStore";
+
     return true;
 }
 
@@ -62,6 +88,7 @@ void StoreManager::stop()
 {
     thread_work_done = true;
     m_eventCondition.notify_one();
+
     if( m_dataStoreThread != NULL )
     {
         m_dataStoreThread->join();
@@ -113,17 +140,17 @@ void StoreManager::stop()
     }
 }
 
-void StoreManager::storeData(string _id, string _value, string _name, string _type, string _unit, string _valid_state, string _timeStamp)
-{
-    CDLData cdlData;
+void StoreManager::storeData(string _id, char* _value, string _name, CDLDataTypes _type, string _unit, bool _valid_state, uint64_t _timeStamp)
+{    
+    CDL_DATA cdlData;
 
     cdlData.id          = _id;
-    cdlData.value       = _value;
+    cdlData.value       = m_dataStoreJSONHandler->convertValueToString(_value, _type);
     cdlData.name        = _name;
-    cdlData.type        = _type;
+    cdlData.type        = to_string(_type);
     cdlData.unit        = _unit;
-    cdlData.valid_state = _valid_state;
-    cdlData.time_stamp  = _timeStamp;
+    cdlData.valid_state = to_string(_valid_state);
+    cdlData.time_stamp  = to_string(_timeStamp);
 
     if ( m_cdlDataList == NULL )
     {
@@ -134,7 +161,7 @@ void StoreManager::storeData(string _id, string _value, string _name, string _ty
     {
         m_cdlDataList->push_back(cdlData);
 
-        BOOST_LOG_TRIVIAL( debug ) << boost::format( "======================= < cdlDataList size : %d / data count : %d >===========================") % m_cdlDataList->size() % cdlData.value;
+        LOGD() << "======================= < cdlDataList size : " << m_cdlDataList->size() << "/ data count : " << cdlData.value << " >===========================";
 
         if( m_cdlDataList->size() >= (unsigned int)m_dataBufferMaxSize )
         {
@@ -149,8 +176,13 @@ void StoreManager::storeData(string _id, string _value, string _name, string _ty
     }
     else
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< StoreManager::storeData >> Failed to create object of cdlDataList");
+        LOGE() << "Failed to create object of cdlDataList";
     }
+}
+
+void StoreManager::registerCompleteDataStoreCallBack(completeDataStoreCallBack callback)
+{
+    m_dataStoreJSONHandler->registerCompleteDataStoreCallBack(callback);
 }
 
 void StoreManager::setConfigurationFile()

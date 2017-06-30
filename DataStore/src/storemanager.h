@@ -22,10 +22,11 @@
 #ifndef STOREMANAGER_H
 #define STOREMANAGER_H
 
-#include "datastoreJSONhandler.h"
-
 #include <iostream>
+#include <functional>
 #include <boost/thread.hpp>
+
+#include "../../common/cdlcommondefine.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ class DataStoreConfiguration;
 class FileInfoDBHandler;
 class FileManager;
 class StorageManager;
+class DataStoreJSONHandler;
 
 /**
  *
@@ -44,12 +46,25 @@ class StorageManager;
  *
  */
 
-typedef DataStoreJSONHandler::CDL_DATA CDLData;
-typedef vector<CDLData> CDLDataList;
-typedef vector<CDLDataList*> CDLDataListQueue;
+typedef std::function<void(string)> completeDataStoreCallBack;
 
 class StoreManager
 {
+public:
+    struct CDL_DATA
+    {
+        string id;
+        string value;
+        string name;
+        string type;
+        string unit;
+        string valid_state;
+        string time_stamp;
+    };
+
+    typedef vector<CDL_DATA> CDLDataList;
+    typedef vector<CDLDataList*> CDLDataListQueue;
+
 public:
     StoreManager();
     virtual ~StoreManager();
@@ -59,13 +74,13 @@ public:
      * @brief Set configuration JSON file and start DataStoreManager.
      *
      */
-    bool init();
+    virtual bool init();
 
     /**
      * @brief Stop DataStoreManager.
      *
      */
-    void stop();
+    virtual void stop();
 
 public:
     /**
@@ -73,7 +88,8 @@ public:
      *
      * @param CDLData
      */
-    void storeData(string _id, string _value, string _name, string _type, string _unit, string _valid_state, string _timeStamp);
+    virtual void storeData(string _id, char* _value, string _name, CDLDataTypes _type, string _unit, bool _valid_state, uint64_t _timeStamp);
+    virtual void registerCompleteDataStoreCallBack(completeDataStoreCallBack callback);
 
 private:
     void setConfigurationFile();

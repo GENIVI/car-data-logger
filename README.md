@@ -14,9 +14,7 @@ The software platform level requirements collected while implementing the functi
 # Status
 
 ### Implemented Modules
-* VSS Data Collector : please refer to VSSDataCollector page for more detail
-* Data Store         : please refer to DataStore page for more detail
-
-### Todo
-* Implement on-board data providing module
-
+* VSS Data Collector : please refer to [VSSDataCollector](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/VSSDataCollector/README.md) page for more detail
+* Data Store         : please refer to [DataStore](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/DataStore/README.md) page for more detail
+* On Board Provider  : please refer to [OnBoardProvider](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/OnBoardProvider/README.md) page for more detail
+* Off Board Provider : please refer to [OffBoardProvider](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/OffBoardProvider/README.md) page for more detail

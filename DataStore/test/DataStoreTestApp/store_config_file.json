@@ -1,7 +1,7 @@
 {
-    "DataStoreLocation": "./log",
-    "MaxFileSize": "100",                     //unit : kByte
-    "MaxStorageSize": "10000",                //unit : kByte
-    "MaxFileExpirePeriod": "300",             //unit : minutes
-    "TransactionBufferSize": "100"            //unit : counts
+    "DataStoreLocation": "/tmp/cdl/StoreCDLDataFile",
+    "MaxFileSize": "15",                     //unit : kByte
+    "MaxStorageSize": "100",                 //unit : kByte
+    "MaxFileExpirePeriod": "60",             //unit : minutes
+    "TransactionBufferSize": "20"            //unit : counts
 }

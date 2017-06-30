@@ -1,7 +1,28 @@
+/*
+* Copyright (C) 2017, IVIS
+*
+* This file is part of GENIVI Project CDL - Car Data Logger.
+*
+* This Source Code Form is subject to the terms of the
+* Mozilla Public License (MPL), v. 2.0.
+* If a copy of the MPL was not distributed with this file,
+* You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+* For further information see http://www.genivi.org/.
+*/
+
+/*!
+* \author Seok-Heum Choi <seokheum.choi@ivisolution.com>
+*
+* \copyright Copyright (c) 2017, IVIS \n
+* License MPL-2.0: Mozilla Public License version 2.0 http://mozilla.org/MPL/2.0/.
+*
+*/
+
 #include "storagemanager.h"
 #include "filemanager.h"
-#include "commonlogheader.h"
 #include "configuration.h"
+#include "../../common/log.h"
 
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem.hpp>
@@ -46,12 +67,26 @@ void StorageManager::manageStorage(int dataSize)
 
 bool StorageManager::isFileExceedSizeLimit(int dataSize, string filePath)
 {
-    if( (m_maxFileSize - getCurrentFileUsageSize(filePath)) < dataSize )
+    static int printInformationSize = 1024 * 10;
+
+    int currentUsageSize = getCurrentFileUsageSize(filePath);
+
+    if( (m_maxFileSize - currentUsageSize) < dataSize )
     {
+        LOGI() << "[Exceed] current file = " << filePath << ", size = " << currentUsageSize;
+        printInformationSize = 1024 * 10;
+
         return true;
     }
     else
     {
+        if ( currentUsageSize + dataSize > printInformationSize )
+        {
+            LOGI() << "current file = " << filePath << ", size = " << currentUsageSize + dataSize;
+
+            printInformationSize += (1024 * 10);
+        }
+
         return false;
     }
 }
@@ -74,7 +109,7 @@ int StorageManager::getCurrentFileUsageSize(string filePath)
     }
     else
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< StorageManager::checkCurrentUsingFileSize() >> File is not existed / FilePath : %s" ) % filePath;
+        LOGE() << "File is not existed ( File Path : " << filePath << " )";
         return 0;
     }
 
@@ -97,7 +132,7 @@ int StorageManager::getCurrentStorageUsageSize()
         }
         catch( std::exception &e )
         {
-            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< StorageManager::getCurrentStorageUsageSize >> retry calculate directory size ( err : %s)" ) % e.what();
+            LOGE() << "Retry calculate directory size ( Error Msg : " << e.what() << " )";
             size = getCurrentStorageUsageSize();
         }
     }
@@ -108,7 +143,7 @@ int StorageManager::getCurrentStorageUsageSize()
 bool StorageManager::deleteFile(string oldestFilePath)
 {
     boost::filesystem::path filePath(oldestFilePath);
-    bool result;
+    bool result = 0;
 
     if( boost::filesystem::exists(filePath) )
     {
@@ -117,7 +152,7 @@ bool StorageManager::deleteFile(string oldestFilePath)
 
     if( result == 0 )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to delete file ( file name : %1% )" ) % oldestFilePath;
+        LOGE() << "Failed to delete file ( Delete File Name : " << oldestFilePath << " )";
         return false;
     }
 
@@ -143,25 +178,32 @@ void StorageManager::requestDeleteOldestFile()
     }
     else
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to search oldest file name");
+        LOGE() << "Failed to search oldest file name";
     }
 
-    BOOST_LOG_TRIVIAL( debug ) << boost::format( "================================================================================" );
-    BOOST_LOG_TRIVIAL( debug ) << boost::format( "<< StorageManager::requestDeleteOldestFile() >> Succeed to delete oldest file" );
-    BOOST_LOG_TRIVIAL( debug ) << boost::format( "< Oldest File Name : %s >" ) % oldestFileName;
-    BOOST_LOG_TRIVIAL( debug ) << boost::format( "================================================================================" );
+    LOGD() << "================================================================================";
+    LOGD() << "Succeed to delete oldest file ( Oldest File Name : " << oldestFileName << " )";
+    LOGD() << "================================================================================";
 }
 
 bool StorageManager::createDataStoreLocation()
 {
-    boost::filesystem::path directory_path(m_storagePath);
+    string storagePath = m_storagePath.erase( m_storagePath.size() - 1 );
+    boost::filesystem::path directory_path(storagePath);
 
     if( !boost::filesystem::exists(directory_path) )
     {
-        if( !boost::filesystem::create_directory(directory_path) )
+        try
         {
-            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< StorageManager::createDataStoreLocation() >> Failed to create storage ( dir path : %1% )" ) % m_storagePath;
-            return false;
+            if( !boost::filesystem::create_directories(directory_path) )
+            {
+                LOGE() << "Failed to create storage ( Storage Path : " << m_storagePath << " )";
+                return false;
+            }
+        }
+        catch(std::exception &e)
+        {
+            LOGE() << "Error in create_directories : " << e.what();
         }
     }
     else
@@ -172,7 +214,7 @@ bool StorageManager::createDataStoreLocation()
         }
         else
         {
-            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< StorageManager::createDataStoreLocation() >> Specified path is not directory ( dir path : %1% )" ) % m_storagePath;
+            LOGE() << "Invalid Storage Path ( Invalid Path : " << m_storagePath << " )";
             return false;
         }
     }

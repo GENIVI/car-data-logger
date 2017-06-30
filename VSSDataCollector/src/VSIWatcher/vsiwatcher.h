@@ -24,9 +24,10 @@
 
 extern "C"
 {
-    #include <vsi.h>
+    #include <vsi/vsi.h>
 }
 
+#include "vssdatacollector.h"
 #include "vssitemmanager.h"
 #include "nametoidconvertor.h"
 #include "dataconfigparser.h"
@@ -67,6 +68,10 @@ private:
      */
     void collectCycleData(int interval, int groupID, int signalCount);
 
+    /* Function for event data */
+    void collectEventData(int interval, int groupID, int signalCount);
+    bool isChangedEventData(VssItem * item, int signalID, const char* data);
+
     /**
      * @brief Validate the data to store in database.
      *
@@ -85,7 +90,7 @@ private:
      * @param data
      * @param signalID
      */
-    void storeData(VssItem * item, const char * data, signal_t signalId);
+    void storeData(VssItem * item, const char * data, signal_t signalId, unsigned long dataLength);
 
     void createCycleDataCollectionThread();
     void createEventDataCollectionThread();
@@ -98,17 +103,28 @@ private:
 
     void deleteTimerObject();
 
+public:
+    // void register callback function
+    void registerCDLDaemonCallBack(cdlDaemonCallBack callback);
+
 private:
     boost::thread *m_cycleDataThread;
     boost::thread *m_eventDataThread;
-    boost::asio::io_service m_ioService;
+    boost::asio::io_service m_cycleIOService;
+    boost::asio::io_service m_eventIOService;
 
     vsi_handle m_vsiHandle;
 
     vector<CycleDataTimer*> m_vsi_cycle_timer;
+    CycleDataTimer * m_vsi_event_timer;
     VssItemManager * m_vssItemManager;
     DataCollectConfiguration * m_dataCollectionConfiguration;
     NameToIdConvertor * m_nameToIdConvertor;
+
+    // callback function
+    cdlDaemonCallBack onCDLDaemonCallBack;
+
+    boost::posix_time::ptime m_epoch;
 };
 
 #endif // VSIWATCHER_H

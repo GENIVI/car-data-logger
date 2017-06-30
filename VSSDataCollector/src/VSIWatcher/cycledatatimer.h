@@ -28,8 +28,6 @@
 #include <unordered_map>
 #include <functional>
 
-#include "commonlogheader.h"
-
 using namespace std;
 
 typedef boost::asio::deadline_timer Timer;

@@ -20,26 +20,39 @@
 */
 
 #include "vsiwatcher.h"
+#include "../../common/log.h"
 
 #define VSI_DOMAIN_ID 0
 #define VSI_DATA_MAX_SIZE 1024
+#define AIR_CONDITION_ID            132    //Signal.Cabin.HVAC.isAirConditioningActive         132
+#define AIR_INTAKE_ID               109    //Signal.Cabin.HVAC.Row1.Recirculation              109
+#define DEFROST_WIND_SHIELD_ID      130    //Signal.Cabin.HVAC.IsFrontDefrosterActive          130
+#define DRIVER_TEMPERATURE_ID       111    //Signal.Cabin.HVAC.Row1.LeftTemperature            111
+#define PASSENGER_TEMPERATURE_ID    112    //Signal.Cabin.HVAC.Row1.RightTemperature           112
+#define DUAL_MODE_ID                1092   //Signal.Cabin.HVAC.IsDualModeActive                1092
+#define FAN_DIRECTION_ID            113    //Signal.Cabin.HVAC.Row1.AirDistribution            113
+#define FAN_SPEED_ID                110    //Signal.Cabin.HVAC.Row1.FanSpeed                   110
 
-VSIWatcher::VSIWatcher(VssItemManager *vssItemManager, DataCollectConfiguration *dataConfigParser,
-                         NameToIdConvertor *nameToIdConvertor)
+#define UNUSED(x) (void)(x)
+
+VSIWatcher::VSIWatcher(VssItemManager *vssItemManager, DataCollectConfiguration *dataConfigParser, NameToIdConvertor *nameToIdConvertor)
     :m_cycleDataThread(NULL), m_eventDataThread(NULL), m_vsiHandle(NULL)
     ,m_vssItemManager(vssItemManager)
     ,m_dataCollectionConfiguration(dataConfigParser)
     ,m_nameToIdConvertor(nameToIdConvertor)
+    ,m_epoch(boost::gregorian::date(1970,1,1))
 {
 
 }
 
 VSIWatcher::~VSIWatcher()
 {
-    m_ioService.stop();
+    m_cycleIOService.stop();
+//    m_eventIOService.stop();
     deleteTimerObject();
 
     stopCycleDataCollectionThread();
+//    stopEventDataCollectionThread();
 }
 
 bool VSIWatcher::init()
@@ -48,21 +61,20 @@ bool VSIWatcher::init()
 
     if ( !m_vsiHandle )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to allocate memory for VSI( Data handle for group )" );
+        LOGE() << "Failed to allocate memory for VSI( Data handle for group )";
         return false;
     }
 
     createCycleDataCollectionThread();
+//    createEventDataCollectionThread();
 
     return true;
 }
 
 void VSIWatcher::collectCycleData(int interval, int groupID, int signalCount)
 {
-    BOOST_LOG_TRIVIAL( info ) << boost::format( "=================================================================================" );
-    BOOST_LOG_TRIVIAL( info ) << boost::format( "VSIWatcher::CollectData() : interval = %1%, groupID = %2%" ) % interval % groupID;
+    UNUSED(interval);
 
-    // create result array
     vsi_result* results = (vsi_result*)malloc( sizeof(vsi_result) * signalCount );
     memset ( results, 0, sizeof(vsi_result) * signalCount );
 
@@ -70,27 +82,30 @@ void VSIWatcher::collectCycleData(int interval, int groupID, int signalCount)
     {
         results[i].data = (char*)malloc(VSI_DATA_MAX_SIZE);
         results[i].dataLength = VSI_DATA_MAX_SIZE;
-        *results[i].data = 0;
+        *(results[i].data) = 0;
+        results[i].status = -61;
     }
-
 
     // get data from VSI
     int get_newest_in_group_status = vsi_get_newest_in_group ( m_vsiHandle, groupID, results);
 
     if ( get_newest_in_group_status )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to get the newest data in group %1%, Error code : %2%") % groupID % get_newest_in_group_status;
+        LOGE() << "Failed to get the newest data in group : " << groupID << ", Error code : " << get_newest_in_group_status;
     }
     else
     {
         for ( int i = 0; i < signalCount; i++ )
         {
-            signal_t signalID = results[i].signalId;
-            VssItem * item = m_vssItemManager->getVSSItem(signalID);
-
-            if ( item != NULL )
+            if ( results[i].status == 0 )
             {
-                storeData(item, results[i].data, signalID);
+                signal_t signalID = results[i].signalId;
+                VssItem * item = m_vssItemManager->getVSSItem(signalID);
+
+                if ( item != NULL )
+                {
+                    storeData(item, results[i].data, signalID, results[i].dataLength);
+                }
             }
         }
     }
@@ -104,6 +119,22 @@ void VSIWatcher::collectCycleData(int interval, int groupID, int signalCount)
     free(results);
 }
 
+void VSIWatcher::collectEventData(int interval, int groupID, int signalCount)
+{
+    UNUSED(interval);
+    UNUSED(groupID);
+    UNUSED(signalCount);
+    //not implemented yet
+}
+
+bool VSIWatcher::isChangedEventData(VssItem *item, int signalID, const char* data)
+{
+    UNUSED(item);
+    UNUSED(signalID);
+    UNUSED(data);
+    //not implemented yet
+}
+
 bool VSIWatcher::validateData(VssItem *item, const char *data)
 {
     if ( (item->getHasMinValue() && item->getHasMaxValue()) || item->getHasEnumValue() )
@@ -114,26 +145,31 @@ bool VSIWatcher::validateData(VssItem *item, const char *data)
     return true;
 }
 
-void VSIWatcher::storeData(VssItem *item, const char *data, signal_t signalId)
+void VSIWatcher::storeData(VssItem *item, const char *data, signal_t signalId, unsigned long dataLength)
 {
-    // common log
-    BOOST_LOG_TRIVIAL( info ) << boost::format( "Signal ID : %1%, Name : %2%, Value : %3%, Type : %4% unit: %5%" )
-                                 % signalId % item->getName() % item->convertToValueString(data) % item->getType() % (item->getHasUnitValue() ? item->getUnit() : "N/A");
-    // validation
-    if ( !validateData(item, data) )
+    UNUSED(signalId);
+
+    bool valid_state;
+    uint64_t time_stamp;
+
+    valid_state = validateData(item, data);
+
+    /* Sample provide time_stamp */
+    boost::posix_time::ptime now = boost::posix_time::microsec_clock::universal_time();
+    boost::posix_time::time_duration currentUTCTime = now - m_epoch;
+
+    time_stamp = currentUTCTime.total_milliseconds();
+
+    LOGD() << "--------------------------------------------------";
+    LOGD() << "[ Collected Data ]";
+    LOGD() << " 1. Signal ID   : " << signalId;
+    LOGD() << " 2. Signal Name : " << item->getName();
+    LOGD() << " 3. Value       : " << item->convertToValueString(data, dataLength);
+    LOGD() << " 4. Valid State : " << valid_state;
+
+    if( this->onCDLDaemonCallBack != NULL )
     {
-        if ( item->getHasEnumValue() )
-        {
-            // invalid
-            BOOST_LOG_TRIVIAL( warning ) << boost::format( "  -> Invalid Data!!! >> %1% is not included" )
-                                         % item->convertToValueString(data);
-        }
-        else
-        {
-            // invalid
-            BOOST_LOG_TRIVIAL( warning ) << boost::format( "  -> Invalid Data!!! >> min : %1%, max : %2%, data : %3%" )
-                                         % item->getMinValue() % item->getMaxValue() % item->convertToValueString(data);
-        }
+        this->onCDLDaemonCallBack(to_string(item->getID()), (char*)data, item->getName(), item->getType(), item->getUnit(), valid_state, time_stamp, dataLength);
     }
 }
 
@@ -145,13 +181,20 @@ void VSIWatcher::createCycleDataCollectionThread()
     }
     else
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "Cycle data thread is already existed" );
+        LOGW() << "Cycle data thread is already existed";
     }
 }
 
 void VSIWatcher::createEventDataCollectionThread()
 {
-    // not implemented yet.
+    if ( m_eventDataThread == NULL )
+    {
+        m_eventDataThread = new boost::thread(std::bind(&VSIWatcher::eventDataCollectionThread, this));
+    }
+    else
+    {
+        LOGW() << "Event data thread is already existed";
+    }
 }
 
 void VSIWatcher::stopCycleDataCollectionThread()
@@ -173,6 +216,14 @@ void VSIWatcher::deleteTimerObject()
     {
         delete m_vsi_cycle_timer.at(count);
     }
+
+    delete m_vsi_event_timer;
+    m_vsi_event_timer = NULL;
+}
+
+void VSIWatcher::registerCDLDaemonCallBack(cdlDaemonCallBack callback)
+{
+    onCDLDaemonCallBack = callback;
 }
 
 void VSIWatcher::cycleDataCollectionThread()
@@ -187,12 +238,12 @@ void VSIWatcher::cycleDataCollectionThread()
     {
         CycleDataItem * item = iter->second;
         int interval = stoi(iter->first);
-        BOOST_LOG_TRIVIAL( info ) << boost::format( "Interval : %1%, Group ID : %2%" ) % interval % groupId;
+        LOGD() << "Cycle Data Collect Info -> Interval : " << interval << ", GroupID : " << groupId;
 
         int status = vsi_create_signal_group(m_vsiHandle, groupId);
         if ( status != 0 )
         {
-            BOOST_LOG_TRIVIAL( error ) << boost::format( "Fail to create signal group for cycle interval : %1%" ) % interval;
+            LOGE() << "Failed to create signal group with cycle interval : " << interval;
 
             iter++;
             continue;
@@ -208,26 +259,27 @@ void VSIWatcher::cycleDataCollectionThread()
 
                 if ( status != 0 )
                 {
-                    BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to add signal %1% ( %2% ) in group ( %3% ). Error Code : %4%") % item->nameList.at(i) % signalID % groupId % status;
+                    LOGE() << "Failed to add signal Info ( name : " << item->nameList.at(i) << " , signalID : " << signalID
+                           << ", groupID(interval) : " << groupId << ", Error Code : " << status;
                 }
             }
         }
 
         // create timer;
 
-        CycleDataTimer *timer = new CycleDataTimer(interval, groupId, item->nameList.size(), m_ioService);
+        CycleDataTimer *timer = new CycleDataTimer(interval, groupId, item->nameList.size(), m_cycleIOService);
 
-        timer->registerCollectDataCallback(std::bind(&VSIWatcher::collectCycleData, this, placeholders::_1, placeholders::_2, placeholders::_3));
+        timer->registerCollectDataCallback(std::bind(&VSIWatcher::collectCycleData, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
         m_vsi_cycle_timer.push_back(timer);
 
         groupId++; iter++;
     }
 
-    m_ioService.run();
+    m_cycleIOService.run();
 }
 
 void VSIWatcher::eventDataCollectionThread()
 {
-    // not implemented yet.
+    //not implemented yet
 }

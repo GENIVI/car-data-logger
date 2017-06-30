@@ -21,7 +21,7 @@
 
 #include "cycledatatimer.h"
 
-CycleDataTimer::CycleDataTimer(int interval,int groupID, int signalCount, boost::asio::io_service &io)
+CycleDataTimer::CycleDataTimer(int interval, int groupID, int signalCount, boost::asio::io_service &io)
     :m_timer(io, boost::posix_time::milliseconds(interval))
     ,m_interval(interval), m_groupID(groupID), m_signalCount(signalCount)
 {    

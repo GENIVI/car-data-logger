@@ -83,12 +83,11 @@ On VSSDataCollector side, you can check data collection status including data va
 
 ### Configuration file for data collection
 Configuration file element explanation:
-* Cycle
-Contains the data that should be collected periodically.
-   * {cycle} (array)
-   Specifies the data and collection cycle(miliseconds).
-* Event (array)
-Contains the data that should be collected by event.
+* **Cycle**
+   * **{cycle}** Collection cycle(miliseconds)
+       * **[array]** List of data that should be collected periodically.
+* **Event**
+    * **[array]** List of data that should be collected by event.
 
 Example
 
@@ -129,12 +128,9 @@ Example
 
 ### Environment variables
 VSS Data Collector needs 3 environment variables for run such as generated VSS JSON file, VSS VSI file and configuration file for data collecton. VSS Data Collector reads specified files or if not specified, reads default file in current working directory.
-* VSS_JSON_FILE
-generated from vspec file using `vsepc2json` (e.g. vss_rel_1.json)
+* **VSS_JSON_FILE** : generated from vspec file using `vsepc2json` (e.g. vss_rel_1.json)
 
-* VSS_COLLECTOR_CONFIGURATION_FILE
-user defined configuration file for data collection
+* **VSS_COLLECTOR_CONFIGURATION_FILE** : user defined configuration file for data collection
 
-* VSS_VSI_FILE
-generated from vspec file using `vspec2vsi` (e.g. vss_rel_1.vsi)
+* **VSS_VSI_FILE** : generated from vspec file using `vspec2vsi` (e.g. vss_rel_1.vsi)
 

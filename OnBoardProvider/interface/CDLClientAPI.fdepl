@@ -1,0 +1,72 @@
+/* Copyright (C) 2015 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-SOMEIP_deployment_spec.fdepl"
+import "CDLClientAPI.fidl"
+
+define org.genivi.commonapi.someip.deployment for interface
+org.genivi.CDL.ClientAPI {
+	SomeIpServiceID = 1000
+	
+	method registerClient {
+		SomeIpMethodID = 10000
+		SomeIpReliable = false
+		in {
+			key { SomeIpStringEncoding = utf8 }
+		}
+		out {
+			handle {}
+			result { SomeIpArgEnumWidth = 4 }
+		}
+	}
+	
+	method setListenData {
+		SomeIpMethodID = 10001
+		SomeIpReliable = false		
+		in {
+			handle {}
+			signalNameList { SomeIpArgArrayLengthWidth = 4 }
+			type { SomeIpArgEnumWidth = 4 }
+		}
+		out {			
+			result { SomeIpArgEnumWidth = 4 }
+		}
+	}
+	
+	method getData {
+		SomeIpMethodID = 10002
+		SomeIpReliable = false
+		in {
+			handle {}
+			signalName { SomeIpStringEncoding = utf8 }
+		}
+		out {
+			result { SomeIpArgEnumWidth = 4 }
+		}
+	}
+	
+	broadcast notifyData {
+		SomeIpEventID = 20001
+		SomeIpEventGroups = { 20000 }
+		SomeIpMulticast = true
+		out {
+			signalName { SomeIpStringEncoding = utf8 }
+			type { SomeIpArgEnumWidth = 4 }
+			unit { SomeIpStringEncoding = utf8 }
+			value { SomeIpArgUnionLengthWidth = 4 }
+			timeStamp {}
+		}
+	}	
+}
+
+define org.genivi.commonapi.someip.deployment for provider Service {
+	instance org.genivi.CDL.ClientAPI {
+		InstanceId = "org.genivi.CDL.ClientAPI.SomeIp"
+		SomeIpInstanceID = 1100
+		
+		SomeIpUnicastAddress = "127.0.0.1"
+		SomeIpUnreliableUnicastPort = 30100
+		SomeIpReliableUnicastPort = 30101
+	}
+}

@@ -23,6 +23,8 @@
 #include "DataConfigService/dataconfigparser.h"
 #include "VssJsonService/vssjsonparser.h"
 #include "VSIWatcher/vsiwatcher.h"
+#include "../../common/log.h"
+
 
 VSSDataCollector::VSSDataCollector()
     :m_vssJsonParser(NULL), m_dataConfigParser(NULL), m_vssItemManager(NULL)
@@ -38,7 +40,7 @@ VSSDataCollector::VSSDataCollector()
 
 VSSDataCollector::~VSSDataCollector()
 {
-    stop();
+
 }
 
 void VSSDataCollector::setConfigurationFiles()
@@ -51,7 +53,7 @@ void VSSDataCollector::setConfigurationFiles()
     }
     else
     {
-        m_vssJsonFile = "./VssSpec.json";
+        m_vssJsonFile = "./vss_rel_1.json";
     }
 
     const char * data_configuration = getenv("VSS_COLLECTOR_CONFIGURATION_FILE");
@@ -101,6 +103,8 @@ bool VSSDataCollector::start()
         return false;
     }
 
+    LOGD() << "Succeed to create VSSDataCollector";
+
     return true;
 }
 
@@ -135,4 +139,9 @@ void VSSDataCollector::stop()
         delete m_vssItemManager;
         m_vssItemManager = NULL;
     }
+}
+
+void VSSDataCollector::registerCollectDataCallback(cdlDaemonCallBack callback)
+{
+    m_vsiWatcher->registerCDLDaemonCallBack(callback);
 }

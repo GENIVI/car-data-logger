@@ -1,0 +1,187 @@
+package org.genivi.CDL
+
+<**
+	@description : CDL Client APIs for providing data to on-board components
+**>	
+interface ClientAPI {
+	version {
+		major 1
+		minor 0
+	}
+	
+	<**
+		@description : register and authenticate client
+	**>
+	method registerClient {
+		in {
+			<**
+				@description : key for authentication. key could be private ssh key, password, ...
+			**>
+			String key
+		}
+		out {
+			<**
+				@description : handle for client. the value of handle is 0, when registration and authentication failed
+			**>
+			ClientAPITypes.Handle handle
+			
+			<**
+				@description : registration result authentication
+			**>
+			ClientAPITypes.ResultCode result
+		}
+	}
+
+	<**
+		@description : set id list for listen. only specified data will notified to client
+	**>
+	method setListenData {
+		in {
+			<**
+				@description : handle obtained when registering client
+			**>
+			ClientAPITypes.Handle handle
+			
+			<**
+				@description : signal name list to listen  
+			**>
+			String [] signalNameList
+			
+			<**
+				@description : updated = notify data when data is updated. 
+				               changed = notify data when data is changed only
+			**>
+			ClientAPITypes.NotifyType type			
+		}
+		out {
+			<**
+				@description : result for request
+			**>
+			ClientAPITypes.ResultCode result
+		}
+	}
+	
+	<**
+		@description : get single data instantly
+	**>
+	method getData {
+		in {
+			<**
+				@description : handle obtained when registering client
+			**>
+			ClientAPITypes.Handle handle
+			
+			<**
+				@description : name of data
+			**>
+			String signalName						
+		}
+		out {
+			<**
+				@description : result of request
+				               data will be notified to client via broadcasting 
+			**>
+			ClientAPITypes.ResultCode result
+		}
+	}
+	
+	<**
+		@description : notify data to client
+	**>
+	broadcast notifyData selective {
+		out {
+			<**
+				@description : name of data
+			**>
+			String signalName
+			
+			<**
+				@description : type of data 
+			**>
+			ClientAPITypes.Types type
+			
+			<**
+				@description : unit of data
+			**>
+			String unit
+			
+			<**
+				@description : value of data 
+			**>
+			ClientAPITypes.CDLValue value
+			
+			<**
+				@description : timestamp of data 
+			**>
+			UInt64 timeStamp			
+		}
+	}
+}
+
+typeCollection ClientAPITypes {
+	version { major 1 minor 0 }
+	
+	<**
+		@description : handle for client
+	**>
+	typedef Handle is UInt32
+	
+	<**
+		@description : value of CDL data
+	**>
+	union CDLValue {
+		UInt8 unsignedInteger8Value
+		Int8 signedInteger8Value
+		UInt16 unsignedInteger16Value
+		Int16 signedInteger16Value
+		UInt32 unsignedInteger32Value
+		Int32 signedInteger32Value
+		UInt64 unsignedInteger64Value
+		Int64 signedInteger64Value
+		Boolean booleanValue
+		Float floatValue
+		Double doubleValue
+		String stringValue
+		ByteBuffer bytebufferValue
+	}
+	
+	<**
+		@description : data types of value 
+	**>
+	enumeration Types {
+		UINT8		
+		INT8		
+		UINT16		
+		INT16		
+		UINT32		
+		INT32		
+		UINT64		
+		INT64		
+		BOOLEAN		
+		FLOAT		
+		DOUBLE		
+		STRING		
+		BYTEBUFFER	
+	}
+	
+	<**
+		@description : result code for request 
+	**>
+	enumeration ResultCode {
+		RC_OK		
+		RC_AUTHENTICATION_FAILED
+		RC_CLIENT_ALREADY_REGISTERED
+		RC_INVALID_HANDLE
+		RC_FAILED
+	}
+	
+	<**
+		@description : notification type 
+		               NT_UPDATED = notify data when data is updated.
+		               NT_CHANGED = notify data when data is changed only
+	**>
+	enumeration NotifyType {
+		NT_UPDATED
+		NT_CHANGED
+	}
+}

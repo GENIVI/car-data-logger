@@ -1,8 +1,23 @@
-#-------------------------------------------------
+#/*
+#* Copyright (C) 2017, IVIS
+#*
+#* This file is part of GENIVI Project CDL - Car Data Logger.
+#*
+#* This Source Code Form is subject to the terms of the
+#* Mozilla Public License (MPL), v. 2.0.
+#* If a copy of the MPL was not distributed with this file,
+#* You can obtain one at http://mozilla.org/MPL/2.0/.
+#*
+#* For further information see http://www.genivi.org/.
+#*/
 #
-# Project created by QtCreator 2016-12-02T10:16:34
-#
-#-------------------------------------------------
+#/*!
+#* \author Seok-Heum Choi <seokheum.choi@ivisolution.com>
+#*
+#* \copyright Copyright (c) 2017, IVIS \n
+#* License MPL-2.0: Mozilla Public License version 2.0 http://mozilla.org/MPL/2.0/.
+#*
+#*/
 
 QT += core
 QT -= gui
@@ -16,9 +31,18 @@ TEMPLATE = app
 
 DEFINES += BOOST_ALL_DYN_LINK
 
-SOURCES += main.cpp
+HEADERS += $$PWD/../../../common/log.h
 
-INVITE_LIBS = vsi VSSDataCollector \
+SOURCES += main.cpp \
+           $$PWD/../../../common/log.cpp \
+
+INVITE_LIBS += vsi \
+            VSSDataCollector \
+
+LIBS += \
+    -lboost_system \
+    -lboost_thread \
+    -lboost_log \
 
 CONFIG += link_pkgconfig
 PKGCONFIG += $$INVITE_LIBS
@@ -47,6 +71,9 @@ CONFIG(debug, debug|release) {
     DEFINES += __DEBUG__
     QMAKE_CXXFLAGS += -g
 }
+
+INCLUDEPATH += \
+	../../src \
 
 OBJECTS_DIR = $$DESTDIR/.obj
 MOC_DIR     = $$DESTDIR/.moc

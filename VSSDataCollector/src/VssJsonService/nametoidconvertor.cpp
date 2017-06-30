@@ -20,6 +20,7 @@
 */
 
 #include "nametoidconvertor.h"
+#include "../../common/log.h"
 
 NameToIdConvertor::NameToIdConvertor()
 {
@@ -39,7 +40,7 @@ bool NameToIdConvertor::read(string vsiFilePath)
 
     if( !file.is_open() )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< openVSIFile() >> Fail to Open SignalPath To ID Definition Json File" );
+        LOGE() << "<< openVSIFile() >> Fail to Open SignalPath To ID Definition Json File";
         return false;
     }
 
@@ -54,11 +55,14 @@ int NameToIdConvertor::convertToID( string name )
 
     auto convertID = m_nameToIdList.find(name);
 
-    if(convertID != m_nameToIdList.end()){
+    if(convertID != m_nameToIdList.end())
+    {
         id=convertID->second;
+        LOGD() << "Succeed to convert Name to ID ( name : " << name << " / id : " << id;
     }
-    else{
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to convert Name to ID" );
+    else
+    {
+        LOGE() << "Failed to convert Name to ID ( name : " << name << " / id : " << id;
     }
 
     return id;

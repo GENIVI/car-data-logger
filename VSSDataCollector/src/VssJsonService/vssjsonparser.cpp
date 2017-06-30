@@ -20,6 +20,7 @@
 */
 
 #include "vssjsonparser.h"
+#include "../../common/log.h"
 
 VssJsonParser::VssJsonParser(VssItemManager *vssItemManager)
     : m_vssItemManager(vssItemManager), m_signalPath(""), m_keyDepth(0)
@@ -45,7 +46,7 @@ bool VssJsonParser::read( const string vssJsonFilePath )
     }
     else
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< vssJsonParserInit() >> %1% Json object ptree is empty" ) % "Attribute";
+        LOGE() << "Attribute object JSON ptree is empty";
         return false;
     }
 
@@ -56,7 +57,7 @@ bool VssJsonParser::read( const string vssJsonFilePath )
     }
     else
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< vssJsonParserInit() >> %1% Json object ptree is empty") % "Signal";
+        LOGE() << "Signal object JSON ptree is empty";
         return false;
     }
 
@@ -71,7 +72,7 @@ void VssJsonParser::readVSSJsonFile( const string vssJsonFilePath, property_tree
     }
     catch(std::exception & e)
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "Failed to read json %1%" ) % e.what();
+        LOGE() << "Failed to read JSON ( " << e.what() << " )";
     }
 }
 
@@ -153,22 +154,6 @@ void VssJsonParser::parseVSSJson(property_tree::ptree &jsonTree, string signalPa
         {
             m_vssItemManager->addVssItem(vssItem->getID(), vssItem);
         }
-
-        /* Data Display */
-//        cout<<"name    : "<<signalPath<<endl;
-//        cout<<"type    : "<<type<<endl;
-//        cout<<"unit    : "<<unit<<endl;
-//        cout<<"id      : "<<id<<endl;
-//        cout<<"min     : "<<min<<endl;
-//        cout<<"max     : "<<max<<endl;
-//        cout<<"default : "<<defaultValue<<endl;
-//        cout<<"value   : "<<value<<endl;
-//        cout<<"enumVal : ";
-//        for (auto value : vssEnumValue)
-//        {
-
-//        }
-//        cout<<endl;
     }
 }
 

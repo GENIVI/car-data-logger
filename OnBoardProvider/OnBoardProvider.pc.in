@@ -1,0 +1,12 @@
+prefix=@PREFIX@
+exec_prefix=@PREFIX@
+libdir=${exec_prefix}/lib
+includedir=${exec_prefix}/include
+
+Name: OnBoardProvider
+Description: CDL On Board Provider
+Version:
+Requires:
+Libs: -L${libdir} -lOnBoardProvider -lboost_system -lboost_thread -lboost_log -lboost_filesystem -lboost_date_time
+Cflags: -I${includedir}/OnBoardProvider
+

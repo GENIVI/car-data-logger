@@ -20,6 +20,7 @@
 */
 
 #include "dataconfigparser.h"
+#include "../../common/log.h"
 
 DataCollectConfiguration::DataCollectConfiguration()
 {
@@ -51,7 +52,7 @@ bool DataCollectConfiguration::read(const string jsonFilePath)
     }
     catch(std::exception & e)
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< DataConfigParser init() >> Failed to read json : %1%" ) % e.what();
+        LOGE() << "Failed to read json file ( Error Msg : " << e.what() << " )";
 
         return false;
     }
@@ -68,11 +69,11 @@ void DataCollectConfiguration::parseCycleData(property_tree::ptree & jsonDoc, st
 
     if ( childTree.empty() )
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "<< DataConfigParser::parseCycleData() >> pTree is empty" );
+        LOGW() << "JSON value(ptree) is empty";
         return;
     }
 
-    BOOST_LOG_TRIVIAL( info ) << boost::format( "============ < Cycle > ==============" );
+    LOGD() << "============ < Cycle > ==============";
 
     BOOST_FOREACH(property_tree::ptree::value_type &value_type, childTree)
     {
@@ -86,7 +87,7 @@ void DataCollectConfiguration::parseCycleData(property_tree::ptree & jsonDoc, st
             {
                 cycleItem->nameList.push_back( cycleValue.second.data() );
 
-                BOOST_LOG_TRIVIAL( info ) << boost::format( "data : %1%" ) % cycleValue.second.data();
+                LOGD() << "Cycle data : " << cycleValue.second.data();
             }
         }
     }
@@ -98,16 +99,16 @@ void DataCollectConfiguration::parseEventData(property_tree::ptree & jsonDoc, st
 
     if ( childTree.empty() )
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "<< DataConfigParser::parseEventData() >> pTree is empty" );
+        LOGW() << "JSON value(ptree) is empty";
         return;
     }
 
     /* Event Data Case */
-    BOOST_LOG_TRIVIAL( info ) << boost::format( "============ < Event > ==============" );
+    LOGD() << "============ < Event > ==============";
 
     BOOST_FOREACH(property_tree::ptree::value_type &eventValue, childTree)
     {
-        BOOST_LOG_TRIVIAL( info ) << boost::format( "data : %1%" ) % eventValue.second.data();
+        LOGD() << "Event data : " << eventValue.second.data();
         m_eventDataList.push_back(eventValue.second.data());
     }
 }

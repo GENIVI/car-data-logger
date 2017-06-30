@@ -31,8 +31,6 @@
 #include <vector>
 #include <unordered_map>
 
-#include "commonlogheader.h"
-
 using namespace std;
 using namespace boost;
 

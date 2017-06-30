@@ -1,6 +1,27 @@
+/*
+* Copyright (C) 2017, IVIS
+*
+* This file is part of GENIVI Project CDL - Car Data Logger.
+*
+* This Source Code Form is subject to the terms of the
+* Mozilla Public License (MPL), v. 2.0.
+* If a copy of the MPL was not distributed with this file,
+* You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+* For further information see http://www.genivi.org/.
+*/
+
+/*!
+* \author Seok-Heum Choi <seokheum.choi@ivisolution.com>
+*
+* \copyright Copyright (c) 2017, IVIS \n
+* License MPL-2.0: Mozilla Public License version 2.0 http://mozilla.org/MPL/2.0/.
+*
+*/
+
 #include "fileinfodbhandler.h"
 #include "fileinfodbquerygenerator.h"
-#include "commonlogheader.h"
+#include "../../common/log.h"
 
 FileInfoDBHandler::FileInfoDBHandler()
     :m_fileInfoDBQueryGenerator(NULL), m_db(NULL)
@@ -28,7 +49,7 @@ bool FileInfoDBHandler::addNewFileInfo(FILE_INFO &fileInfo)
     m_dbHandlerMutex.lock();
     if( !InsertData(FileInfoListTableName, fileInfo) )
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "<< FileInfoDBHandler::addNewFileInfo >> Failed to update new file info" );
+        LOGW() << "Failed to update new file info in DB file";
         result = false;
     }
     m_dbHandlerMutex.unlock();
@@ -130,14 +151,14 @@ bool FileInfoDBHandler::openFileInfoListFile(string &filePath)
         {
             if( !CreateTable(FileInfoListTableName) )
             {
-                BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDBHandler::openFileInfoFile >> Failed to create table : %s" ) % FileInfoListTableName;
+                LOGE() << "Failed to create table in DB ( Table name : " << FileInfoListTableName << " )";
                 result = false;
             }
         }
     }
     else
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDBHandler::openFileInfoFile >> Failed to open FileInfo file" );
+        LOGE() << "Failed to open FileInfo DB File";
         result =  false;
     }
     m_dbHandlerMutex.unlock();
@@ -170,19 +191,19 @@ bool FileInfoDBHandler::IsTableExist(const string tableName)
     result = sqlite3_prepare_v2(m_db, tableExistQueryStr.c_str(), -1, &stmt, NULL);    //5th argu is NULL because of query is just one
     if( result != SQLITE_OK )
     {
-        BOOST_LOG_TRIVIAL( info ) << boost::format( "<< FileInfoDataBaseHandler::IsTableExist() >> msg : %1%" ) % sqlite3_errmsg(m_db);
+        LOGD() << "Table is existed ( Error Msg : " << sqlite3_errmsg(m_db) << " )";
         return false;
     }
 
     result = sqlite3_step(stmt);
     if( result == SQLITE_DONE )       //find table success : SQLITE_ROW | find table Fail : SQLITE_DONE
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDataBaseHandler::IsTableExist() >> Failed to find table(tablename: %s)" ) % tableName;
+        LOGE() << "Failed to find table ( Table name : " << tableName << " )";
         return false;
     }
     else
     {
-        BOOST_LOG_TRIVIAL( info ) << boost::format( "<< FileInfoDataBaseHandler::IsTableExist() >> Succeed to find table(tablename: %s)" ) % tableName;
+        LOGD() << "Succeed to find table ( Table name : " << tableName << " )";
     }
 
     sqlite3_reset(stmt);
@@ -202,19 +223,19 @@ bool FileInfoDBHandler::CreateTable(const string tableName)
     result = sqlite3_prepare_v2(m_db, createTableQueryStr.c_str(), -1, &stmt, NULL);
     if( result != SQLITE_OK )
     {
-        BOOST_LOG_TRIVIAL( info ) << boost::format( "<< FileInfoDBHandler::CreateTable >> msg : %1%" ) % sqlite3_errmsg(m_db);
+        LOGE() << "Failed to create table ( Error Msg : " << sqlite3_errmsg(m_db) << " )";
         return false;
     }
 
     result = sqlite3_step(stmt);
     if( result != SQLITE_DONE )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDBHandler::CreateTable() >> Failed to create table(tablename: %s)" ) % tableName;
+        LOGD() << "Failed to create table ( Table name : " << tableName << " )";
         return false;
     }
     else
     {
-        BOOST_LOG_TRIVIAL( info ) << boost::format( "<< FileInfoDBHandler::CreateTable() >> Succeed to create table(tablename: %s)" ) % tableName;
+        LOGD() << "Succeed to create table ( Table name : " << tableName << " )";
     }
 
     sqlite3_reset(stmt);
@@ -232,7 +253,7 @@ bool FileInfoDBHandler::InsertData(const string tableName, FILE_INFO &fileInfo)
     result = sqlite3_prepare_v2(m_db, insertQueryStr.c_str(), -1, &stmt, NULL);
     if( result != SQLITE_OK )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDBHandler::InsertData >> Failed to insert data ( msg: %1% )" ) % sqlite3_errmsg(m_db);
+        LOGE() << "Failed to insert data ( Error Msg : " << sqlite3_errmsg(m_db) << " )";
         return false;
     }
 
@@ -258,7 +279,7 @@ bool FileInfoDBHandler::UpdateData(const string updateQueryStr)
     result = sqlite3_prepare_v2(m_db, updateQueryStr.c_str(), -1, &stmt, NULL);
     if( result != SQLITE_OK )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDBHandler::UpdateData >> msg : %1%" ) % sqlite3_errmsg(m_db);
+        LOGE() << "Failed to update data ( Error Msg : " << sqlite3_errmsg(m_db) << " )";
         return false;
     }
 
@@ -304,7 +325,7 @@ string FileInfoDBHandler::GetData(const string getDataQueryStr)
                     }
                     case SQLITE_NULL:
                     {
-                        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileInfoDBHandler::GetData >> Data type is NULL" );
+                        LOGW() << "Data type is NULL";
                         break;
                     }
                     default:

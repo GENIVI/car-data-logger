@@ -1,7 +1,29 @@
-#include "filemanager.h"
-#include "commonlogheader.h"
-#include "configuration.h"
+/*
+* Copyright (C) 2017, IVIS
+*
+* This file is part of GENIVI Project CDL - Car Data Logger.
+*
+* This Source Code Form is subject to the terms of the
+* Mozilla Public License (MPL), v. 2.0.
+* If a copy of the MPL was not distributed with this file,
+* You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+* For further information see http://www.genivi.org/.
+*/
 
+/*!
+* \author Seok-Heum Choi <seokheum.choi@ivisolution.com>
+*
+* \copyright Copyright (c) 2017, IVIS \n
+* License MPL-2.0: Mozilla Public License version 2.0 http://mozilla.org/MPL/2.0/.
+*
+*/
+
+#include "filemanager.h"
+#include "configuration.h"
+#include "../../common/log.h"
+
+#include <boost/format.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 FileManager::FileManager(DataStoreConfiguration *configManager, FileInfoDBHandler *fileInfoDBHandler)
@@ -35,6 +57,7 @@ bool FileManager::createFileInfoListFile()
 }
 void FileManager::requestUpdateFileInfo(UpdateFileInfoType updateFileType, string filename)
 {
+    bool updateFileResult = true;
     switch(updateFileType)
     {
     case UpdateFileInfoType::UPDATE_FILE_DELETED:
@@ -43,7 +66,7 @@ void FileManager::requestUpdateFileInfo(UpdateFileInfoType updateFileType, strin
     {
         if( !m_fileInfoDBHandler->updateFileInfo(updateFileType, filename) )
         {
-            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileManager::updateFileInfo() >> Failed to update data ( type : %d )" ) % updateFileType;
+            updateFileResult = false;
         }
 
         break;
@@ -53,13 +76,17 @@ void FileManager::requestUpdateFileInfo(UpdateFileInfoType updateFileType, strin
         string endTime = getCurrentDateTime();
         if( !m_fileInfoDBHandler->updateFileInfo(updateFileType, filename, endTime) )
         {
-            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< FileManager::updateFileInfo() >> Failed to update data ( type : %d )" ) % updateFileType;
+            updateFileResult = false;
         }
 
         break;
     }
     }
 
+    if( !updateFileResult )
+    {
+        LOGE() << "Failed to update data ( File managing type : " << updateFileType << " )";
+    }
 }
 
 void FileManager::requestUpdateNewFileCreated(string filename)
@@ -99,7 +126,7 @@ string FileManager::getCurrentDateTime()
     boost::posix_time::ptime localTime =
                 boost::posix_time::second_clock::local_time();
 
-    string dateTimeFormat = boost::str( boost::format( "%04d%02d%02d_%2d%02d%02d" )
+    string dateTimeFormat = boost::str( boost::format( "%04d%02d%02d_%02d%02d%02d" )
                                        % localTime.date().year() % static_cast<int>(localTime.date().month()) % localTime.date().day()
                                        % localTime.time_of_day().hours() % localTime.time_of_day().minutes() % localTime.time_of_day().seconds() );
 

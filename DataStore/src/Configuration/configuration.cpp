@@ -1,5 +1,26 @@
+/*
+* Copyright (C) 2017, IVIS
+*
+* This file is part of GENIVI Project CDL - Car Data Logger.
+*
+* This Source Code Form is subject to the terms of the
+* Mozilla Public License (MPL), v. 2.0.
+* If a copy of the MPL was not distributed with this file,
+* You can obtain one at http://mozilla.org/MPL/2.0/.
+*
+* For further information see http://www.genivi.org/.
+*/
+
+/*!
+* \author Seok-Heum Choi <seokheum.choi@ivisolution.com>
+*
+* \copyright Copyright (c) 2017, IVIS \n
+* License MPL-2.0: Mozilla Public License version 2.0 http://mozilla.org/MPL/2.0/.
+*
+*/
+
 #include "configuration.h"
-#include "commonlogheader.h"
+#include "../../common/log.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/foreach.hpp>
@@ -26,7 +47,7 @@ bool DataStoreConfiguration::read(const string jsonFilePath)
     }
     catch(std::exception & e)
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< ConfigurationManager::read() >> Failed to read json : %1%" ) % e.what();
+        LOGE() << "Failed to read JSON file : " << e.what();
 
         return false;
     }
@@ -68,7 +89,7 @@ bool DataStoreConfiguration::parseStoreConfigFile(property_tree::ptree &jsonDoc)
 {
     if( jsonDoc.empty() )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< ConfigurationManager::parseStoreConfigFile() >> JSON file is empty" );
+        LOGE() << "JSON file is empty";
         return false;
     }
 
@@ -99,7 +120,7 @@ bool DataStoreConfiguration::parseStoreConfigFile(property_tree::ptree &jsonDoc)
         }
         else
         {
-            BOOST_LOG_TRIVIAL( warning ) << boost::format( "No configuration list : %s" ) % objName;
+            LOGW() << "No configuration list in JSON file : " << objName;
         }
     }
 
@@ -115,36 +136,31 @@ bool DataStoreConfiguration::checkConfigInfo()
 {
     if( m_dataStoreLocation.empty() )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< DataStoreConfiguration::checkConfigInfo() >> DataStoreLocation is invalid path ( %s )" )
-                                       % m_dataStoreLocation;
+        LOGE() << "Invalid DataStoreLocation Path ( " << m_dataStoreLocation << " )";
         return false;
     }
 
     if( m_maxFileSize <= 0 )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< DataStoreConfiguration::checkConfigInfo() >> MaxFileSize is invalid value ( %d )" )
-                                      % m_maxFileSize;
+        LOGE() << "Invalid MaxFileSize Value ( " << m_maxFileSize << " )";
         return false;
     }
 
     if( m_maxStorageSize <= 0 )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< DataStoreConfiguration::checkConfigInfo() >> MaxStorageSize is invalid value ( %d )" )
-                                      % m_maxStorageSize;
+        LOGE() << "Invalid MaxStorageSize Value ( " << m_maxStorageSize << " )";
         return false;
     }
 
     if( m_fileExpirePeriod <= 0 )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< DataStoreConfiguration::checkConfigInfo() >> FileExpirePeriod is invalid value ( %d )" )
-                                      % m_fileExpirePeriod;
+        LOGE() << "Invalid FileExpirePeriod Value ( " << m_fileExpirePeriod << " )";
         return false;
     }
 
     if( m_transactionBufferSize <= 0 )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< DataStoreConfiguration::checkConfigInfo() >> TransactionBufferSize is invalid value ( %d )" )
-                                      % m_transactionBufferSize;
+        LOGE() << "Invalid TransactionBufferSize Value ( " << m_transactionBufferSize << " )";
         return false;
     }
 

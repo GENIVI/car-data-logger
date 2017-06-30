@@ -23,6 +23,9 @@
 #define VSSDATACOLLECTOR_H
 
 #include <string>
+#include <functional>
+
+#include "../../common/cdlcommondefine.h"
 
 using namespace std;
 
@@ -42,6 +45,8 @@ class VssItemManager;
 class NameToIdConvertor;
 class VSIWatcher;
 
+typedef std::function<void(string, char*, string, CDLDataTypes, string, bool, uint64_t, unsigned long)> cdlDaemonCallBack;
+
 class VSSDataCollector
 {
 public:
@@ -60,6 +65,12 @@ public:
      *
      */
     virtual void stop();
+
+    /**
+     * @brief Register to collector.
+     *
+     */
+    virtual void registerCollectDataCallback(cdlDaemonCallBack callback);
 
 private:
     void setConfigurationFiles();

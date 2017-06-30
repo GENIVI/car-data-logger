@@ -20,9 +20,12 @@
 */
 
 #include "vssitem.h"
+#include "../../common/log.h"
+#include <string.h>
+#include <iomanip>
 
 VssItem::VssItem()
-    : m_name(""), m_type(Data_Type_Max), m_unit(""),
+    : m_name(""), m_type(), m_unit(""),
       m_id(0), m_min(0), m_max(0),
       m_hasUnitValue(false), m_hasMinValue(false), m_hasMaxValue(false), m_hasEnumValue(false)
 {
@@ -34,17 +37,13 @@ VssItem::~VssItem()
 
 }
 
-string VssItem::convertToValueString(const char *data)
+string VssItem::convertToValueString(const char *data, unsigned long dataLength)
 {
     string convertedValue = "";
 
     switch ( m_type )
     {
-    case branch:
-    {
-        break;
-    }
-    case UInt8:
+    case UINT8:
     {
         UInt8_t value = 0;
         memcpy(&value, data, sizeof(UInt8_t));
@@ -53,7 +52,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case Int8:
+    case INT8:
     {
         Int8_t value = 0;
         memcpy(&value, data, sizeof(Int8_t));
@@ -62,7 +61,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case UInt16:
+    case UINT16:
     {
         UInt16_t value = 0;
         memcpy(&value, data, sizeof(UInt16_t));
@@ -71,7 +70,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case Int16:
+    case INT16:
     {
         Int16_t value = 0;
         memcpy(&value, data, sizeof(Int16_t));
@@ -80,7 +79,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case UInt32:
+    case UINT32:
     {
         UInt32_t value = 0;
         memcpy(&value, data, sizeof(UInt32_t));
@@ -89,7 +88,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case Int32:
+    case INT32:
     {
         Int32_t value = 0;
         memcpy(&value, data, sizeof(Int32_t));
@@ -98,7 +97,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case UInt64:
+    case UINT64:
     {
         UInt64_t value = 0;
         memcpy(&value, data, sizeof(UInt64_t));
@@ -107,7 +106,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case Int64:
+    case INT64:
     {
         Int64_t value = 0;
         memcpy(&value, data, sizeof(Int64_t));
@@ -116,15 +115,15 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case Boolean:
+    case BOOLEAN:
     {
         bool value = 0;
-        memcpy(&value, data, sizeof(bool));
+        memcpy(&value, data, sizeof(int));
         convertedValue = to_string(value);
 
         break;
     }
-    case Float:
+    case FLOAT:
     {
         float value = 0;
         memcpy(&value, data, sizeof(float));
@@ -133,7 +132,7 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case Double:
+    case DOUBLE:
     {
         double value = 0;
         memcpy(&value, data, sizeof(double));
@@ -142,19 +141,41 @@ string VssItem::convertToValueString(const char *data)
 
         break;
     }
-    case String:
+    case STRING:
     {
         convertedValue = data;
 
         break;
     }
-    case ByteBuffer:
+    case BYTEBUFFER:
     {
+        ByteBuffer value;
+
+        // convert const char* to ByteBuffer
+        for( unsigned long i=0; i<dataLength; i++ )
+        {
+            value.push_back(data[i]);
+        }
+
+        // convert ByteBuffer to string
+        for( unsigned int i=0; i<value.size(); i++ )
+        {
+            stringstream tmp;
+            tmp << setfill('0') << std::hex << setw(2) << (int)value.at(i);
+            convertedValue.append(tmp.str());
+
+            if( i != value.size() )
+            {
+                convertedValue.append(" ");
+            }
+
+        }
+
         break;
     }
     default:
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "<< convertToValueString() >> This data is not VSS value type" );
+        LOGW() << "<< convertToValueString() >> This data is not VSS value type";
         break;
     }
     }
@@ -168,11 +189,7 @@ bool VssItem::validateData(const char *data)
 
     switch ( m_type )
     {
-    case branch:
-    {
-        break;
-    }
-    case UInt8:
+    case UINT8:
     {
         UInt8_t value = 0;
         memcpy(&value, data, sizeof(UInt8_t));
@@ -185,7 +202,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Int8:
+    case INT8:
     {
         Int8_t value = 0;
         memcpy(&value, data, sizeof(Int8_t));
@@ -197,7 +214,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case UInt16:
+    case UINT16:
     {
         UInt16_t value = 0;
         memcpy(&value, data, sizeof(UInt16_t));
@@ -209,7 +226,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Int16:
+    case INT16:
     {
         Int16_t value = 0;
         memcpy(&value, data, sizeof(Int16_t));
@@ -221,7 +238,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case UInt32:
+    case UINT32:
     {
         UInt32_t value = 0;
         memcpy(&value, data, sizeof(UInt32_t));
@@ -233,7 +250,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Int32:
+    case INT32:
     {
         Int32_t value = 0;
         memcpy(&value, data, sizeof(Int32_t));
@@ -245,7 +262,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case UInt64:
+    case UINT64:
     {
         UInt64_t value = 0;
         memcpy(&value, data, sizeof(UInt64_t));
@@ -257,7 +274,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Int64:
+    case INT64:
     {
         Int64_t value = 0;
         memcpy(&value, data, sizeof(Int64_t));
@@ -269,7 +286,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Boolean:
+    case BOOLEAN:
     {
         bool value = 0;
         memcpy(&value, data, sizeof(bool));
@@ -279,7 +296,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Float:
+    case FLOAT:
     {
         float value = 0;
         memcpy(&value, data, sizeof(float));
@@ -291,7 +308,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case Double:
+    case DOUBLE:
     {
         double value = 0;
         memcpy(&value, data, sizeof(double));
@@ -303,7 +320,7 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case String:
+    case STRING:
     {
         string value(data);
         vector<string> vssEnum = getVssEnumValueList();
@@ -319,13 +336,13 @@ bool VssItem::validateData(const char *data)
 
         break;
     }
-    case ByteBuffer:
+    case BYTEBUFFER:
     {
         break;
     }
     default:
     {
-        BOOST_LOG_TRIVIAL( warning ) << boost::format( "<< validateData() >> This data is not VSS value type" );
+        LOGW() << "<< validateData() >> This data is not VSS value type";
         break;
     }
     }
@@ -333,64 +350,64 @@ bool VssItem::validateData(const char *data)
     return validatedResult;
 }
 
-VssData_Type_e VssItem::convertDataTypeToEnum(string type)
+CDLDataTypes VssItem::convertDataTypeToEnum(string type)
 {
-    VssData_Type_e jsonDataType = Data_Type_Max;
+    CDLDataTypes cdlDataType;
 
     if(!type.compare("UInt8"))
     {
-        jsonDataType = UInt8;
+        cdlDataType = UINT8;
     }
     else if(!type.compare("Int8"))
     {
-        jsonDataType = Int8;
+        cdlDataType = INT8;
     }
     else if(!type.compare("UInt16"))
     {
-        jsonDataType = UInt16;
+        cdlDataType = UINT16;
     }
     else if(!type.compare("Int16"))
     {
-        jsonDataType = Int16;
+        cdlDataType = INT16;
     }
     else if(!type.compare("UInt32"))
     {
-        jsonDataType = UInt32;
+        cdlDataType = UINT32;
     }
     else if(!type.compare("Int32"))
     {
-        jsonDataType = Int32;
+        cdlDataType = INT32;
     }
     else if(!type.compare("UInt64"))
     {
-        jsonDataType = UInt64;
+        cdlDataType = UINT64;
     }
     else if(!type.compare("Int64"))
     {
-        jsonDataType = Int32;
+        cdlDataType = INT64;
     }
     else if(!type.compare("Boolean"))
     {
-        jsonDataType = Boolean;
+        cdlDataType = BOOLEAN;
     }
     else if(!type.compare("Float"))
     {
-        jsonDataType = Float;
+        cdlDataType = FLOAT;
     }
     else if(!type.compare("Double"))
     {
-        jsonDataType = Double;
+        cdlDataType = DOUBLE;
     }
     else if(!type.compare("String"))
     {
-        jsonDataType = String;
+        cdlDataType = STRING;
     }
     else if(!type.compare("ByteBuffer"))
     {
-        jsonDataType = ByteBuffer;
+        cdlDataType = BYTEBUFFER;
     }
 
-    return jsonDataType;
+    return cdlDataType;
 }
 
 void VssItem::setName(string nameValue)
@@ -478,7 +495,7 @@ string VssItem::getName()
     return m_name;
 }
 
-VssData_Type_e VssItem::getType()
+CDLDataTypes VssItem::getType()
 {
     return m_type;
 }

@@ -8,16 +8,17 @@ set(PREFIX ${CMAKE_INSTALL_PREFIX})
 set(SRCS
 	${SRC_DIR}/storemanager.cpp
 	${SRC_DIR}/Configuration/configuration.cpp
-        ${SRC_DIR}/DataStoreHandler/datastoreJSONhandler.cpp
+	${SRC_DIR}/DataStoreHandler/datastoreJSONhandler.cpp
 	${SRC_DIR}/FileManager/fileinfodbhandler.cpp
 	${SRC_DIR}/FileManager/fileinfodbquerygenerator.cpp
 	${SRC_DIR}/FileManager/filemanager.cpp
-        ${SRC_DIR}/StorageManager/storagemanager.cpp )
+	${SRC_DIR}/StorageManager/storagemanager.cpp )
 
-include_directories(${SRC_DIR}
+include_directories(
+	${SRC_DIR}
 	${SRC_DIR}/Configuration
 	${SRC_DIR}/DataStoreHandler
-        ${SRC_DIR}/FileManager
+	${SRC_DIR}/FileManager
 	${SRC_DIR}/StorageManager )
 
 add_definitions(-DBOOST_LOG_DYN_LINK)
@@ -37,5 +38,4 @@ configure_file(${PROJECT_NAME}.pc.in ${PROJECT_NAME}.pc @ONLY)
 	
 install(TARGETS ${PROJECT_NAME} DESTINATION ${PREFIX}/lib)
 install(FILES ${SRC_DIR}/storemanager.h DESTINATION ${PREFIX}/include/${PROJECT_NAME})
-install(FILES ${SRC_DIR}/DataStoreHandler/datastoreJSONhandler.h DESTINATION ${PREFIX}/include/${PROJECT_NAME})
 install(FILES ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.pc DESTINATION ${PREFIX}/lib/pkgconfig)

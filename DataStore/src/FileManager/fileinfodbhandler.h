@@ -19,8 +19,8 @@
 *
 */
 
-#ifndef FILEINFODATABASEHANDLER_H
-#define FILEINFODATABASEHANDLER_H
+#ifndef FILEINFODBHANDLER_H
+#define FILEINFODBHANDLER_H
 
 #include <boost/thread/mutex.hpp>
 #include <sqlite3.h>
@@ -113,4 +113,4 @@ private:
     boost::mutex m_dbHandlerMutex;
 };
 
-#endif // FILEINFODATABASEHANDLER_H
+#endif // FILEINFODBHANDLER_H

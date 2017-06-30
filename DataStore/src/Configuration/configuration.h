@@ -19,8 +19,8 @@
 *
 */
 
-#ifndef CONFIGURATIONMANAGER_H
-#define CONFIGURATIONMANAGER_H
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
 
 #include <boost/property_tree/ptree.hpp>
 
@@ -86,4 +86,4 @@ private:
     int m_transactionBufferSize;
 };
 
-#endif // CONFIGURATIONMANAGER_H
+#endif // CONFIGURATION_H
