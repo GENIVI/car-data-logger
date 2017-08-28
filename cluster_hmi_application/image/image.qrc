@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>genivi_16th_amm/Gear/D_Assistor.png</file>
+        <file>genivi_16th_amm/Gear/N_Assistor.png</file>
+        <file>genivi_16th_amm/Gear/P_Assistor.png</file>
+        <file>genivi_16th_amm/Gear/R_Assistor.png</file>
+        <file>genivi_16th_amm/cluster/Needle.png</file>
+        <file>genivi_16th_amm/cluster/Rpm_bg.png</file>
+        <file>genivi_16th_amm/cluster/Speed_bg.png</file>
+        <file>genivi_16th_amm/cluster/gauge_effect.png</file>
+        <file>genivi_16th_amm/mode_icon/Active_media_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Active_navi_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Active_radio_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Active_setting_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Disable_media_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Disable_navi_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Disable_radio_Assistor.png</file>
+        <file>genivi_16th_amm/mode_icon/Disable_setting_Assistor.png</file>
+        <file>genivi_16th_amm/cluster/center_bg_forward.png</file>
+        <file>genivi_16th_amm/cluster/Metal border.png</file>
+        <file>genivi_16th_amm/cluster/Rpm_gauge_effect.png</file>
+        <file>genivi_16th_amm/cluster/Rpm_number.png</file>
+        <file>genivi_16th_amm/cluster/Speed_gauge_effect.png</file>
+        <file>genivi_16th_amm/cluster/Speed_number.png</file>
+        <file>genivi_16th_amm/cluster/center_bg_back.png</file>
+        <file>genivi_16th_amm/mode_icon/video_disable.png</file>
+        <file>genivi_16th_amm/mode_icon/video_normal.png</file>
+        <file>genivi_16th_amm/cluster_bg.png</file>
+        <file>genivi_16th_amm/cluster/L_Light.png</file>
+        <file>genivi_16th_amm/cluster/R_Light.png</file>
+    </qresource>
+</RCC>

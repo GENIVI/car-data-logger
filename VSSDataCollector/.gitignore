@@ -1,6 +1,0 @@
-build/
-debug/
-release/
-Makefile
-*.pro.user
-*.pro.user.*

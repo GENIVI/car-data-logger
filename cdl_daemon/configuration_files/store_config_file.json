@@ -1,0 +1,7 @@
+{
+    "DataStoreLocation": "/tmp/cdl",
+    "MaxFileSize": "100",
+    "MaxStorageSize": "100000",
+    "MaxFileExpirePeriod": "60",
+    "TransactionBufferSize": "20"
+}

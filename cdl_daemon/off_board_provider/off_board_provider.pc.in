@@ -1,0 +1,12 @@
+prefix=@PREFIX@
+exec_prefix=@PREFIX@
+libdir=${exec_prefix}/lib
+includedir=${exec_prefix}/include
+
+Name: off_board_provider
+Description: CDL Off Board Provider
+Version:
+Requires:
+Libs: -L${libdir} -loff_board_provider -lboost_system -lboost_thread -lboost_iostreams -lboost_log -lpython2.7
+Cflags: -I${includedir}/off_board_provider
+

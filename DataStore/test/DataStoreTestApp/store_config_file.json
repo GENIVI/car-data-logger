@@ -1,7 +1,0 @@
-{
-    "DataStoreLocation": "/tmp/cdl/StoreCDLDataFile",
-    "MaxFileSize": "15",                     //unit : kByte
-    "MaxStorageSize": "100",                 //unit : kByte
-    "MaxFileExpirePeriod": "60",             //unit : minutes
-    "TransactionBufferSize": "20"            //unit : counts
-}

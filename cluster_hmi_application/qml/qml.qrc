@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>main.qml</file>
+        <file>AlbumArt.qml</file>
+        <file>Gauge.qml</file>
+        <file>RadioInfo.qml</file>
+        <file>ClusterIcon.qml</file>
+        <file>MarqueeLabel.qml</file>
+        <file>VideoInfo.qml</file>
+        <file>Gear.qml</file>
+    </qresource>
+</RCC>

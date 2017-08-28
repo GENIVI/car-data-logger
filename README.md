@@ -1,20 +1,53 @@
-# Car Data Logger Trial Integration with RVI
 
-This is trial integration of CDL with RVI (components)
+# Car Data Logger For PoC
 
-The goal of this implementation is to implement the function of collecting, storing and providing data using various components of GENIVI.
-So the following functions will be implemented:
-* collect vehicle data defined in VSS format using VSI
-* store collected data to file
-* provide data to clients running on-board using CommonAPI (DBus and SOME/IP)
-* transfer data to off-board server using RVI
+This is the CDL proof of concept for AC.
 
-The software platform level requirements collected while implementing the functions defined above will continue to be updated on the [CDL wiki](https://collab.genivi.org/wiki/display/genivi/cdl+software+platform+level+use+cases) page.
+There are some modules that can operate with `cdl_daemon` such as `cluster_hmi_application`, `can_router`, `rvi_server`.
 
-# Status
+- CAN Router
+  * Store the vehicle data received from the `GENIVI VehicleSimulator` using `VSI`.
+- CDLDaemon
+  * Collect, Store, Provide with On/Off-BoardProvider vehicle Data.
+- Cluster
+  * Received the vehicle data from vehicle-data-consumer.
+  * Display the vehicle data(speed, rpm).
+- RVIServer
+  * Receive the data(file of JSON format) from the `OffBoardProvider` using `RVI`.
+  * Display the transferred data(file of JSON format) with a graph (Historical View).
+- vehicle-data-consumer
+  * Received the vehicle data(speed, rpm) from `OnBoardProvider` in the `cdl_daemon` using DBus.
+  * Provide the vehicle data to cluster-hmi-application.
+  
+## Precondition
+* [GENIVI] Vehicle Simulator
+    * Download pre-build binary :
+       * [dropbox](https://www.dropbox.com/sh/jh3pyz7umhtmv0p/AABdQmwAl7LWcT4qlXvhUuS3a?dl=0)   
+    * Run :
+       * [Unity 5.3.4](https://unity3d.com/kr/)
+    * Reference :
+       * [GENIVI Vehicle Simulator Project Page](https://at.projects.genivi.org/wiki/display/PROJ/GENIVI+Vehicle+Simulator)
+      
+## Operation
+1. Run the `rvi_server`.
+2. Run the `can_router`, `cdl_daemon`, `vehicle_data_consumer`, `cluster_hmi_application`.
+  * `can_router` stores the vehicleData after the VehicleSimulator runs.
+  * `cdl_daemon` starts to collect vehicle data after the vehicle data is stored using VSI from `can_router`.
+  * `vehicle_data_consumer` registers to `on_board_provider` in `cdl_daemon` to receive the vehicle data using dbus.
+3. Run the `Vehicle Simulator` GENIVI Component.
 
-### Implemented Modules
-* VSS Data Collector : please refer to [VSSDataCollector](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/VSSDataCollector/README.md) page for more detail
-* Data Store         : please refer to [DataStore](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/DataStore/README.md) page for more detail
-* On Board Provider  : please refer to [OnBoardProvider](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/OnBoardProvider/README.md) page for more detail
-* Off Board Provider : please refer to [OffBoardProvider](https://github.com/GENIVI/car-data-logger/blob/trial-integration-with-rvi/OffBoardProvider/README.md) page for more detail
+### Operated device
+#### DeskTop
+* GENIVI VehicleSimulator
+#### RaspberryPi 3
+* can_router
+* cdl_daemon
+* vehicle_data_consumer
+* cluster_hmi_application
+#### DeskTop
+* rvi_server
+
+Installation and Run categories are on the page of each module.
+
+Please refer to page for more detail.
+

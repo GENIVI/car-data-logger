@@ -1,0 +1,12 @@
+prefix=@PREFIX@
+exec_prefix=@PREFIX@
+libdir=${exec_prefix}/lib
+includedir=${exec_prefix}/include
+
+Name: data_store_manager
+Description: CDL Data Store
+Version:
+Requires:
+Libs: -L${libdir} -ldata_store_manager -lsqlite3 -lboost_system -lboost_thread -lboost_log -lboost_filesystem -lboost_date_time
+Cflags: -I${includedir}/data_store_manager
+
