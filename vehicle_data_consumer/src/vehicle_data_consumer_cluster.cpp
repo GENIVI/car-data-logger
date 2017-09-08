@@ -21,7 +21,7 @@
 
 #include "vehicle_data_consumer_cluster.hpp"
 #include "common_log_header.hpp"
-
+#include "../../cdl_daemon/common/client_authentication/client_authentication_encryption_handler.hpp"
 #include <CommonAPI/CommonAPI.hpp>
 
 /******************************************************
@@ -35,7 +35,7 @@
  ******************************************************/
 
 VehicleDataConsumerCluster::VehicleDataConsumerCluster()
-    :m_handle(0)
+    : m_handle(0), m_clientAuthenticationEncryptionHandler(nullptr), m_publicKey("IVIS")
 {
     initLog();
     init();
@@ -52,6 +52,8 @@ VehicleDataConsumerCluster::~VehicleDataConsumerCluster()
 
 void VehicleDataConsumerCluster::init()
 {
+    m_clientAuthenticationEncryptionHandler = new ClientAuthenticationEncryptionHandler();
+
     m_requestIDList.clear();
 
     m_requestIDList.push_back("Drivetrain.InternalCombustionEngine.RPM");
@@ -100,14 +102,17 @@ void VehicleDataConsumerCluster::subscribeEvents()
 {
     m_proxy->getProxyStatusEvent().subscribe(std::bind(&VehicleDataConsumerCluster::onConnectionsStatusChanged, this, std::placeholders::_1));
     m_proxy->getNotifyDataSelectiveEvent().subscribe(std::bind(&VehicleDataConsumerCluster::onNotifyData,
-                                                      this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
+                                                        this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 }
 
 void VehicleDataConsumerCluster::onConnectionsStatusChanged(CommonAPI::AvailabilityStatus status)
 {
     if ( status == CommonAPI::AvailabilityStatus::AVAILABLE )
     {
-        registerClient();
+        if( !registerClient() )
+        {
+            return;
+        }
     }
     else
     {
@@ -143,23 +148,46 @@ void VehicleDataConsumerCluster::onNotifyData(const string &_id, const ClientAPI
     }
 }
 
-void VehicleDataConsumerCluster::registerClient()
+bool VehicleDataConsumerCluster::registerClient()
 {
     CommonAPI::CallStatus callStatus;
     ClientAPITypes::ResultCode result;
+    string privateKey;
 
-    m_proxy->registerClient("VehicleDataConsumerCluster", callStatus, m_handle, result);
+    privateKey = m_clientAuthenticationEncryptionHandler->createPrivateKey(m_publicKey);
+
+    m_proxy->registerClient(privateKey, callStatus, m_handle, result);
 
     if( callStatus != CommonAPI::CallStatus::SUCCESS )
     {
         BOOST_LOG_TRIVIAL( error ) << boost::format( "<< VehicleDataConsumerDBusClientCluster::registerClient::registerClient() >> Error call status." );
-        return;
+        return false;
     }
 
     if ( result != ClientAPITypes::ResultCode::RC_OK )
     {
-        BOOST_LOG_TRIVIAL( error ) << boost::format( "<< VehicleDataConsumerDBusClientCluster::registerClient() >> Failed to registered this client." );
-        return;
+        switch( result )
+        {
+        case ClientAPITypes::ResultCode::RC_AUTHENTICATION_FAILED:
+        {
+            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< VehicleDataConsumerDBusClientCluster::registerClient() >> Failed to Authentication client" );
+
+            break;
+        }
+        case ClientAPITypes::ResultCode::RC_CLIENT_ALREADY_REGISTERED:
+        {
+            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< VehicleDataConsumerDBusClientCluster::registerClient() >> Client is already registered" );
+
+            break;
+        }
+        default:
+        {
+            BOOST_LOG_TRIVIAL( error ) << boost::format( "<< VehicleDataConsumerDBusClientCluster::registerClient() >> Invailed fail type on register client" );
+
+            break;
+        }
+        }
+        return false;
     }
 
     if( m_handle != 0 )
@@ -174,7 +202,9 @@ void VehicleDataConsumerCluster::registerClient()
         if ( callStatus != CommonAPI::CallStatus::SUCCESS )
         {
             BOOST_LOG_TRIVIAL( error ) << boost::format( "<< VehicleDataConsumerDBusClientCluster::registerClient::setNotigyData() >> Error call status." );
-            return;
+            return false;
         }
     }
+
+    return true;
 }

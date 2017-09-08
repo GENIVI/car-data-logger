@@ -23,14 +23,16 @@
 #include "on_board_provider_dbus_service.hpp"
 #include "on_board_provider_someip_service.hpp"
 #include "data_manager/data_manager.hpp"
+#include "../../common/client_authentication/client_authentication_decryption_handler.hpp"
 #include "../../common/log.hpp"
 
 #define UNUSED_PARAMETER(x) (void)(x)
 #define DEFAULT_NOTIFY_TYPE 2
 
 OnBoardProviderService::OnBoardProviderService(DataManager *dataManager)
-    : m_dataManager(dataManager), m_clientHandle(1)
+    : m_dataManager(dataManager), m_clientAuthenticationDecryptionHandler(nullptr), m_clientHandle(1), m_publicKey("IVIS")
 {
+    m_clientAuthenticationDecryptionHandler = new ClientAuthenticationDecryptionHandler();
     m_onBoardProviderDBusService = std::make_shared<OnBoardProviderDBusService>(this);
     m_onBoardProviderSomeIPService = std::make_shared<OnBoardProviderSomeIPService>(this);
 
@@ -52,7 +54,13 @@ OnBoardProviderService::~OnBoardProviderService()
 
 void OnBoardProviderService::registerClient(RuntimeType _runtime, const std::shared_ptr<CommonAPI::ClientId> _client, std::string _key, ClientAPITypes::Handle &handleOut, ClientAPITypes::ResultCode &result)
 {
-    UNUSED_PARAMETER(_key);
+    if( !authenticationClient(_key) )
+    {
+        result = ClientAPITypes::ResultCode::RC_AUTHENTICATION_FAILED;
+        handleOut = 0;
+
+        return;
+    }
 
     unordered_map<std::shared_ptr<CommonAPI::ClientId>, ClientAPITypes::Handle>::iterator clientHandleIter
             = m_clientIdToHandleList.find(_client);
@@ -70,7 +78,7 @@ void OnBoardProviderService::registerClient(RuntimeType _runtime, const std::sha
     clientInfo.runTimeType = _runtime;
 
     m_registeredClientInfoList.insert( pair<ClientAPITypes::Handle, ClientInfo>(m_clientHandle, clientInfo) );
-    m_clientIdToHandleList.insert(pair<std::shared_ptr<CommonAPI::ClientId>, ClientAPITypes::Handle>(_client, m_clientHandle));
+    m_clientIdToHandleList.insert( pair<std::shared_ptr<CommonAPI::ClientId>, ClientAPITypes::Handle>(_client, m_clientHandle) );
 
     handleOut = m_clientHandle;
     result = ClientAPITypes::ResultCode::RC_OK;
@@ -624,4 +632,37 @@ void OnBoardProviderService::notifySomeIPClientData(CDL_DATA &cdlData, CommonAPI
     const std::shared_ptr<CommonAPI::ClientIdList> clientIdList = std::make_shared<CommonAPI::ClientIdList>(someipClientIDList);
 
     m_onBoardProviderSomeIPService->fireNotifyDataSelective(cdlData.name, getCDLValueType(cdlData.type), cdlData.unit, cdlData.value, cdlData.time_stamp, clientIdList);
+}
+
+bool OnBoardProviderService::authenticationClient(string privateKey)
+{
+    string decodedPrivateKey = m_clientAuthenticationDecryptionHandler->decodePrivateKey(privateKey);
+
+    if( decodedPrivateKey != m_publicKey )
+    {
+        return false;
+    }
+
+    return true;
+}
+
+vector<string> OnBoardProviderService::stringSplit(string name, string delimiter)
+{
+    size_t pos=0;
+    string preToken;
+    string postToken;
+    vector<string> splitStr;
+
+    pos=name.find(delimiter);
+
+    if( pos != 0 )
+    {
+        preToken=name.substr(0, pos);
+        postToken=name.erase(0, pos+delimiter.length());
+
+        splitStr.push_back(preToken);
+        splitStr.push_back(postToken);
+    }
+
+    return splitStr;
 }

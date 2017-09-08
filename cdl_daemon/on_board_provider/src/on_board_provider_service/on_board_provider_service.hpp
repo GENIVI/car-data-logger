@@ -35,6 +35,7 @@ using namespace v1::org::genivi::CDL;
 class OnBoardProviderDBusService;
 class OnBoardProviderSomeIPService;
 class DataManager;
+class ClientAuthenticationDecryptionHandler;
 
 /**
  * @brief This class is an interface between Clients( DBus or SomeIP ) and OnBoardProvider.
@@ -169,10 +170,24 @@ private:
      */
     void notifySomeIPClientData(CDL_DATA & cdlData, CommonAPI::ClientIdList & someipClientIDList);
 
+    /**
+     * @brief Authenicate whether the client is valid or not.
+     *
+     * Check the client is valid or not through comparing the privateKey provided with the publicKey using Client_Authentication API.
+     *
+     * @param privateKey
+     *
+     */
+    bool authenticationClient(string privateKey);
+
+    vector<string> stringSplit(string name, string delimiter);
+
 private:
     DataManager * m_dataManager;
     std::shared_ptr<OnBoardProviderDBusService> m_onBoardProviderDBusService;
     std::shared_ptr<OnBoardProviderSomeIPService> m_onBoardProviderSomeIPService;
+
+    ClientAuthenticationDecryptionHandler * m_clientAuthenticationDecryptionHandler;
 
     ClientInfoList m_registeredClientInfoList;
     ClientIDToHandleList m_clientIdToHandleList;
@@ -185,6 +200,8 @@ private:
     ClientDataNameList m_clientDataNameList;
 
     ClientAPITypes::Handle m_clientHandle;
+
+    string m_publicKey;
 };
 
 #endif // ONBOARDPROVIDERSERVICE_H

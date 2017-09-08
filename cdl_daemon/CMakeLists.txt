@@ -46,6 +46,7 @@ set(SRCS
 	${OFFBOARD_PROVIDER_DIR}/src/rvi_data_manager/rvi_data_manager.cpp
         # Common Log source files
 	${CDL_DAEMON_DIR}/common/log.cpp
+	${CDL_DAEMON_DIR}/common/client_authentication/client_authentication_decryption_handler.cpp
 	# CDL Daemon source files
 	${CDL_DAEMON_DIR}/cdl_daemon.cpp
         ${CDL_DAEMON_DIR}/main.cpp)

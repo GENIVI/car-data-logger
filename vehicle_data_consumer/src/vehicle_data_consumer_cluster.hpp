@@ -31,6 +31,8 @@ using namespace std;
 using namespace v1::org::genivi::CDL;
 using namespace v1::com::ivis::ClusterData;
 
+class ClientAuthenticationEncryptionHandler;
+
 class VehicleDataConsumerCluster
 {
 public:
@@ -44,7 +46,7 @@ private:
     void subscribeEvents();
     void onConnectionsStatusChanged(CommonAPI::AvailabilityStatus status);
     void onNotifyData(const std::string &_id, const ClientAPITypes::Types &_type, const std::string &_unit, const ClientAPITypes::CDLValue &_value, const uint64_t &_timeStamp);
-    void registerClient();
+    bool registerClient();
 
 private:
     std::shared_ptr<ClientAPIProxy<>> m_proxy;
@@ -52,6 +54,9 @@ private:
     ClientAPITypes::Handle m_handle;
     ClientAPITypes::NotifyType m_notiType;
     vector<string> m_requestIDList;
+
+    ClientAuthenticationEncryptionHandler * m_clientAuthenticationEncryptionHandler;
+    string m_publicKey;
 };
 
 #endif // VEHICLEDATACONSUMERCLUSTER_H

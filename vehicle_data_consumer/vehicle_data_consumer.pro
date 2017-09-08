@@ -89,6 +89,7 @@ SOURCES += main.cpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusDeployment.cpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusStubAdapter.cpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataStubDefault.cpp \
+    ../cdl_daemon/common/client_authentication/client_authentication_encryption_handler.cpp \
     src/vehicle_data_consumer_cluster.cpp
 
 HEADERS += \
@@ -104,6 +105,7 @@ HEADERS += \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusStubAdapter.hpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataStub.hpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataStubDefault.hpp \
+    ../cdl_daemon/common/client_authentication/client_authentication_encryption_handler.hpp \
     src/common_log_header.hpp \
     src/vehicle_data_consumer_cluster.hpp
 
