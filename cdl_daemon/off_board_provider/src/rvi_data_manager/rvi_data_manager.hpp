@@ -37,14 +37,14 @@ public:
     virtual ~RVIDataManager();
 
 public:
-    string prepareProvideData(string filePath);
+    string encryptProvideData(string filePath, string aes256Key, string aes256IV);
     int getProvideFileTotalIndex(string &fileData);
     vector<string> getDivideFileData(string fileData, int provideFileTotalIndex);
     string getFileName(string filePath);    
 
 private:
+    string encryptionData(string data, string aes256Key, string aes256IV);
     string compressData(string data);
-    string encodeData(string data);
     string stringSplit(string str, string delimiter);
 };
 

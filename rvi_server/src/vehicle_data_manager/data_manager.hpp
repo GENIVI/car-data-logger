@@ -41,6 +41,8 @@ public:
 private:
     void init();
     void createTransmissionResultStorage();
+    string decryptData(string & aes256Key, string & aes256Iv, string & dataBuf);
+    bool createResultFile(QString & resultFileStoragePath, string & decryptedData);
 
 signals:
     void signalCompletedTransferData(QString jsonFilePath);
@@ -59,6 +61,9 @@ private:
     int m_fileSize;
     int m_totalIndex;
     string m_dataBuf;
+
+    string m_aes256Key;
+    string m_aes256IV;
 };
 
 #endif // DATAMANAGER_H

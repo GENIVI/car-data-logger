@@ -25,7 +25,8 @@
 #include "../../common/log.hpp"
 
 OffBoardProvider::OffBoardProvider()
-    : m_dataManager(NULL), m_rviClient(NULL)
+    : m_dataManager(NULL), m_rviClient(NULL),
+      m_aes256Key("12345678901234567890123456789012"), m_aes256IV("09876543210987654321098765432109")
 {
     m_dataManager = new RVIDataManager();
     m_rviClient = new RVIClient();
@@ -85,7 +86,14 @@ void OffBoardProvider::transferFileData(string filePath)
 
     if( !filePath.empty() )
     {
-        fileData = m_dataManager->prepareProvideData(filePath);
+        fileData = m_dataManager->encryptProvideData(filePath, m_aes256Key, m_aes256IV);
+
+        if( fileData.empty() )
+        {
+            LOGE() << "Failed to transferred Data ( No Data )";
+            return;
+        }
+
         fileName = m_dataManager->getFileName(filePath);
         fileSize = fileData.length();
         fileDataTotalindex = m_dataManager->getProvideFileTotalIndex(fileData);

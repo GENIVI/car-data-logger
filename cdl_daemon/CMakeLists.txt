@@ -44,12 +44,12 @@ set(SRCS
 	${OFFBOARD_PROVIDER_DIR}/src/off_board_provider.cpp
 	${OFFBOARD_PROVIDER_DIR}/src/rvi_client/rvi_client.cpp
 	${OFFBOARD_PROVIDER_DIR}/src/rvi_data_manager/rvi_data_manager.cpp
-        # Common Log source files
+    # Common Log source files
 	${CDL_DAEMON_DIR}/common/log.cpp
 	${CDL_DAEMON_DIR}/common/client_authentication/client_authentication_decryption_handler.cpp
 	# CDL Daemon source files
 	${CDL_DAEMON_DIR}/cdl_daemon.cpp
-        ${CDL_DAEMON_DIR}/main.cpp)
+    ${CDL_DAEMON_DIR}/main.cpp)
 
 include_directories(
 	${CDL_DAEMON_DIR}
@@ -116,6 +116,11 @@ pkg_check_modules(PYTHON REQUIRED python )
 include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_INCLUDE_DIRS})
 
+pkg_check_modules(CryptoPP REQUIRED libcrypto++)
+include_directories(${CRYPTOPP_INCLUDE_DIRS})
+link_directories(${CRYPTOPP_INCLUDE_DIRS})
+
+
 # make exec file       
 add_executable(${PROJECT_NAME} ${SRCS})
 
@@ -133,6 +138,7 @@ target_link_libraries(${PROJECT_NAME} boost_filesystem)
 target_link_libraries(${PROJECT_NAME} boost_date_time)
 target_link_libraries(${PROJECT_NAME} boost_iostreams)
 target_link_libraries(${PROJECT_NAME} python2.7)
+target_link_libraries(${PROJECT_NAME} crypto++)
 
 # install
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CDL_DAEMON_DIR}/deploy)

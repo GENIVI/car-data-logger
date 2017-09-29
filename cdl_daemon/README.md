@@ -26,6 +26,7 @@ To build cdl_daemon, following package are required
 * CommonAPI 3.1.5 (including DBus and Some/IP Runtime)
 * python 2.7.6
 * [rvi_core 0.5.1](https://github.com/GENIVI/rvi_core/releases)
+* crypto++ 5.6.1 ( sudo apt-get install libcrypto++-dev )
 
 ### Clone Source Codes
 Clone source codes from GENIVI GitHub using following command in the terminal window:

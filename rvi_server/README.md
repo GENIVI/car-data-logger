@@ -15,6 +15,7 @@ To build `rvi_server`, following package are required
     * system, thread, date_time, iostreams
 * python 2.7.6
 * [rvi_core 0.5.1](https://github.com/GENIVI/rvi_core/releases)
+* crypto++ 5.6.1 ( sudo apt-get install libcrypto++-dev )
 
 ### Clone Source Codes
 Clone source codes from GENIVI GitHub using following command in the terminal window:

@@ -25,6 +25,7 @@
 #include "compression_handler.hpp"
 #include "vehicle_data_viewer_window.hpp"
 #include "vehicle_data_manager_window.hpp"
+#include "../../cdl_daemon/common/data_encryption/data_decryption_handler.hpp"
 
 #include <QDebug>
 #include <QDir>
@@ -32,7 +33,8 @@
 static DataManager * g_data_manager_instance = NULL;
 
 DataManager::DataManager(QObject *parent)
-    :QObject(parent), m_resultFileStoragePath("")
+    : QObject(parent), m_resultFileStoragePath(""),
+      m_aes256Key("12345678901234567890123456789012"), m_aes256IV("09876543210987654321098765432109")
 {
 
 }
@@ -55,6 +57,8 @@ DataManager *DataManager::getInstance()
 
 void DataManager::init()
 {
+    m_dataBuf.clear();
+
     connect(RVIServer::getInstance(), SIGNAL(signalTransmissionStart(QString,int,int)), this, SLOT(slotTransmissionStart(QString,int,int)));
     connect(RVIServer::getInstance(), SIGNAL(signalTransmissionData(QString, int)), this, SLOT(slotTransmissionData(QString, int)));
     connect(RVIServer::getInstance(), SIGNAL(signalTransmissionFinish()), this, SLOT(slotTransmissionFinish()));
@@ -76,6 +80,54 @@ void DataManager::createTransmissionResultStorage()
     {
         qDebug() << "Storage is already existed";
     }
+}
+
+string DataManager::decryptData(string &aes256Key, string &aes256Iv, string &dataBuf)
+{
+    string decryption_data = AES256_CBC_decrypt_data((byte*)aes256Key.c_str(), (byte*)aes256Iv.c_str(), dataBuf);
+
+    // data decryption
+    if( decryption_data.empty() )
+    {
+        qDebug() << "<< DataManager::decryptionData >> Invalid decrypt data";
+
+        return "";
+    }
+
+    // data unzip
+    string decompressedData = decompress(decryption_data);
+
+    if( decompressedData.empty() )
+    {
+        qDebug() << "<< DataManager::decryptionData >> Invalid depress data";
+
+        return "";
+    }
+
+    return decompressedData;
+}
+
+bool DataManager::createResultFile(QString &resultFileStoragePath, string &decryptedData)
+{
+    // call VehicleDataViewer for displaying the graph
+    resultFileStoragePath = m_resultFileStoragePath;
+    resultFileStoragePath.append("/").append(m_fileName);
+
+    qDebug() << "<< DataManager::createResultFile >> Store File Path : " << resultFileStoragePath;
+
+    ofstream writeJsonFile(resultFileStoragePath.toLocal8Bit().constData());
+
+    if( !writeJsonFile.is_open() )
+    {
+        qDebug() << "<< DataManager::createResultFile >> Failed to file open. ( Invalid file path : " << resultFileStoragePath << " )";
+
+        return false;
+    }
+
+    writeJsonFile << decryptedData.data();
+    writeJsonFile.close();
+
+    return true;
 }
 
 void DataManager::slotTransmissionStart(QString fileName, int fileSize, int totalIndex)
@@ -107,24 +159,14 @@ void DataManager::slotTransmissionFinish()
 
     if( m_fileSize == transferredDataSize )
     {
-        // data decording
-        string decodedData( base64_decode(m_dataBuf.begin()), base64_decode(m_dataBuf.end()));
+        string decryptedData = decryptData(m_aes256Key,  m_aes256IV, m_dataBuf);
+        QString resultFileStoragePath;
 
-        // data unzip
-        string decompressedData = decompress(decodedData);
-
-        // call VehicleDataViewer for displaying the graph
-        QString resultFileStoragePath = m_resultFileStoragePath;
-        resultFileStoragePath.append("/").append(m_fileName);
-
-        qDebug() << "Store File Path : " << resultFileStoragePath;
-
-        ofstream writeJsonFile(resultFileStoragePath.toLocal8Bit().constData());
-        writeJsonFile << decompressedData.data();
-        writeJsonFile.close();
-
-        emit signalCompletedTransferData(resultFileStoragePath);
-        emit signalCompletedStoreFile(resultFileStoragePath);
+        if( createResultFile(resultFileStoragePath, decryptedData) )
+        {
+            emit signalCompletedTransferData(resultFileStoragePath);
+            emit signalCompletedStoreFile(resultFileStoragePath);
+        }
     }
     else
     {

@@ -55,6 +55,9 @@ private:
     boost::mutex m_eventMutex;
     boost::mutex::scoped_lock m_eventLock;
     boost::condition_variable m_eventCondition;
+
+    string m_aes256Key;
+    string m_aes256IV;
 };
 
 #endif // OFFBOARDPROVIDER_H

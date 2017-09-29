@@ -23,6 +23,7 @@
 #include "compression_handler.hpp"
 #include "base64_handler.hpp"
 #include "../../../common/log.hpp"
+#include "../../../common/data_encryption/data_encryption_handler.hpp"
 
 RVIDataManager::RVIDataManager()
 {
@@ -34,21 +35,30 @@ RVIDataManager::~RVIDataManager()
 
 }
 
-string RVIDataManager::prepareProvideData(string filePath)
+string RVIDataManager::encryptProvideData(string filePath, string aes256Key, string aes256IV)
 {
     ifstream openFile(filePath.c_str());
-    stringstream fileStr;
+    stringstream fileData;
 
-    fileStr << openFile.rdbuf();
+    fileData << openFile.rdbuf();
 
     /* compressed Data */
-    string compress_data = compressData(fileStr.str());
+    string compress_data = compressData(fileData.str());
 
-    /* Encoded Data */
-    string encode_data = encodeData(compress_data);
+    if( compress_data.empty() )
+    {
+        return "";
+    }
 
-    return encode_data;
+    /* Encryption Data & Base 64 Encode */
+    string providedData = encryptionData(compress_data, aes256Key, aes256IV);
 
+    if( providedData.empty() )
+    {
+        return "";
+    }
+
+    return providedData;
 }
 
 int RVIDataManager::getProvideFileTotalIndex(string &fileData)
@@ -98,16 +108,16 @@ string RVIDataManager::getFileName(string filePath)
     return stringSplit(filePath, "/");
 }
 
+string RVIDataManager::encryptionData(string data, string aes256Key, string aes256IV)
+{
+    string encryptedData = AES256_CBC_encrypt_data((byte*)aes256Key.c_str(), (byte*)aes256IV.c_str(), data);
+
+    return encryptedData;
+}
+
 string RVIDataManager::compressData(string data)
 {
     return compress(data);
-}
-
-string RVIDataManager::encodeData(string data)
-{
-    string base64EncodeStr( base64_encode(data.begin()), base64_encode(data.end()));
-
-    return base64EncodeStr;
 }
 
 string RVIDataManager::stringSplit(string str, string delimiter)
