@@ -24,7 +24,7 @@ QT -= gui
 
 CONFIG += c++11
 
-TARGET = vehicle_data_consumer
+TARGET = vehicle_data_consumer_cluster
 CONFIG += console
 CONFIG -= app_bundle
 
@@ -89,8 +89,8 @@ SOURCES += main.cpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusDeployment.cpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusStubAdapter.cpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataStubDefault.cpp \
+    src/vehicle_data_consumer_cluster.cpp \
     ../cdl_daemon/common/client_authentication/client_authentication_encryption_handler.cpp \
-    src/vehicle_data_consumer_cluster.cpp
 
 HEADERS += \
     ../cdl_daemon/on_board_provider/interface/src-gen/v1/org/genivi/CDL/ClientAPI.hpp \
@@ -105,8 +105,8 @@ HEADERS += \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataDBusStubAdapter.hpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataStub.hpp \
     ../cluster_hmi_application/interface/src-gen/v1/com/ivis/ClusterData/ClusterDataStubDefault.hpp \
-    ../cdl_daemon/common/client_authentication/client_authentication_encryption_handler.hpp \
     src/common_log_header.hpp \
+    ../cdl_daemon/common/client_authentication/client_authentication_encryption_handler.hpp \
     src/vehicle_data_consumer_cluster.hpp
 
 *-arm-*|*-oe-*  {

@@ -53,10 +53,10 @@ private:
     std::shared_ptr<ClusterDataStubDefault> m_clusterDataService;
     ClientAPITypes::Handle m_handle;
     ClientAPITypes::NotifyType m_notiType;
-    vector<string> m_requestIDList;
+    vector<string> m_requestSignalNameList;
 
-    ClientAuthenticationEncryptionHandler * m_clientAuthenticationEncryptionHandler;
     string m_publicKey;
+    ClientAuthenticationEncryptionHandler * m_clientAuthenticationEncryptionHandler;
 };
 
 #endif // VEHICLEDATACONSUMERCLUSTER_H
