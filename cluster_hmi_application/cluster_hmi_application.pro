@@ -87,8 +87,8 @@ SOURCES += main.cpp \
     album_art_provider.cpp \
     av_data_manager.cpp \
     av_information_provider_helper.cpp \
-    vehicle_data_manager_helper.cpp \
-    gauge_area.cpp
+    gauge_area.cpp \
+    vehicle_data_manager_helper.cpp
 
 RESOURCES += \
     qml/qml.qrc \

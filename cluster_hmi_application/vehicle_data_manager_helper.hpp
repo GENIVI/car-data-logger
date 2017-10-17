@@ -24,6 +24,7 @@
 
 #include <QObject>
 #include <QLoggingCategory>
+#include <QTimer>
 
 #ifdef ENABLE_COMMONAPI
     #include <CommonAPI/CommonAPI.hpp>
@@ -39,13 +40,36 @@ class VehicleDataManagerHelper : public QObject
     Q_OBJECT
 
 public:
+    enum GEAR_STATE
+	{
+        PARKING = 0,
+        REVERSE,
+        NEUTRAL,
+        DRIVE,
+
+        MAX_GEAR_STATE,
+    };
+public:
 #ifdef ENABLE_COMMONAPI
     static std::shared_ptr<VehicleDataManagerHelper> &getInstance();
 
     void init();
-    void onVehicleSpeedChanged(uint16_t vehicleSpeed);
+    void onVehicleSpeedChanged(int16_t vehicleSpeed);
     void onEngineSpeedChanged(uint16_t engineSpeed);
+
     void onFuelLevelChanged(uint8_t fuelLevel);
+    void onGearStateChanged(int8_t gearState);
+    void onAirBagDeployedChanged(bool airBagDeployed);
+    void onLowWasherFluidChanged(bool lowWasherFluid);
+    void onParkingBrakeEnagedChanged(bool parkingBrakeEngaged);
+    void onSeatBeltChanged(bool seatBelted);
+    void onFogLightChanged(bool fogLightActive);
+    void onHeadLightChanged(bool headLightActive);
+    void onHighBeamChanged(bool highBeamActive);
+    void onLeftIndicatorChanged(bool leftIndicatorActive);
+    void onRightIndicatorChanged(bool rightIndicatorActive);
+    void onEngineCoolantTemperatureChanged(int16_t coolantTemperature);
+
 #endif
 
 private:

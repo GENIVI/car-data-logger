@@ -1,0 +1,50 @@
+package com.ivis.ClusterData
+
+interface ClusterData {
+	version {
+		major 1
+		minor 0
+	}
+	
+	<** @description : current vehicle speed. unit is km/h **>
+	attribute UInt16 vehicleSpeed
+	
+	<** @description : current engine speed. unit is RPM **>
+	attribute UInt16 engineSpeed	
+	
+	<** @description : current fuel level. unit is % **>
+	attribute UInt8 fuelLevel
+	
+	<** @description : is air bag deployed. **>
+	attribute Boolean airBagDeployed
+	
+	<** @description : is low washer fluid. **>
+	attribute Boolean lowWasherFluid
+	
+	<** @description : is parking brake engaged **>
+	attribute Boolean parkingBrake
+	
+	<** @description : is seat belt active **>
+	attribute Boolean seatBeltActive
+	
+	<** @description : is fog light on **>
+	attribute Boolean fogLight
+	
+	<** @description : is head light on **>
+	attribute Boolean headLight
+	
+	<** @description : is high beam on **>
+	attribute Boolean highBeam
+	
+	<** @description : is left indicator active **>
+	attribute Boolean leftIndicator
+	
+	<** @description : is right indicator active **>
+	attribute Boolean rightIndicator
+	
+	<** @description : current gear state. -1 : reverse, 0 : neutral **>
+	attribute UInt8 gearState
+	
+	<** @description : ect ( Engine Coolant Temperature ) level **>
+	attribute Int16 engineCoolantTemperature
+}

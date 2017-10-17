@@ -66,6 +66,105 @@ public:
     virtual FuelLevelAttribute& getFuelLevelAttribute() {
         return delegate_->getFuelLevelAttribute();
     }
+    /**
+     * description: is air bag deployed.
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute airBagDeployed.
+     */
+    virtual AirBagDeployedAttribute& getAirBagDeployedAttribute() {
+        return delegate_->getAirBagDeployedAttribute();
+    }
+    /**
+     * description: is low washer fluid.
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute lowWasherFluid.
+     */
+    virtual LowWasherFluidAttribute& getLowWasherFluidAttribute() {
+        return delegate_->getLowWasherFluidAttribute();
+    }
+    /**
+     * description: is parking brake engaged
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute parkingBrake.
+     */
+    virtual ParkingBrakeAttribute& getParkingBrakeAttribute() {
+        return delegate_->getParkingBrakeAttribute();
+    }
+    /**
+     * description: is seat belt active
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute seatBeltActive.
+     */
+    virtual SeatBeltActiveAttribute& getSeatBeltActiveAttribute() {
+        return delegate_->getSeatBeltActiveAttribute();
+    }
+    /**
+     * description: is fog light on
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute fogLight.
+     */
+    virtual FogLightAttribute& getFogLightAttribute() {
+        return delegate_->getFogLightAttribute();
+    }
+    /**
+     * description: is head light on
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute headLight.
+     */
+    virtual HeadLightAttribute& getHeadLightAttribute() {
+        return delegate_->getHeadLightAttribute();
+    }
+    /**
+     * description: is high beam on
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute highBeam.
+     */
+    virtual HighBeamAttribute& getHighBeamAttribute() {
+        return delegate_->getHighBeamAttribute();
+    }
+    /**
+     * description: is left indicator active
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute leftIndicator.
+     */
+    virtual LeftIndicatorAttribute& getLeftIndicatorAttribute() {
+        return delegate_->getLeftIndicatorAttribute();
+    }
+    /**
+     * description: is right indicator active
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute rightIndicator.
+     */
+    virtual RightIndicatorAttribute& getRightIndicatorAttribute() {
+        return delegate_->getRightIndicatorAttribute();
+    }
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute gearState.
+     */
+    virtual GearStateAttribute& getGearStateAttribute() {
+        return delegate_->getGearStateAttribute();
+    }
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    /**
+     * Returns the wrapper class that provides access to the attribute engineCoolantTemperature.
+     */
+    virtual EngineCoolantTemperatureAttribute& getEngineCoolantTemperatureAttribute() {
+        return delegate_->getEngineCoolantTemperatureAttribute();
+    }
 
 
 
@@ -179,6 +278,281 @@ namespace ClusterDataExtensions {
         extension_type attributeExtension_;
     };
 
+    /**
+     * description: is air bag deployed.
+     */
+    template <template <typename > class _ExtensionType>
+    class AirBagDeployedAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::AirBagDeployedAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::AirBagDeployedAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        AirBagDeployedAttributeExtension() {}
+    #endif
+    
+        AirBagDeployedAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getAirBagDeployedAttribute()) {
+        }
+    
+        inline extension_type& getAirBagDeployedAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is low washer fluid.
+     */
+    template <template <typename > class _ExtensionType>
+    class LowWasherFluidAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::LowWasherFluidAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::LowWasherFluidAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        LowWasherFluidAttributeExtension() {}
+    #endif
+    
+        LowWasherFluidAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getLowWasherFluidAttribute()) {
+        }
+    
+        inline extension_type& getLowWasherFluidAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is parking brake engaged
+     */
+    template <template <typename > class _ExtensionType>
+    class ParkingBrakeAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::ParkingBrakeAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::ParkingBrakeAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        ParkingBrakeAttributeExtension() {}
+    #endif
+    
+        ParkingBrakeAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getParkingBrakeAttribute()) {
+        }
+    
+        inline extension_type& getParkingBrakeAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is seat belt active
+     */
+    template <template <typename > class _ExtensionType>
+    class SeatBeltActiveAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::SeatBeltActiveAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::SeatBeltActiveAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        SeatBeltActiveAttributeExtension() {}
+    #endif
+    
+        SeatBeltActiveAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getSeatBeltActiveAttribute()) {
+        }
+    
+        inline extension_type& getSeatBeltActiveAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is fog light on
+     */
+    template <template <typename > class _ExtensionType>
+    class FogLightAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::FogLightAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::FogLightAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        FogLightAttributeExtension() {}
+    #endif
+    
+        FogLightAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getFogLightAttribute()) {
+        }
+    
+        inline extension_type& getFogLightAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is head light on
+     */
+    template <template <typename > class _ExtensionType>
+    class HeadLightAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::HeadLightAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::HeadLightAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        HeadLightAttributeExtension() {}
+    #endif
+    
+        HeadLightAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getHeadLightAttribute()) {
+        }
+    
+        inline extension_type& getHeadLightAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is high beam on
+     */
+    template <template <typename > class _ExtensionType>
+    class HighBeamAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::HighBeamAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::HighBeamAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        HighBeamAttributeExtension() {}
+    #endif
+    
+        HighBeamAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getHighBeamAttribute()) {
+        }
+    
+        inline extension_type& getHighBeamAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is left indicator active
+     */
+    template <template <typename > class _ExtensionType>
+    class LeftIndicatorAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::LeftIndicatorAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::LeftIndicatorAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        LeftIndicatorAttributeExtension() {}
+    #endif
+    
+        LeftIndicatorAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getLeftIndicatorAttribute()) {
+        }
+    
+        inline extension_type& getLeftIndicatorAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: is right indicator active
+     */
+    template <template <typename > class _ExtensionType>
+    class RightIndicatorAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::RightIndicatorAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::RightIndicatorAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        RightIndicatorAttributeExtension() {}
+    #endif
+    
+        RightIndicatorAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getRightIndicatorAttribute()) {
+        }
+    
+        inline extension_type& getRightIndicatorAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    template <template <typename > class _ExtensionType>
+    class GearStateAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::GearStateAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::GearStateAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        GearStateAttributeExtension() {}
+    #endif
+    
+        GearStateAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getGearStateAttribute()) {
+        }
+    
+        inline extension_type& getGearStateAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    template <template <typename > class _ExtensionType>
+    class EngineCoolantTemperatureAttributeExtension {
+     public:
+        typedef _ExtensionType<ClusterDataProxyBase::EngineCoolantTemperatureAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension<ClusterDataProxyBase::EngineCoolantTemperatureAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    #ifdef WIN32
+        EngineCoolantTemperatureAttributeExtension() {}
+    #endif
+    
+        EngineCoolantTemperatureAttributeExtension(ClusterDataProxyBase& proxy): attributeExtension_(proxy.getEngineCoolantTemperatureAttribute()) {
+        }
+    
+        inline extension_type& getEngineCoolantTemperatureAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
 } // namespace ClusterDataExtensions
 
 //
@@ -233,7 +607,18 @@ struct DefaultAttributeProxyHelper<::v1::com::ivis::ClusterData::ClusterDataProx
     typedef typename ::v1::com::ivis::ClusterData::ClusterDataProxy<
             ::v1::com::ivis::ClusterData::ClusterDataExtensions::VehicleSpeedAttributeExtension<_AttributeExtension>, 
             ::v1::com::ivis::ClusterData::ClusterDataExtensions::EngineSpeedAttributeExtension<_AttributeExtension>, 
-            ::v1::com::ivis::ClusterData::ClusterDataExtensions::FuelLevelAttributeExtension<_AttributeExtension>
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::FuelLevelAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::AirBagDeployedAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::LowWasherFluidAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::ParkingBrakeAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::SeatBeltActiveAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::FogLightAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::HeadLightAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::HighBeamAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::LeftIndicatorAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::RightIndicatorAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::GearStateAttributeExtension<_AttributeExtension>, 
+            ::v1::com::ivis::ClusterData::ClusterDataExtensions::EngineCoolantTemperatureAttributeExtension<_AttributeExtension>
     > class_t;
 };
 }

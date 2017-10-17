@@ -44,6 +44,7 @@ void GaugeArea::paint(QPainter *painter)
     QPainterPath path = QPainterPath();
     path.moveTo(QPointF(459/2, 455/2));
     path.arcTo(QRectF(0, 0, 459, 455), 210, m_calculateY - m_endAngle);
+
     painter->setClipPath(path);
 
     painter->drawImage(QPoint(m_imageX, m_imageY), m_myImage);

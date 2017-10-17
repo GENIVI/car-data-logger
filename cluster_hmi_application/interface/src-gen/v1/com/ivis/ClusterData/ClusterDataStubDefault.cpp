@@ -198,6 +198,622 @@ bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetFuelLevelAttribute(c
     return onRemoteSetFuelLevelAttribute(_value);
 }
 
+const bool& ClusterDataStubDefault::getAirBagDeployedAttribute() {
+    return airBagDeployedAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getAirBagDeployedAttribute();
+}
+
+void ClusterDataStubDefault::setAirBagDeployedAttribute(bool _value) {
+    const bool valueChanged = trySetAirBagDeployedAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireAirBagDeployedAttributeChanged(airBagDeployedAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetAirBagDeployedAttribute(bool _value) {
+    if (!validateAirBagDeployedAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (airBagDeployedAttributeValue_ != _value);
+    airBagDeployedAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateAirBagDeployedAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setAirBagDeployedAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteAirBagDeployedAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteAirBagDeployedAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteAirBagDeployedAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetAirBagDeployedAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetAirBagDeployedAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetAirBagDeployedAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getLowWasherFluidAttribute() {
+    return lowWasherFluidAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getLowWasherFluidAttribute();
+}
+
+void ClusterDataStubDefault::setLowWasherFluidAttribute(bool _value) {
+    const bool valueChanged = trySetLowWasherFluidAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireLowWasherFluidAttributeChanged(lowWasherFluidAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetLowWasherFluidAttribute(bool _value) {
+    if (!validateLowWasherFluidAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (lowWasherFluidAttributeValue_ != _value);
+    lowWasherFluidAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateLowWasherFluidAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setLowWasherFluidAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteLowWasherFluidAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteLowWasherFluidAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteLowWasherFluidAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetLowWasherFluidAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetLowWasherFluidAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetLowWasherFluidAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getParkingBrakeAttribute() {
+    return parkingBrakeAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getParkingBrakeAttribute();
+}
+
+void ClusterDataStubDefault::setParkingBrakeAttribute(bool _value) {
+    const bool valueChanged = trySetParkingBrakeAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireParkingBrakeAttributeChanged(parkingBrakeAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetParkingBrakeAttribute(bool _value) {
+    if (!validateParkingBrakeAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (parkingBrakeAttributeValue_ != _value);
+    parkingBrakeAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateParkingBrakeAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setParkingBrakeAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteParkingBrakeAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteParkingBrakeAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteParkingBrakeAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetParkingBrakeAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetParkingBrakeAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetParkingBrakeAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getSeatBeltActiveAttribute() {
+    return seatBeltActiveAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getSeatBeltActiveAttribute();
+}
+
+void ClusterDataStubDefault::setSeatBeltActiveAttribute(bool _value) {
+    const bool valueChanged = trySetSeatBeltActiveAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireSeatBeltActiveAttributeChanged(seatBeltActiveAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetSeatBeltActiveAttribute(bool _value) {
+    if (!validateSeatBeltActiveAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (seatBeltActiveAttributeValue_ != _value);
+    seatBeltActiveAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateSeatBeltActiveAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setSeatBeltActiveAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteSeatBeltActiveAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteSeatBeltActiveAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteSeatBeltActiveAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetSeatBeltActiveAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetSeatBeltActiveAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetSeatBeltActiveAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getFogLightAttribute() {
+    return fogLightAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getFogLightAttribute();
+}
+
+void ClusterDataStubDefault::setFogLightAttribute(bool _value) {
+    const bool valueChanged = trySetFogLightAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireFogLightAttributeChanged(fogLightAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetFogLightAttribute(bool _value) {
+    if (!validateFogLightAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (fogLightAttributeValue_ != _value);
+    fogLightAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateFogLightAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setFogLightAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteFogLightAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteFogLightAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteFogLightAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetFogLightAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetFogLightAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetFogLightAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getHeadLightAttribute() {
+    return headLightAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getHeadLightAttribute();
+}
+
+void ClusterDataStubDefault::setHeadLightAttribute(bool _value) {
+    const bool valueChanged = trySetHeadLightAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireHeadLightAttributeChanged(headLightAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetHeadLightAttribute(bool _value) {
+    if (!validateHeadLightAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (headLightAttributeValue_ != _value);
+    headLightAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateHeadLightAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setHeadLightAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteHeadLightAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteHeadLightAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteHeadLightAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetHeadLightAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetHeadLightAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetHeadLightAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getHighBeamAttribute() {
+    return highBeamAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getHighBeamAttribute();
+}
+
+void ClusterDataStubDefault::setHighBeamAttribute(bool _value) {
+    const bool valueChanged = trySetHighBeamAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireHighBeamAttributeChanged(highBeamAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetHighBeamAttribute(bool _value) {
+    if (!validateHighBeamAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (highBeamAttributeValue_ != _value);
+    highBeamAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateHighBeamAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setHighBeamAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteHighBeamAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteHighBeamAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteHighBeamAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetHighBeamAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetHighBeamAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetHighBeamAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getLeftIndicatorAttribute() {
+    return leftIndicatorAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getLeftIndicatorAttribute();
+}
+
+void ClusterDataStubDefault::setLeftIndicatorAttribute(bool _value) {
+    const bool valueChanged = trySetLeftIndicatorAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireLeftIndicatorAttributeChanged(leftIndicatorAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetLeftIndicatorAttribute(bool _value) {
+    if (!validateLeftIndicatorAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (leftIndicatorAttributeValue_ != _value);
+    leftIndicatorAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateLeftIndicatorAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setLeftIndicatorAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteLeftIndicatorAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteLeftIndicatorAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteLeftIndicatorAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetLeftIndicatorAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetLeftIndicatorAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetLeftIndicatorAttribute(_value);
+}
+
+const bool& ClusterDataStubDefault::getRightIndicatorAttribute() {
+    return rightIndicatorAttributeValue_;
+}
+
+const bool& ClusterDataStubDefault::getRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getRightIndicatorAttribute();
+}
+
+void ClusterDataStubDefault::setRightIndicatorAttribute(bool _value) {
+    const bool valueChanged = trySetRightIndicatorAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireRightIndicatorAttributeChanged(rightIndicatorAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetRightIndicatorAttribute(bool _value) {
+    if (!validateRightIndicatorAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (rightIndicatorAttributeValue_ != _value);
+    rightIndicatorAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateRightIndicatorAttributeRequestedValue(const bool &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    setRightIndicatorAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteRightIndicatorAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteRightIndicatorAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteRightIndicatorAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetRightIndicatorAttribute(bool _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetRightIndicatorAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) {
+    (void)_client;
+    return onRemoteSetRightIndicatorAttribute(_value);
+}
+
+const uint8_t& ClusterDataStubDefault::getGearStateAttribute() {
+    return gearStateAttributeValue_;
+}
+
+const uint8_t& ClusterDataStubDefault::getGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getGearStateAttribute();
+}
+
+void ClusterDataStubDefault::setGearStateAttribute(uint8_t _value) {
+    const bool valueChanged = trySetGearStateAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireGearStateAttributeChanged(gearStateAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetGearStateAttribute(uint8_t _value) {
+    if (!validateGearStateAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (gearStateAttributeValue_ != _value);
+    gearStateAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateGearStateAttributeRequestedValue(const uint8_t &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value) {
+    (void)_client;
+    setGearStateAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteGearStateAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteGearStateAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteGearStateAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetGearStateAttribute(uint8_t _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetGearStateAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value) {
+    (void)_client;
+    return onRemoteSetGearStateAttribute(_value);
+}
+
+const int16_t& ClusterDataStubDefault::getEngineCoolantTemperatureAttribute() {
+    return engineCoolantTemperatureAttributeValue_;
+}
+
+const int16_t& ClusterDataStubDefault::getEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+    (void)_client;
+    return getEngineCoolantTemperatureAttribute();
+}
+
+void ClusterDataStubDefault::setEngineCoolantTemperatureAttribute(int16_t _value) {
+    const bool valueChanged = trySetEngineCoolantTemperatureAttribute(std::move(_value));
+    if (valueChanged) {
+        auto stubAdapter = CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireEngineCoolantTemperatureAttributeChanged(engineCoolantTemperatureAttributeValue_);
+    }
+}
+
+bool ClusterDataStubDefault::trySetEngineCoolantTemperatureAttribute(int16_t _value) {
+    if (!validateEngineCoolantTemperatureAttributeRequestedValue(_value))
+        return false;
+
+    const bool valueChanged = (engineCoolantTemperatureAttributeValue_ != _value);
+    engineCoolantTemperatureAttributeValue_ = std::move(_value);
+    return valueChanged;
+}
+
+bool ClusterDataStubDefault::validateEngineCoolantTemperatureAttributeRequestedValue(const int16_t &_value) {
+    (void)_value;
+	return true;
+}
+
+void ClusterDataStubDefault::setEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, int16_t _value) {
+    (void)_client;
+    setEngineCoolantTemperatureAttribute(_value);
+}
+
+void ClusterDataStubDefault::onRemoteEngineCoolantTemperatureAttributeChanged() {
+    // No operation in default
+}
+
+void ClusterDataStubDefault::RemoteEventHandler::onRemoteEngineCoolantTemperatureAttributeChanged() {
+	assert(defaultStub_ !=NULL);
+    defaultStub_->onRemoteEngineCoolantTemperatureAttributeChanged();
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetEngineCoolantTemperatureAttribute(int16_t _value) {
+	assert(defaultStub_ !=NULL);
+    return defaultStub_->trySetEngineCoolantTemperatureAttribute(std::move(_value));
+}
+
+bool ClusterDataStubDefault::RemoteEventHandler::onRemoteSetEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, int16_t _value) {
+    (void)_client;
+    return onRemoteSetEngineCoolantTemperatureAttribute(_value);
+}
+
 
 
 

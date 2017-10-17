@@ -33,6 +33,18 @@ class Cluster : public QObject
     Q_PROPERTY(QVariant speed READ speed NOTIFY speedChanged)
     Q_PROPERTY(QVariant rpm   READ rpm   NOTIFY rpmChanged)
     Q_PROPERTY(QVariant fuel  READ fuel  NOTIFY fuelChanged)
+    Q_PROPERTY(QVariant gearState  READ gearState  NOTIFY gearStateChanged)
+    Q_PROPERTY(QVariant airBagDeployed  READ airBagDeployed  NOTIFY airBagDeployedChanged)
+    Q_PROPERTY(QVariant lowWasherFluid  READ lowWasherFluid  NOTIFY lowWasherFluidChanged)
+    Q_PROPERTY(QVariant parkingBrakeEngaged  READ parkingBrakeEngaged  NOTIFY parkingBrakeEngagedChanged)
+    Q_PROPERTY(QVariant seatBelt  READ seatBelt  NOTIFY seatBeltChanged)
+    Q_PROPERTY(QVariant fogLight  READ fogLight  NOTIFY fogLightChanged)
+    Q_PROPERTY(QVariant headLight  READ headLight  NOTIFY headLightChanged)
+    Q_PROPERTY(QVariant highBeam  READ highBeam  NOTIFY highBeamChanged)
+    Q_PROPERTY(QVariant leftIndicator  READ leftIndicator  NOTIFY leftIndicatorChanged)
+    Q_PROPERTY(QVariant rightIndicator  READ rightIndicator  NOTIFY rightIndicatorChanged)
+    Q_PROPERTY(QVariant engineCoolantTemperature  READ engineCoolantTemperature  NOTIFY engineCoolantTemperatureChanged)
+
     Q_PROPERTY(QVariant totalDistance READ totalDistance NOTIFY totalDistanceChanged)
 
 public:
@@ -50,6 +62,16 @@ public:
     QVariant m_rpm;
     QVariant m_fuel;
     QVariant m_totalDistance;
+    QVariant m_gearState;
+    QVariant m_airBagDeployed;
+    QVariant m_lowWasherFluid;
+    QVariant m_parkingBrakeEngaged;
+    QVariant m_seatBelt;
+    QVariant m_fogLight;
+    QVariant m_headLight;
+    QVariant m_highBeam;
+    QVariant m_leftIndicator;
+    QVariant m_rightIndicator;
 
 public:
     // Q_PROPERTY getter setter
@@ -65,10 +87,41 @@ public:
     QVariant totalDistance() const;
     void setTotalDistance(const QVariant & totalDistance);
 
+    QVariant gearState() const;
+    void setGearState(const QVariant &gear);
+
+    QVariant lowWasherFluid() const;
+    void setLowWasherFluid(const QVariant &washerFluid);
+
+    QVariant parkingBrakeEngaged() const;
+    void setParkingBrakeEnaged(const QVariant &parkingBrake);
+
+    QVariant seatBelt() const;
+    void setSeatBelt(const QVariant &seatBeltActive);
+
+    QVariant fogLight() const;
+    void setFogLight(const QVariant &fogLightActive);
+
+    QVariant headLight() const;
+    void setHeadLight(const QVariant &headLightActive);
+
+    QVariant highBeam() const;
+    void setHighBeam(const QVariant &highBeamActive);
+
+    QVariant leftIndicator() const;
+    void setLeftIndicator(const QVariant &leftIndicatorActive);
+
+    QVariant rightIndicator() const;
+    void setRightIndicator(const QVariant &rightIndicatorActive);
+
+    QVariant airBagDeployed() const;
+    void setAirBagDeployed(const QVariant &airBag);
+
+    QVariant engineCoolantTemperature() const;
+    void setEngineCoolantTemperature(const QVariant &engineCoolantTemperature);
+
 public slots:
     void calcTotalDistance();
-
-    void timeslot();
 
 signals:
     // Q_PROPERTY signal
@@ -77,6 +130,18 @@ signals:
     void fuelChanged();
     void totalDistanceChanged();
 
+    void gearStateChanged();
+    void lowWasherFluidChanged();
+    void parkingBrakeEngagedChanged();
+    void seatBeltChanged();
+    void fogLightChanged();
+    void headLightChanged();
+    void highBeamChanged();
+    void leftIndicatorChanged();
+    void rightIndicatorChanged();
+    void airBagDeployedChanged();
+    void engineCoolantTemperatureChanged();
+
 private:
     quint32 mTotalDistance;
     QTimer distanceTimer;
@@ -84,6 +149,7 @@ private:
 
     int speedTestValue;
     int rpmTestValue;
+    QVariant m_engineCoolantTemperature;
 };
 
 #endif // CLUSTER_H

@@ -28,35 +28,188 @@ Item {
 
     property int rpmValue: 3000
     property int speedValue: 120
-    property int gearValue: 0
+    property string gearValue: "P"
 
-    /* test */
-    property bool drivingMode: true
+    property bool leftIndicatorActice: false
+    property bool rightIndicatorActice: false
+
+    property real ectPercentage: 0.0
+    property int ectFullGauge: 0
+
+    property real fuelPercentage: 0.0
+    property int fuelFullGauge: 0
 
     width: 1280
     height: 720
 
     Component.onCompleted: {
+        print( Cluster.engineCoolantTemperature , Cluster.fuel)
         setAVSource(AVDataManager.source)
+        fuelFullGauge = fuelGaugeLine.width
+        ectFullGauge = ectGaugeLine.width
         main.state = "music"
     }
 
     Timer {
-        id: sideLightsTimer
+        id: leftIndicatorTimer
 
         interval: 500
-        running: true
         repeat: true
         onTriggered: {
-            if( leftLight.visible )
+            leftIndicatorActice = !leftIndicatorActice
+        }
+    }
+
+    Timer {
+        id: rightIndicatorTimer
+
+        interval: 500
+        repeat: true
+        onTriggered: {
+            rightIndicatorActice = !rightIndicatorActice
+        }
+    }
+
+    Timer {
+        id: bothSideIndicatorTimer
+
+        interval: 500
+        repeat: true
+        onTriggered: {
+            leftIndicatorActice = !leftIndicatorActice
+            rightIndicatorActice = !rightIndicatorActice
+        }
+    }
+
+    Connections{
+        target: Cluster
+
+        onEngineCoolantTemperatureChanged: {
+            ectPercentage = Cluster.engineCoolantTemperature/100.0
+            ectGaugeLine.width = ectFullGauge*ectPercentage/2
+            if( Cluster.engineCoolantTemperature > 120 )
             {
-                leftLight.visible = false
-                rightLight.visible = false
+                ectHighGaugeLine.width = ectGaugeLine.width-180.6
+            }
+        }
+
+        onFuelChanged: {
+            fuelPercentage = Cluster.fuel/100.0
+            fuelGaugeLine.width = fuelFullGauge*fuelPercentage
+            if( Cluster.fuel < 20 )
+            {
+                fuelLowGaugeLine.width = fuelGaugeLine.width
+            }
+        }
+
+        onSpeedChanged: {
+            speedValue = Cluster.speed
+        }
+
+        onRpmChanged: {
+            rpmValue = Cluster.rpm
+        }
+
+        onGearStateChanged: {
+            switch( Cluster.gearState )
+            {
+            case 0:
+                gearValue = "P";
+                break;
+            case 1:
+                gearValue = "R";
+                break;
+            case 2:
+                gearValue = "N";
+                break;
+            case 3:
+                gearValue = "D";
+                break;
+            }
+        }
+
+        onLeftIndicatorChanged: {
+            if( Cluster.leftIndicator )
+            {
+                if( !Cluster.rightIndicator )
+                {
+                    leftIndicatorActice = true
+                    leftIndicatorTimer.start()
+                }
+                else
+                {
+                    leftIndicatorTimer.stop()
+                    rightIndicatorTimer.stop()
+                    leftIndicatorActice = false
+                    rightIndicatorActice = false
+                    bothSideIndicatorTimer.start()
+                }
+
             }
             else
             {
-                leftLight.visible = true
-                rightLight.visible = true
+                if( !Cluster.rightIndicator )
+                {
+                    leftIndicatorTimer.stop();
+                    leftIndicatorActice = false;
+                }
+                else
+                {
+                    if( !bothSideIndicatorTimer.running )
+                    {
+                        leftIndicatorActice = false
+
+                    }
+                    else
+                    {
+                        bothSideIndicatorTimer.stop()
+                        leftIndicatorActice = false
+                        rightIndicatorActice = false
+                    }
+                }
+            }
+        }
+
+        onRightIndicatorChanged: {
+            if( Cluster.rightIndicator )
+            {
+                if( !Cluster.leftIndicator )
+                {
+                    rightIndicatorActice = true
+                    rightIndicatorTimer.start()
+                }
+                else
+                {
+                    leftIndicatorTimer.stop()
+                    rightIndicatorTimer.stop()
+                    leftIndicatorActice = false
+                    rightIndicatorActice = false
+                    bothSideIndicatorTimer.start()
+                    leftIndicatorActice = true
+                    rightIndicatorActice = true
+                }
+            }
+            else
+            {
+                if( !Cluster.leftIndicator )
+                {
+                    rightIndicatorTimer.stop();
+                    rightIndicatorActice = false;
+                }
+                else
+                {
+                    if( !bothSideIndicatorTimer.running )
+                    {
+                        rightIndicatorActice = false
+
+                    }
+                    else
+                    {
+                        bothSideIndicatorTimer.stop()
+                        leftIndicatorActice = false
+                        rightIndicatorActice = false
+                    }
+                }
             }
         }
     }
@@ -65,26 +218,37 @@ Item {
         id: bg
         objectName: "BgImage"
         anchors.fill: parent
-        source: "../image/genivi_16th_amm/cluster_bg.png"
+        source: "../image/genivi_16th_amm/cluster_normal_bg.png"
     }
 
     Image {
-        id: leftLight
+        id: leftIndicatorImage
 
         x: 340
         anchors.verticalCenter: textTime.verticalCenter
+
+        opacity: leftIndicatorActice ? 1 : 0.2
 
         source: "../image/genivi_16th_amm/cluster/L_Light.png"
     }
 
     Image {
-        id: rightLight
+        id: rightIndicatorImage
 
         x: 909
         anchors.verticalCenter: textTime.verticalCenter
 
+        opacity: rightIndicatorActice ? 1 : 0.2
+
         source: "../image/genivi_16th_amm/cluster/R_Light.png"
     }
+
+
+
+
+
+
+
 
     /* Speed Cluster */
     Image {
@@ -127,14 +291,13 @@ Item {
             color: "white"
             text: speedValue
             font.family: "Digital-7 Mono, Italic"
-//            font.family: "SpoqaHanSans"
+            //            font.family: "SpoqaHanSans"
             font.bold: false
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
 
             font.pixelSize: 101
         }
-
     }
 
     Image {
@@ -156,7 +319,6 @@ Item {
         anchors.top: speedBg.top
         anchors.topMargin: 20
         source: "../image/genivi_16th_amm/cluster/Metal border.png"
-
     }
 
 
@@ -187,7 +349,6 @@ Item {
         anchors.top: rpmBg.top
         anchors.topMargin: 20
         source: "../image/genivi_16th_amm/cluster/Metal border.png"
-
     }
 
     Gauge {
@@ -202,6 +363,7 @@ Item {
         value: rpmValue
     }
 
+    /* Gear State */
     Item {
         id: gearArea
 
@@ -216,7 +378,7 @@ Item {
             id: textRpm
             anchors.fill: parent
             color: "white"
-            text: "D"
+            text: gearValue
             font.family: "SpoqaHanSans"
             font.bold: false
             verticalAlignment: Text.AlignVCenter
@@ -236,30 +398,32 @@ Item {
     }
 
 
+    /* Total Distance */
     Text {
         id: textTotalDistance
         x: 437
         color: "white"
         anchors.verticalCenter: textTime.verticalCenter
         text: Cluster.totalDistance
-//        font.family: "NanumBarunGothic, Bold"
+        //        font.family: "NanumBarunGothic, Bold"
         font.family: "SpoqaHanSans Bold"
         font.bold: true
         font.pixelSize: 18
     }
 
+    /* External Degree */
     Text {
         id: textExternalDegree
         x: 770
         anchors.verticalCenter: textTime.verticalCenter
         color: "white"
         text: "26.5 ℃"
-//        font.family: "NanumBarunGothic, Bold"
         font.family: "SpoqaHanSans Bold"
         font.bold: true
         font.pixelSize: 18
     }
 
+    /* Time */
     Text {
         id: textTime
         x: 579
@@ -268,7 +432,6 @@ Item {
         height: 21
         color: "white"
         text: AVDataManager.currentTime
-//        font.family: "NanumBarunGothic, Bold"
         font.family: "SpoqaHanSans Bold"
         font.bold: true
         verticalAlignment: Text.AlignVCenter
@@ -276,7 +439,77 @@ Item {
         font.pixelSize: 25
     }
 
+    /* Engine Coolant Temperature Gauge */
+    Image {
+        id: ectLevelLine
 
+        source: "../image/genivi_17th_amm/Gauge_Line/ECT_Cool_Hot_Bg_Line.png"
+
+        anchors.horizontalCenter: main.horizontalCenter
+        anchors.bottom: fuelLevelLine.top
+        anchors.bottomMargin: 10
+
+        Image {
+            id: ectGaugeLine
+
+            source : "../image/genivi_17th_amm/Gauge_Line/ECT_Default_White_Gauge.png"
+
+            opacity: 0.7
+
+            anchors.bottom: ectLevelLine.bottom
+            anchors.bottomMargin: 16
+            anchors.left: ectLevelLine.left
+            anchors.leftMargin: 16
+        }
+
+        Image {
+            id: ectHighGaugeLine
+
+            width: 120.4
+
+            source : "../image/genivi_17th_amm/Gauge_Line/ECT_Warning_Red_Gauge.png"
+            opacity: 0.7
+
+            visible: Cluster.engineCoolantTemperature > 120 ? true : false
+
+            anchors.bottom: ectGaugeLine.bottom
+            anchors.left: ectGaugeLine.left
+            anchors.leftMargin: 180.6
+        }
+    }
+
+    /* Fuel Gauge */
+    Image {
+        id: fuelLevelLine
+
+        y: 580
+
+        source: "../image/genivi_17th_amm/Fuel_Level/Empty_Full_Bg_Line.png"
+        anchors.horizontalCenter: main.horizontalCenter
+
+        Image {
+            id: fuelGaugeLine
+
+            source : "../image/genivi_17th_amm/Fuel_Level/Default_White_Gauge.png"
+            opacity: 0.8
+            anchors.verticalCenter: fuelLevelLine.verticalCenter
+            anchors.left: fuelLevelLine.left
+            anchors.leftMargin: 40
+        }
+
+        Image {
+            id: fuelLowGaugeLine
+
+            source : "../image/genivi_17th_amm/Fuel_Level/Warning_Red_Gauge.png"
+            opacity: 0.8
+            visible: Cluster.fuel < 20 ? true : false
+            anchors.verticalCenter: fuelLevelLine.verticalCenter
+            anchors.left: fuelLevelLine.left
+            anchors.leftMargin: 40
+        }
+    }
+
+    /* Mode Icon */
     ClusterIcon {
         id: icon_music
         x: 479
@@ -359,6 +592,145 @@ Item {
 
 
 
+    /* Lights Image */
+    Image {
+        id: highBeamImage
+
+        anchors.top: textTime.bottom
+        anchors.topMargin: 10
+        anchors.right: headLightsImage.left
+        anchors.rightMargin: 120
+
+        scale: 0.8
+
+        opacity: Cluster.highBeam ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Lights/High_Beam_Light.png"
+    }
+
+    Image {
+        id: headLightsImage
+
+        anchors.top: textTime.bottom
+        anchors.topMargin: 10
+        anchors.horizontalCenter: main.horizontalCenter
+
+        opacity: Cluster.headLight ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Lights/Normal_Head_Lights.png"
+    }
+
+    Image {
+        id: fogLightImage
+
+        anchors.top: textTime.bottom
+        anchors.topMargin: 10
+        anchors.left: headLightsImage.right
+        anchors.leftMargin: 120
+
+        scale: 0.8
+
+        opacity: Cluster.fogLight ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Lights/Fog_Light.png"
+    }
+
+
+
+
+
+    /* Warning Image */
+    Image {
+        id: engineCoolantTempWarningImage
+
+        anchors.bottom: main.bottom
+        anchors.bottomMargin: 7
+        anchors.right: seatBeltWarningImage.left
+        anchors.rightMargin: 37
+
+        scale: 0.8
+
+        opacity: Cluster.engineCoolantTemperature > 120 ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Warning_Icon/Engine_Coolant_Temp_Icon.png"
+    }
+
+    Image {
+        id: airBagWarningImage
+
+        anchors.bottom: main.bottom
+        anchors.bottomMargin: 7
+        anchors.right: parkingBrakeWarningImage.left
+        anchors.rightMargin: 40
+
+        scale: 0.8
+
+        opacity: Cluster.airBagDeployed ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Warning_Icon/Air_Bag_Icon.png"
+    }
+
+    Image {
+        id: seatBeltWarningImage
+
+        anchors.bottom: main.bottom
+        anchors.bottomMargin: 7
+        anchors.right: airBagWarningImage.left
+        anchors.rightMargin: 40
+
+        scale: 0.8
+
+        opacity: Cluster.seatBelt ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Warning_Icon/Seat_Belt_Icon.png"
+    }
+
+    Image {
+        id: parkingBrakeWarningImage
+
+        x: main.width/2 + 30
+        anchors.bottom: main.bottom
+        anchors.bottomMargin: 7
+
+        opacity: Cluster.parkingBrakeEngaged ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Warning_Icon/Parking_Brake_Icon.png"
+    }
+
+
+    Image {
+        id: lowFuelWarningImage
+
+        anchors.bottom: main.bottom
+        anchors.bottomMargin: 7
+        anchors.left: parkingBrakeWarningImage.right
+        anchors.leftMargin: 40
+
+        scale: 0.8
+
+        opacity: Cluster.fuel < 20 ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Warning_Icon/Low_Fuel_Icon.png"
+    }
+
+    Image {
+        id: washerFluidLowWarningImage
+
+        anchors.bottom: main.bottom
+        anchors.bottomMargin: 7
+        anchors.left: lowFuelWarningImage.right
+        anchors.leftMargin: 40
+
+        scale: 0.8
+
+        opacity: Cluster.lowWasherFluid ? true : 0.2
+
+        source: "../image/genivi_17th_amm/Warning_Icon/Washer_Fiuid_Low_Icon.png"
+    }
+
+
+
+    /* Info */
     RadioInfo {
         id: radioInfo
         x: 508
@@ -372,8 +744,6 @@ Item {
         Behavior on opacity {
             NumberAnimation { duration: 300 }
         }
-
-
     }
 
     VideoInfo {
@@ -381,12 +751,11 @@ Item {
         anchors.centerIn: parent
         visible: opacity !== 0
         opacity: main.state === "video" ? 1 : 0
-
     }
 
-    function setAVSource(source)
+    function setAVSource( source )
     {
-        switch(source)
+        switch( source )
         {
         case Source.FM:
         case Source.AM:

@@ -50,6 +50,50 @@ public:
     virtual const uint8_t& getFuelLevelAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
     virtual void setFuelLevelAttribute(uint8_t _value);
     virtual void setFuelLevelAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value);
+    virtual const bool& getAirBagDeployedAttribute();
+    virtual const bool& getAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setAirBagDeployedAttribute(bool _value);
+    virtual void setAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getLowWasherFluidAttribute();
+    virtual const bool& getLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setLowWasherFluidAttribute(bool _value);
+    virtual void setLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getParkingBrakeAttribute();
+    virtual const bool& getParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setParkingBrakeAttribute(bool _value);
+    virtual void setParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getSeatBeltActiveAttribute();
+    virtual const bool& getSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setSeatBeltActiveAttribute(bool _value);
+    virtual void setSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getFogLightAttribute();
+    virtual const bool& getFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setFogLightAttribute(bool _value);
+    virtual void setFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getHeadLightAttribute();
+    virtual const bool& getHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setHeadLightAttribute(bool _value);
+    virtual void setHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getHighBeamAttribute();
+    virtual const bool& getHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setHighBeamAttribute(bool _value);
+    virtual void setHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getLeftIndicatorAttribute();
+    virtual const bool& getLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setLeftIndicatorAttribute(bool _value);
+    virtual void setLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const bool& getRightIndicatorAttribute();
+    virtual const bool& getRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setRightIndicatorAttribute(bool _value);
+    virtual void setRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+    virtual const uint8_t& getGearStateAttribute();
+    virtual const uint8_t& getGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setGearStateAttribute(uint8_t _value);
+    virtual void setGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value);
+    virtual const int16_t& getEngineCoolantTemperatureAttribute();
+    virtual const int16_t& getEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client);
+    virtual void setEngineCoolantTemperatureAttribute(int16_t _value);
+    virtual void setEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, int16_t _value);
 
 
 
@@ -73,6 +117,72 @@ protected:
     virtual bool trySetFuelLevelAttribute(uint8_t _value);
     virtual bool validateFuelLevelAttributeRequestedValue(const uint8_t &_value);
     virtual void onRemoteFuelLevelAttributeChanged();
+    /**
+     * description: is air bag deployed.
+     */
+    virtual bool trySetAirBagDeployedAttribute(bool _value);
+    virtual bool validateAirBagDeployedAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteAirBagDeployedAttributeChanged();
+    /**
+     * description: is low washer fluid.
+     */
+    virtual bool trySetLowWasherFluidAttribute(bool _value);
+    virtual bool validateLowWasherFluidAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteLowWasherFluidAttributeChanged();
+    /**
+     * description: is parking brake engaged
+     */
+    virtual bool trySetParkingBrakeAttribute(bool _value);
+    virtual bool validateParkingBrakeAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteParkingBrakeAttributeChanged();
+    /**
+     * description: is seat belt active
+     */
+    virtual bool trySetSeatBeltActiveAttribute(bool _value);
+    virtual bool validateSeatBeltActiveAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteSeatBeltActiveAttributeChanged();
+    /**
+     * description: is fog light on
+     */
+    virtual bool trySetFogLightAttribute(bool _value);
+    virtual bool validateFogLightAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteFogLightAttributeChanged();
+    /**
+     * description: is head light on
+     */
+    virtual bool trySetHeadLightAttribute(bool _value);
+    virtual bool validateHeadLightAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteHeadLightAttributeChanged();
+    /**
+     * description: is high beam on
+     */
+    virtual bool trySetHighBeamAttribute(bool _value);
+    virtual bool validateHighBeamAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteHighBeamAttributeChanged();
+    /**
+     * description: is left indicator active
+     */
+    virtual bool trySetLeftIndicatorAttribute(bool _value);
+    virtual bool validateLeftIndicatorAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteLeftIndicatorAttributeChanged();
+    /**
+     * description: is right indicator active
+     */
+    virtual bool trySetRightIndicatorAttribute(bool _value);
+    virtual bool validateRightIndicatorAttributeRequestedValue(const bool &_value);
+    virtual void onRemoteRightIndicatorAttributeChanged();
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    virtual bool trySetGearStateAttribute(uint8_t _value);
+    virtual bool validateGearStateAttributeRequestedValue(const uint8_t &_value);
+    virtual void onRemoteGearStateAttributeChanged();
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    virtual bool trySetEngineCoolantTemperatureAttribute(int16_t _value);
+    virtual bool validateEngineCoolantTemperatureAttributeRequestedValue(const int16_t &_value);
+    virtual void onRemoteEngineCoolantTemperatureAttributeChanged();
     class RemoteEventHandler: public virtual ClusterDataStubRemoteEvent {
     public:
         RemoteEventHandler(ClusterDataStubDefault *_defaultStub);
@@ -98,6 +208,83 @@ protected:
         virtual bool onRemoteSetFuelLevelAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value);
         virtual void onRemoteFuelLevelAttributeChanged();
 
+        /**
+         * description: is air bag deployed.
+         */
+        virtual bool onRemoteSetAirBagDeployedAttribute(bool _value);
+        virtual bool onRemoteSetAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteAirBagDeployedAttributeChanged();
+
+        /**
+         * description: is low washer fluid.
+         */
+        virtual bool onRemoteSetLowWasherFluidAttribute(bool _value);
+        virtual bool onRemoteSetLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteLowWasherFluidAttributeChanged();
+
+        /**
+         * description: is parking brake engaged
+         */
+        virtual bool onRemoteSetParkingBrakeAttribute(bool _value);
+        virtual bool onRemoteSetParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteParkingBrakeAttributeChanged();
+
+        /**
+         * description: is seat belt active
+         */
+        virtual bool onRemoteSetSeatBeltActiveAttribute(bool _value);
+        virtual bool onRemoteSetSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteSeatBeltActiveAttributeChanged();
+
+        /**
+         * description: is fog light on
+         */
+        virtual bool onRemoteSetFogLightAttribute(bool _value);
+        virtual bool onRemoteSetFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteFogLightAttributeChanged();
+
+        /**
+         * description: is head light on
+         */
+        virtual bool onRemoteSetHeadLightAttribute(bool _value);
+        virtual bool onRemoteSetHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteHeadLightAttributeChanged();
+
+        /**
+         * description: is high beam on
+         */
+        virtual bool onRemoteSetHighBeamAttribute(bool _value);
+        virtual bool onRemoteSetHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteHighBeamAttributeChanged();
+
+        /**
+         * description: is left indicator active
+         */
+        virtual bool onRemoteSetLeftIndicatorAttribute(bool _value);
+        virtual bool onRemoteSetLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteLeftIndicatorAttributeChanged();
+
+        /**
+         * description: is right indicator active
+         */
+        virtual bool onRemoteSetRightIndicatorAttribute(bool _value);
+        virtual bool onRemoteSetRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value);
+        virtual void onRemoteRightIndicatorAttributeChanged();
+
+        /**
+         * description: current gear state. -1 : reverse, 0 : neutral
+         */
+        virtual bool onRemoteSetGearStateAttribute(uint8_t _value);
+        virtual bool onRemoteSetGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value);
+        virtual void onRemoteGearStateAttributeChanged();
+
+        /**
+         * description: ect ( Engine Coolant Temperature ) level
+         */
+        virtual bool onRemoteSetEngineCoolantTemperatureAttribute(int16_t _value);
+        virtual bool onRemoteSetEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, int16_t _value);
+        virtual void onRemoteEngineCoolantTemperatureAttributeChanged();
+
 
     private:
         ClusterDataStubDefault *defaultStub_;
@@ -117,6 +304,50 @@ private:
      * description: current fuel level. unit is %
      */
     uint8_t fuelLevelAttributeValue_ {};
+    /**
+     * description: is air bag deployed.
+     */
+    bool airBagDeployedAttributeValue_ {};
+    /**
+     * description: is low washer fluid.
+     */
+    bool lowWasherFluidAttributeValue_ {};
+    /**
+     * description: is parking brake engaged
+     */
+    bool parkingBrakeAttributeValue_ {};
+    /**
+     * description: is seat belt active
+     */
+    bool seatBeltActiveAttributeValue_ {};
+    /**
+     * description: is fog light on
+     */
+    bool fogLightAttributeValue_ {};
+    /**
+     * description: is head light on
+     */
+    bool headLightAttributeValue_ {};
+    /**
+     * description: is high beam on
+     */
+    bool highBeamAttributeValue_ {};
+    /**
+     * description: is left indicator active
+     */
+    bool leftIndicatorAttributeValue_ {};
+    /**
+     * description: is right indicator active
+     */
+    bool rightIndicatorAttributeValue_ {};
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    uint8_t gearStateAttributeValue_ {};
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    int16_t engineCoolantTemperatureAttributeValue_ {};
 
     CommonAPI::Version interfaceVersion_;
 };

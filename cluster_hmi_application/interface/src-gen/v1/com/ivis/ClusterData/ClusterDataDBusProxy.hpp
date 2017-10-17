@@ -45,6 +45,17 @@ public:
     virtual VehicleSpeedAttribute& getVehicleSpeedAttribute();
     virtual EngineSpeedAttribute& getEngineSpeedAttribute();
     virtual FuelLevelAttribute& getFuelLevelAttribute();
+    virtual AirBagDeployedAttribute& getAirBagDeployedAttribute();
+    virtual LowWasherFluidAttribute& getLowWasherFluidAttribute();
+    virtual ParkingBrakeAttribute& getParkingBrakeAttribute();
+    virtual SeatBeltActiveAttribute& getSeatBeltActiveAttribute();
+    virtual FogLightAttribute& getFogLightAttribute();
+    virtual HeadLightAttribute& getHeadLightAttribute();
+    virtual HighBeamAttribute& getHighBeamAttribute();
+    virtual LeftIndicatorAttribute& getLeftIndicatorAttribute();
+    virtual RightIndicatorAttribute& getRightIndicatorAttribute();
+    virtual GearStateAttribute& getGearStateAttribute();
+    virtual EngineCoolantTemperatureAttribute& getEngineCoolantTemperatureAttribute();
 
 
 
@@ -56,6 +67,17 @@ private:
     CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<VehicleSpeedAttribute>> vehicleSpeed_;
     CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<EngineSpeedAttribute>> engineSpeed_;
     CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<FuelLevelAttribute>> fuelLevel_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<AirBagDeployedAttribute>> airBagDeployed_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<LowWasherFluidAttribute>> lowWasherFluid_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<ParkingBrakeAttribute>> parkingBrake_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<SeatBeltActiveAttribute>> seatBeltActive_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<FogLightAttribute>> fogLight_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<HeadLightAttribute>> headLight_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<HighBeamAttribute>> highBeam_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<LeftIndicatorAttribute>> leftIndicator_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<RightIndicatorAttribute>> rightIndicator_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<GearStateAttribute>> gearState_;
+    CommonAPI::DBus::DBusObservableAttribute<CommonAPI::DBus::DBusAttribute<EngineCoolantTemperatureAttribute>> engineCoolantTemperature_;
 
 
 };

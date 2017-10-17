@@ -28,5 +28,25 @@
         <file>genivi_16th_amm/cluster_bg.png</file>
         <file>genivi_16th_amm/cluster/L_Light.png</file>
         <file>genivi_16th_amm/cluster/R_Light.png</file>
+        <file>genivi_16th_amm/cluster_normal_bg.png</file>
+        <file>genivi_17th_amm/Fuel_Level/Default_White_Gauge.png</file>
+        <file>genivi_17th_amm/Fuel_Level/Empty_Full_Bg_Line.png</file>
+        <file>genivi_17th_amm/Fuel_Level/Warning_Red_Gauge.png</file>
+        <file>genivi_17th_amm/Gauge_Line/ECT_Cool_Hot_Bg_Line.png</file>
+        <file>genivi_17th_amm/Gauge_Line/ECT_Default_White_Gauge.png</file>
+        <file>genivi_17th_amm/Gauge_Line/ECT_Warning_Red_Gauge.png</file>
+        <file>genivi_17th_amm/Lights/Fog_Light.png</file>
+        <file>genivi_17th_amm/Lights/High_Beam_Light.png</file>
+        <file>genivi_17th_amm/Lights/Normal_Head_Lights.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Air_Bag_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Air_Bag_Text_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Engine_Coolant_Temp_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Handle_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Low_Fuel_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Parking_Brake_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Seat_Belt_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Stability_ Control_Off_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Stability_ Control_On_Icon.png</file>
+        <file>genivi_17th_amm/Warning_Icon/Washer_Fiuid_Low_Icon.png</file>
     </qresource>
 </RCC>

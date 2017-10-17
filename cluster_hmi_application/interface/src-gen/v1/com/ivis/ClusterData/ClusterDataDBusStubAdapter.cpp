@@ -71,6 +71,116 @@ const char* ClusterDataDBusStubAdapterInternal::getMethodsDBusIntrospectionXmlDa
         "<signal name=\"onFuelLevelAttributeChanged\">\n"
             "<arg name=\"changedValue\" type=\"y\" />\n"
         "</signal>\n"
+        "<method name=\"getAirBagDeployedAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setAirBagDeployedAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onAirBagDeployedAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getLowWasherFluidAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setLowWasherFluidAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onLowWasherFluidAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getParkingBrakeAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setParkingBrakeAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onParkingBrakeAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getSeatBeltActiveAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setSeatBeltActiveAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onSeatBeltActiveAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getFogLightAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setFogLightAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onFogLightAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getHeadLightAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setHeadLightAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onHeadLightAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getHighBeamAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setHighBeamAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onHighBeamAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getLeftIndicatorAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setLeftIndicatorAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onLeftIndicatorAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getRightIndicatorAttribute\">\n"
+            "<arg name=\"value\" type=\"b\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setRightIndicatorAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"b\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"b\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onRightIndicatorAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"b\" />\n"
+        "</signal>\n"
+        "<method name=\"getGearStateAttribute\">\n"
+            "<arg name=\"value\" type=\"y\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setGearStateAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"y\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"y\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onGearStateAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"y\" />\n"
+        "</signal>\n"
+        "<method name=\"getEngineCoolantTemperatureAttribute\">\n"
+            "<arg name=\"value\" type=\"n\" direction=\"out\" />"
+        "</method>\n"
+        "<method name=\"setEngineCoolantTemperatureAttribute\">\n"
+            "<arg name=\"requestedValue\" type=\"n\" direction=\"in\" />\n"
+            "<arg name=\"setValue\" type=\"n\" direction=\"out\" />\n"
+        "</method>\n"
+        "<signal name=\"onEngineCoolantTemperatureAttributeChanged\">\n"
+            "<arg name=\"changedValue\" type=\"n\" />\n"
+        "</signal>\n"
 
     ;
     return introspectionData.c_str();
@@ -141,6 +251,226 @@ CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
                 ,&ClusterDataStubAdapter::fireFuelLevelAttributeChanged
                 ,"y"
                 );
+/**
+ * description: is air bag deployed.
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getAirBagDeployedAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getAirBagDeployedAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setAirBagDeployedAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getAirBagDeployedAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetAirBagDeployedAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteAirBagDeployedAttributeChanged
+                ,&ClusterDataStubAdapter::fireAirBagDeployedAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is low washer fluid.
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getLowWasherFluidAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getLowWasherFluidAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setLowWasherFluidAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getLowWasherFluidAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetLowWasherFluidAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteLowWasherFluidAttributeChanged
+                ,&ClusterDataStubAdapter::fireLowWasherFluidAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is parking brake engaged
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getParkingBrakeAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getParkingBrakeAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setParkingBrakeAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getParkingBrakeAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetParkingBrakeAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteParkingBrakeAttributeChanged
+                ,&ClusterDataStubAdapter::fireParkingBrakeAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is seat belt active
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getSeatBeltActiveAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getSeatBeltActiveAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setSeatBeltActiveAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getSeatBeltActiveAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetSeatBeltActiveAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSeatBeltActiveAttributeChanged
+                ,&ClusterDataStubAdapter::fireSeatBeltActiveAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is fog light on
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getFogLightAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getFogLightAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setFogLightAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getFogLightAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetFogLightAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteFogLightAttributeChanged
+                ,&ClusterDataStubAdapter::fireFogLightAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is head light on
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getHeadLightAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getHeadLightAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setHeadLightAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getHeadLightAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetHeadLightAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteHeadLightAttributeChanged
+                ,&ClusterDataStubAdapter::fireHeadLightAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is high beam on
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getHighBeamAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getHighBeamAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setHighBeamAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getHighBeamAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetHighBeamAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteHighBeamAttributeChanged
+                ,&ClusterDataStubAdapter::fireHighBeamAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is left indicator active
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getLeftIndicatorAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getLeftIndicatorAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setLeftIndicatorAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getLeftIndicatorAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetLeftIndicatorAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteLeftIndicatorAttributeChanged
+                ,&ClusterDataStubAdapter::fireLeftIndicatorAttributeChanged
+                ,"b"
+                );
+/**
+ * description: is right indicator active
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::getRightIndicatorAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getRightIndicatorAttribute
+            , "b"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool
+        > ClusterDataDBusStubAdapterInternal::setRightIndicatorAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getRightIndicatorAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetRightIndicatorAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteRightIndicatorAttributeChanged
+                ,&ClusterDataStubAdapter::fireRightIndicatorAttributeChanged
+                ,"b"
+                );
+/**
+ * description: current gear state. -1 : reverse, 0 : neutral
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        uint8_t
+        > ClusterDataDBusStubAdapterInternal::getGearStateAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getGearStateAttribute
+            , "y"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        uint8_t
+        > ClusterDataDBusStubAdapterInternal::setGearStateAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getGearStateAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetGearStateAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteGearStateAttributeChanged
+                ,&ClusterDataStubAdapter::fireGearStateAttributeChanged
+                ,"y"
+                );
+/**
+ * description: ect ( Engine Coolant Temperature ) level
+ */
+CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        int16_t
+        > ClusterDataDBusStubAdapterInternal::getEngineCoolantTemperatureAttributeStubDispatcher(
+            &::v1::com::ivis::ClusterData::ClusterDataStub::getEngineCoolantTemperatureAttribute
+            , "n"
+            );
+CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        int16_t
+        > ClusterDataDBusStubAdapterInternal::setEngineCoolantTemperatureAttributeStubDispatcher(
+                &::v1::com::ivis::ClusterData::ClusterDataStub::getEngineCoolantTemperatureAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteSetEngineCoolantTemperatureAttribute,
+                &ClusterDataStubRemoteEvent::onRemoteEngineCoolantTemperatureAttributeChanged
+                ,&ClusterDataStubAdapter::fireEngineCoolantTemperatureAttributeChanged
+                ,"n"
+                );
 
 
 
@@ -190,6 +520,171 @@ void ClusterDataDBusStubAdapterInternal::fireFuelLevelAttributeChanged(const uin
     
     );
 }
+/**
+ * description: is air bag deployed.
+ */
+void ClusterDataDBusStubAdapterInternal::fireAirBagDeployedAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onAirBagDeployedAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is low washer fluid.
+ */
+void ClusterDataDBusStubAdapterInternal::fireLowWasherFluidAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onLowWasherFluidAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is parking brake engaged
+ */
+void ClusterDataDBusStubAdapterInternal::fireParkingBrakeAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onParkingBrakeAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is seat belt active
+ */
+void ClusterDataDBusStubAdapterInternal::fireSeatBeltActiveAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onSeatBeltActiveAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is fog light on
+ */
+void ClusterDataDBusStubAdapterInternal::fireFogLightAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onFogLightAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is head light on
+ */
+void ClusterDataDBusStubAdapterInternal::fireHeadLightAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onHeadLightAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is high beam on
+ */
+void ClusterDataDBusStubAdapterInternal::fireHighBeamAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onHighBeamAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is left indicator active
+ */
+void ClusterDataDBusStubAdapterInternal::fireLeftIndicatorAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onLeftIndicatorAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: is right indicator active
+ */
+void ClusterDataDBusStubAdapterInternal::fireRightIndicatorAttributeChanged(const bool& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    bool
+    >>
+        ::sendSignal(
+            *this,
+            "onRightIndicatorAttributeChanged",
+            "b",
+            value
+    
+    );
+}
+/**
+ * description: current gear state. -1 : reverse, 0 : neutral
+ */
+void ClusterDataDBusStubAdapterInternal::fireGearStateAttributeChanged(const uint8_t& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    uint8_t
+    >>
+        ::sendSignal(
+            *this,
+            "onGearStateAttributeChanged",
+            "y",
+            value
+    
+    );
+}
+/**
+ * description: ect ( Engine Coolant Temperature ) level
+ */
+void ClusterDataDBusStubAdapterInternal::fireEngineCoolantTemperatureAttributeChanged(const int16_t& value) {
+    CommonAPI::DBus::DBusStubSignalHelper<CommonAPI::DBus::DBusSerializableArguments<
+    int16_t
+    >>
+        ::sendSignal(
+            *this,
+            "onEngineCoolantTemperatureAttributeChanged",
+            "n",
+            value
+    
+    );
+}
 
 
 
@@ -222,7 +717,62 @@ ClusterDataDBusStubAdapterInternal::ClusterDataDBusStubAdapterInternal(
              * description: current fuel level. unit is %
              */
             { { "getFuelLevelAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getFuelLevelAttributeStubDispatcher }
-            , { { "setFuelLevelAttribute", "y" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setFuelLevelAttributeStubDispatcher }
+            , { { "setFuelLevelAttribute", "y" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setFuelLevelAttributeStubDispatcher },
+            /**
+             * description: is air bag deployed.
+             */
+            { { "getAirBagDeployedAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getAirBagDeployedAttributeStubDispatcher }
+            , { { "setAirBagDeployedAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setAirBagDeployedAttributeStubDispatcher },
+            /**
+             * description: is low washer fluid.
+             */
+            { { "getLowWasherFluidAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getLowWasherFluidAttributeStubDispatcher }
+            , { { "setLowWasherFluidAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setLowWasherFluidAttributeStubDispatcher },
+            /**
+             * description: is parking brake engaged
+             */
+            { { "getParkingBrakeAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getParkingBrakeAttributeStubDispatcher }
+            , { { "setParkingBrakeAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setParkingBrakeAttributeStubDispatcher },
+            /**
+             * description: is seat belt active
+             */
+            { { "getSeatBeltActiveAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getSeatBeltActiveAttributeStubDispatcher }
+            , { { "setSeatBeltActiveAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setSeatBeltActiveAttributeStubDispatcher },
+            /**
+             * description: is fog light on
+             */
+            { { "getFogLightAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getFogLightAttributeStubDispatcher }
+            , { { "setFogLightAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setFogLightAttributeStubDispatcher },
+            /**
+             * description: is head light on
+             */
+            { { "getHeadLightAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getHeadLightAttributeStubDispatcher }
+            , { { "setHeadLightAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setHeadLightAttributeStubDispatcher },
+            /**
+             * description: is high beam on
+             */
+            { { "getHighBeamAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getHighBeamAttributeStubDispatcher }
+            , { { "setHighBeamAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setHighBeamAttributeStubDispatcher },
+            /**
+             * description: is left indicator active
+             */
+            { { "getLeftIndicatorAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getLeftIndicatorAttributeStubDispatcher }
+            , { { "setLeftIndicatorAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setLeftIndicatorAttributeStubDispatcher },
+            /**
+             * description: is right indicator active
+             */
+            { { "getRightIndicatorAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getRightIndicatorAttributeStubDispatcher }
+            , { { "setRightIndicatorAttribute", "b" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setRightIndicatorAttributeStubDispatcher },
+            /**
+             * description: current gear state. -1 : reverse, 0 : neutral
+             */
+            { { "getGearStateAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getGearStateAttributeStubDispatcher }
+            , { { "setGearStateAttribute", "y" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setGearStateAttributeStubDispatcher },
+            /**
+             * description: ect ( Engine Coolant Temperature ) level
+             */
+            { { "getEngineCoolantTemperatureAttribute", "" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::getEngineCoolantTemperatureAttributeStubDispatcher }
+            , { { "setEngineCoolantTemperatureAttribute", "n" }, &com::ivis::ClusterData::ClusterDataDBusStubAdapterInternal::setEngineCoolantTemperatureAttributeStubDispatcher }
             }),
         stubAttributeTable_() {
 

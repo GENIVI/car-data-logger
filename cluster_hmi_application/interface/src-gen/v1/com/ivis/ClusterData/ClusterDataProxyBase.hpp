@@ -35,6 +35,17 @@ public:
     typedef CommonAPI::ObservableAttribute<uint16_t> VehicleSpeedAttribute;
     typedef CommonAPI::ObservableAttribute<uint16_t> EngineSpeedAttribute;
     typedef CommonAPI::ObservableAttribute<uint8_t> FuelLevelAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> AirBagDeployedAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> LowWasherFluidAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> ParkingBrakeAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> SeatBeltActiveAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> FogLightAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> HeadLightAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> HighBeamAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> LeftIndicatorAttribute;
+    typedef CommonAPI::ObservableAttribute<bool> RightIndicatorAttribute;
+    typedef CommonAPI::ObservableAttribute<uint8_t> GearStateAttribute;
+    typedef CommonAPI::ObservableAttribute<int16_t> EngineCoolantTemperatureAttribute;
 
 
     /**
@@ -49,6 +60,50 @@ public:
      * description: current fuel level. unit is %
      */
     virtual FuelLevelAttribute& getFuelLevelAttribute() = 0;
+    /**
+     * description: is air bag deployed.
+     */
+    virtual AirBagDeployedAttribute& getAirBagDeployedAttribute() = 0;
+    /**
+     * description: is low washer fluid.
+     */
+    virtual LowWasherFluidAttribute& getLowWasherFluidAttribute() = 0;
+    /**
+     * description: is parking brake engaged
+     */
+    virtual ParkingBrakeAttribute& getParkingBrakeAttribute() = 0;
+    /**
+     * description: is seat belt active
+     */
+    virtual SeatBeltActiveAttribute& getSeatBeltActiveAttribute() = 0;
+    /**
+     * description: is fog light on
+     */
+    virtual FogLightAttribute& getFogLightAttribute() = 0;
+    /**
+     * description: is head light on
+     */
+    virtual HeadLightAttribute& getHeadLightAttribute() = 0;
+    /**
+     * description: is high beam on
+     */
+    virtual HighBeamAttribute& getHighBeamAttribute() = 0;
+    /**
+     * description: is left indicator active
+     */
+    virtual LeftIndicatorAttribute& getLeftIndicatorAttribute() = 0;
+    /**
+     * description: is right indicator active
+     */
+    virtual RightIndicatorAttribute& getRightIndicatorAttribute() = 0;
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    virtual GearStateAttribute& getGearStateAttribute() = 0;
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    virtual EngineCoolantTemperatureAttribute& getEngineCoolantTemperatureAttribute() = 0;
 
 
 };

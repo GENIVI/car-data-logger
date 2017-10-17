@@ -22,6 +22,7 @@
 #include "cluster.hpp"
 #include <QSharedPointer>
 #include <QLocale>
+#include <QDebug>
 
 static QSharedPointer<Cluster> clusterInstance;
 
@@ -60,14 +61,20 @@ void Cluster::init()
 {
     setSpeed(QVariant(0));
     setRpm(QVariant(0));
-    setFuel(QVariant(0));
     setTotalDistance(QVariant("23,567 km"));
 
-    m_testTimer = new QTimer();
-
-    /* cluster test data generator */
-//    connect(m_testTimer, SIGNAL(timeout()), this, SLOT(timeslot()));
-//    m_testTimer->start(20);
+    setFuel(QVariant(20));
+    setEngineCoolantTemperature(QVariant(130));
+    setAirBagDeployed(QVariant(0));
+    setGearState(QVariant(0));
+    setFogLight(QVariant(0));
+    setHeadLight(QVariant(0));
+    setHighBeam(QVariant(0));
+    setLeftIndicator(QVariant(0));
+    setLowWasherFluid(QVariant(0));
+    setParkingBrakeEnaged(QVariant(0));
+    setRightIndicator(QVariant(0));
+    setSeatBelt(QVariant(0));
 }
 
 QVariant Cluster::speed() const
@@ -100,6 +107,39 @@ void Cluster::setFuel(const QVariant &fuel)
     emit fuelChanged();
 }
 
+QVariant Cluster::rightIndicator() const
+{
+    return m_rightIndicator;
+}
+
+void Cluster::setRightIndicator(const QVariant &rightIndicatorActive)
+{
+    m_rightIndicator = rightIndicatorActive;
+    emit rightIndicatorChanged();
+}
+
+QVariant Cluster::airBagDeployed() const
+{
+    return m_airBagDeployed;
+}
+
+void Cluster::setAirBagDeployed(const QVariant &airBag)
+{
+    m_airBagDeployed = airBag;
+    emit airBagDeployedChanged();
+}
+
+QVariant Cluster::engineCoolantTemperature() const
+{
+    return m_engineCoolantTemperature;
+}
+
+void Cluster::setEngineCoolantTemperature(const QVariant &engineCoolantTemperature)
+{
+    m_engineCoolantTemperature = engineCoolantTemperature;
+    emit engineCoolantTemperatureChanged();
+}
+
 QVariant Cluster::totalDistance() const
 {
     return m_totalDistance;
@@ -109,6 +149,94 @@ void Cluster::setTotalDistance(const QVariant &totalDistance)
 {
     m_totalDistance = totalDistance;
     emit totalDistanceChanged();
+}
+
+QVariant Cluster::gearState() const
+{
+    return m_gearState;
+}
+
+void Cluster::setGearState(const QVariant &gear)
+{
+    m_gearState = gear;
+    emit gearStateChanged();
+}
+
+QVariant Cluster::lowWasherFluid() const
+{
+    return m_lowWasherFluid;
+}
+
+void Cluster::setLowWasherFluid(const QVariant &washerFluid)
+{
+    m_lowWasherFluid = washerFluid;
+    emit lowWasherFluidChanged();
+}
+
+QVariant Cluster::parkingBrakeEngaged() const
+{
+    return m_parkingBrakeEngaged;
+}
+
+void Cluster::setParkingBrakeEnaged(const QVariant &parkingBrake)
+{
+    m_parkingBrakeEngaged = parkingBrake;
+    emit parkingBrakeEngagedChanged();
+}
+
+QVariant Cluster::seatBelt() const
+{
+    return m_seatBelt;
+}
+
+void Cluster::setSeatBelt(const QVariant &seatBeltActive)
+{
+    m_seatBelt = seatBeltActive;
+    emit seatBeltChanged();
+}
+
+QVariant Cluster::fogLight() const
+{
+    return m_fogLight;
+}
+
+void Cluster::setFogLight(const QVariant &fogLightActive)
+{
+    m_fogLight = fogLightActive;
+    emit fogLightChanged();
+}
+
+QVariant Cluster::headLight() const
+{
+    return m_headLight;
+}
+
+void Cluster::setHeadLight(const QVariant &headLightActive)
+{
+    m_headLight = headLightActive;
+    emit headLightChanged();
+}
+
+QVariant Cluster::highBeam() const
+{
+    return m_highBeam;
+}
+
+void Cluster::setHighBeam(const QVariant &highBeamActive)
+{
+    m_highBeam = highBeamActive;
+    emit highBeamChanged();
+}
+
+QVariant Cluster::leftIndicator() const
+{
+    return m_leftIndicator;
+}
+
+void Cluster::setLeftIndicator(const QVariant &leftIndicatorActive)
+{
+    m_leftIndicator = leftIndicatorActive;
+    emit leftIndicatorChanged();
 }
 
 void Cluster::calcTotalDistance()
@@ -121,19 +249,4 @@ void Cluster::calcTotalDistance()
     QString distance = QLocale(QLocale::English).toString(mTotalDistance / 1000) + " km";
 
     setTotalDistance(distance);
-}
-
-void Cluster::timeslot()
-{
-//    speedTestValue++;
-    speedTestValue+=1;
-    rpmTestValue += 100;
-    if(speedTestValue>240)
-        speedTestValue=0;
-
-    if(rpmTestValue>8000)
-        rpmTestValue=0;
-
-    setSpeed(speedTestValue);
-    setRpm(rpmTestValue);
 }

@@ -47,6 +47,28 @@ class ClusterDataStubAdapter
     virtual void fireEngineSpeedAttributeChanged(const uint16_t& engineSpeed) = 0;
     ///Notifies all remote listeners about a change of value of the attribute fuelLevel.
     virtual void fireFuelLevelAttributeChanged(const uint8_t& fuelLevel) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute airBagDeployed.
+    virtual void fireAirBagDeployedAttributeChanged(const bool& airBagDeployed) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute lowWasherFluid.
+    virtual void fireLowWasherFluidAttributeChanged(const bool& lowWasherFluid) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute parkingBrake.
+    virtual void fireParkingBrakeAttributeChanged(const bool& parkingBrake) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute seatBeltActive.
+    virtual void fireSeatBeltActiveAttributeChanged(const bool& seatBeltActive) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute fogLight.
+    virtual void fireFogLightAttributeChanged(const bool& fogLight) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute headLight.
+    virtual void fireHeadLightAttributeChanged(const bool& headLight) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute highBeam.
+    virtual void fireHighBeamAttributeChanged(const bool& highBeam) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute leftIndicator.
+    virtual void fireLeftIndicatorAttributeChanged(const bool& leftIndicator) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute rightIndicator.
+    virtual void fireRightIndicatorAttributeChanged(const bool& rightIndicator) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute gearState.
+    virtual void fireGearStateAttributeChanged(const uint8_t& gearState) = 0;
+    ///Notifies all remote listeners about a change of value of the attribute engineCoolantTemperature.
+    virtual void fireEngineCoolantTemperatureAttributeChanged(const int16_t& engineCoolantTemperature) = 0;
 
 
 
@@ -87,6 +109,50 @@ public:
     virtual bool onRemoteSetFuelLevelAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value) = 0;
     /// Action callback for remote set requests on the attribute fuelLevel
     virtual void onRemoteFuelLevelAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute airBagDeployed
+    virtual bool onRemoteSetAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute airBagDeployed
+    virtual void onRemoteAirBagDeployedAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute lowWasherFluid
+    virtual bool onRemoteSetLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute lowWasherFluid
+    virtual void onRemoteLowWasherFluidAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute parkingBrake
+    virtual bool onRemoteSetParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute parkingBrake
+    virtual void onRemoteParkingBrakeAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute seatBeltActive
+    virtual bool onRemoteSetSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute seatBeltActive
+    virtual void onRemoteSeatBeltActiveAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute fogLight
+    virtual bool onRemoteSetFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute fogLight
+    virtual void onRemoteFogLightAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute headLight
+    virtual bool onRemoteSetHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute headLight
+    virtual void onRemoteHeadLightAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute highBeam
+    virtual bool onRemoteSetHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute highBeam
+    virtual void onRemoteHighBeamAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute leftIndicator
+    virtual bool onRemoteSetLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute leftIndicator
+    virtual void onRemoteLeftIndicatorAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute rightIndicator
+    virtual bool onRemoteSetRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, bool _value) = 0;
+    /// Action callback for remote set requests on the attribute rightIndicator
+    virtual void onRemoteRightIndicatorAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute gearState
+    virtual bool onRemoteSetGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, uint8_t _value) = 0;
+    /// Action callback for remote set requests on the attribute gearState
+    virtual void onRemoteGearStateAttributeChanged() = 0;
+    /// Verification callback for remote set requests on the attribute engineCoolantTemperature
+    virtual bool onRemoteSetEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client, int16_t _value) = 0;
+    /// Action callback for remote set requests on the attribute engineCoolantTemperature
+    virtual void onRemoteEngineCoolantTemperatureAttributeChanged() = 0;
 };
 
 /**
@@ -118,6 +184,61 @@ public:
      */
     /// Provides getter access to the attribute fuelLevel
     virtual const uint8_t &getFuelLevelAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is air bag deployed.
+     */
+    /// Provides getter access to the attribute airBagDeployed
+    virtual const bool &getAirBagDeployedAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is low washer fluid.
+     */
+    /// Provides getter access to the attribute lowWasherFluid
+    virtual const bool &getLowWasherFluidAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is parking brake engaged
+     */
+    /// Provides getter access to the attribute parkingBrake
+    virtual const bool &getParkingBrakeAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is seat belt active
+     */
+    /// Provides getter access to the attribute seatBeltActive
+    virtual const bool &getSeatBeltActiveAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is fog light on
+     */
+    /// Provides getter access to the attribute fogLight
+    virtual const bool &getFogLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is head light on
+     */
+    /// Provides getter access to the attribute headLight
+    virtual const bool &getHeadLightAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is high beam on
+     */
+    /// Provides getter access to the attribute highBeam
+    virtual const bool &getHighBeamAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is left indicator active
+     */
+    /// Provides getter access to the attribute leftIndicator
+    virtual const bool &getLeftIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: is right indicator active
+     */
+    /// Provides getter access to the attribute rightIndicator
+    virtual const bool &getRightIndicatorAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    /// Provides getter access to the attribute gearState
+    virtual const uint8_t &getGearStateAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    /// Provides getter access to the attribute engineCoolantTemperature
+    virtual const int16_t &getEngineCoolantTemperatureAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
 
 
     using CommonAPI::Stub<ClusterDataStubAdapter, ClusterDataStubRemoteEvent>::initStubAdapter;

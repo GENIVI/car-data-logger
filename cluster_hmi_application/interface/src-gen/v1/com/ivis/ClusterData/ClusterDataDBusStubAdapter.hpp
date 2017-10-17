@@ -62,6 +62,50 @@ public:
      * description: current fuel level. unit is %
      */
     void fireFuelLevelAttributeChanged(const uint8_t& value);
+    /**
+     * description: is air bag deployed.
+     */
+    void fireAirBagDeployedAttributeChanged(const bool& value);
+    /**
+     * description: is low washer fluid.
+     */
+    void fireLowWasherFluidAttributeChanged(const bool& value);
+    /**
+     * description: is parking brake engaged
+     */
+    void fireParkingBrakeAttributeChanged(const bool& value);
+    /**
+     * description: is seat belt active
+     */
+    void fireSeatBeltActiveAttributeChanged(const bool& value);
+    /**
+     * description: is fog light on
+     */
+    void fireFogLightAttributeChanged(const bool& value);
+    /**
+     * description: is head light on
+     */
+    void fireHeadLightAttributeChanged(const bool& value);
+    /**
+     * description: is high beam on
+     */
+    void fireHighBeamAttributeChanged(const bool& value);
+    /**
+     * description: is left indicator active
+     */
+    void fireLeftIndicatorAttributeChanged(const bool& value);
+    /**
+     * description: is right indicator active
+     */
+    void fireRightIndicatorAttributeChanged(const bool& value);
+    /**
+     * description: current gear state. -1 : reverse, 0 : neutral
+     */
+    void fireGearStateAttributeChanged(const uint8_t& value);
+    /**
+     * description: ect ( Engine Coolant Temperature ) level
+     */
+    void fireEngineCoolantTemperatureAttributeChanged(const int16_t& value);
 
 
 
@@ -109,6 +153,127 @@ static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
         ::v1::com::ivis::ClusterData::ClusterDataStub,
         uint8_t                    
         > setFuelLevelAttributeStubDispatcher;
+/**
+ * description: is air bag deployed.
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getAirBagDeployedAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setAirBagDeployedAttributeStubDispatcher;
+/**
+ * description: is low washer fluid.
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getLowWasherFluidAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setLowWasherFluidAttributeStubDispatcher;
+/**
+ * description: is parking brake engaged
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getParkingBrakeAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setParkingBrakeAttributeStubDispatcher;
+/**
+ * description: is seat belt active
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getSeatBeltActiveAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setSeatBeltActiveAttributeStubDispatcher;
+/**
+ * description: is fog light on
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getFogLightAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setFogLightAttributeStubDispatcher;
+/**
+ * description: is head light on
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getHeadLightAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setHeadLightAttributeStubDispatcher;
+/**
+ * description: is high beam on
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getHighBeamAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setHighBeamAttributeStubDispatcher;
+/**
+ * description: is left indicator active
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getLeftIndicatorAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setLeftIndicatorAttributeStubDispatcher;
+/**
+ * description: is right indicator active
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                
+        > getRightIndicatorAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        bool                    
+        > setRightIndicatorAttributeStubDispatcher;
+/**
+ * description: current gear state. -1 : reverse, 0 : neutral
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        uint8_t                
+        > getGearStateAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        uint8_t                    
+        > setGearStateAttributeStubDispatcher;
+/**
+ * description: ect ( Engine Coolant Temperature ) level
+ */
+static CommonAPI::DBus::DBusGetAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        int16_t                
+        > getEngineCoolantTemperatureAttributeStubDispatcher;
+static CommonAPI::DBus::DBusSetObservableAttributeStubDispatcher<
+        ::v1::com::ivis::ClusterData::ClusterDataStub,
+        int16_t                    
+        > setEngineCoolantTemperatureAttributeStubDispatcher;
 
 
 

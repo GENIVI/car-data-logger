@@ -32,7 +32,18 @@ ClusterDataDBusProxy::ClusterDataDBusProxy(
 	:	CommonAPI::DBus::DBusProxy(_address, _connection)
 ,		vehicleSpeed_(*this, "onVehicleSpeedAttributeChanged", "setVehicleSpeedAttribute", "q", "getVehicleSpeedAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
 		engineSpeed_(*this, "onEngineSpeedAttributeChanged", "setEngineSpeedAttribute", "q", "getEngineSpeedAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
-		fuelLevel_(*this, "onFuelLevelAttributeChanged", "setFuelLevelAttribute", "y", "getFuelLevelAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr))
+		fuelLevel_(*this, "onFuelLevelAttributeChanged", "setFuelLevelAttribute", "y", "getFuelLevelAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		airBagDeployed_(*this, "onAirBagDeployedAttributeChanged", "setAirBagDeployedAttribute", "b", "getAirBagDeployedAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		lowWasherFluid_(*this, "onLowWasherFluidAttributeChanged", "setLowWasherFluidAttribute", "b", "getLowWasherFluidAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		parkingBrake_(*this, "onParkingBrakeAttributeChanged", "setParkingBrakeAttribute", "b", "getParkingBrakeAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		seatBeltActive_(*this, "onSeatBeltActiveAttributeChanged", "setSeatBeltActiveAttribute", "b", "getSeatBeltActiveAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		fogLight_(*this, "onFogLightAttributeChanged", "setFogLightAttribute", "b", "getFogLightAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		headLight_(*this, "onHeadLightAttributeChanged", "setHeadLightAttribute", "b", "getHeadLightAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		highBeam_(*this, "onHighBeamAttributeChanged", "setHighBeamAttribute", "b", "getHighBeamAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		leftIndicator_(*this, "onLeftIndicatorAttributeChanged", "setLeftIndicatorAttribute", "b", "getLeftIndicatorAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		rightIndicator_(*this, "onRightIndicatorAttributeChanged", "setRightIndicatorAttribute", "b", "getRightIndicatorAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		gearState_(*this, "onGearStateAttributeChanged", "setGearStateAttribute", "y", "getGearStateAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr)),
+		engineCoolantTemperature_(*this, "onEngineCoolantTemperatureAttributeChanged", "setEngineCoolantTemperatureAttribute", "n", "getEngineCoolantTemperatureAttribute", static_cast<CommonAPI::EmptyDeployment*>(nullptr))
 {
 }
 
@@ -44,6 +55,39 @@ ClusterDataDBusProxy::ClusterDataDBusProxy(
       }
       ClusterDataDBusProxy::FuelLevelAttribute& ClusterDataDBusProxy::getFuelLevelAttribute() {
           return fuelLevel_;
+      }
+      ClusterDataDBusProxy::AirBagDeployedAttribute& ClusterDataDBusProxy::getAirBagDeployedAttribute() {
+          return airBagDeployed_;
+      }
+      ClusterDataDBusProxy::LowWasherFluidAttribute& ClusterDataDBusProxy::getLowWasherFluidAttribute() {
+          return lowWasherFluid_;
+      }
+      ClusterDataDBusProxy::ParkingBrakeAttribute& ClusterDataDBusProxy::getParkingBrakeAttribute() {
+          return parkingBrake_;
+      }
+      ClusterDataDBusProxy::SeatBeltActiveAttribute& ClusterDataDBusProxy::getSeatBeltActiveAttribute() {
+          return seatBeltActive_;
+      }
+      ClusterDataDBusProxy::FogLightAttribute& ClusterDataDBusProxy::getFogLightAttribute() {
+          return fogLight_;
+      }
+      ClusterDataDBusProxy::HeadLightAttribute& ClusterDataDBusProxy::getHeadLightAttribute() {
+          return headLight_;
+      }
+      ClusterDataDBusProxy::HighBeamAttribute& ClusterDataDBusProxy::getHighBeamAttribute() {
+          return highBeam_;
+      }
+      ClusterDataDBusProxy::LeftIndicatorAttribute& ClusterDataDBusProxy::getLeftIndicatorAttribute() {
+          return leftIndicator_;
+      }
+      ClusterDataDBusProxy::RightIndicatorAttribute& ClusterDataDBusProxy::getRightIndicatorAttribute() {
+          return rightIndicator_;
+      }
+      ClusterDataDBusProxy::GearStateAttribute& ClusterDataDBusProxy::getGearStateAttribute() {
+          return gearState_;
+      }
+      ClusterDataDBusProxy::EngineCoolantTemperatureAttribute& ClusterDataDBusProxy::getEngineCoolantTemperatureAttribute() {
+          return engineCoolantTemperature_;
       }
 
     
