@@ -235,7 +235,7 @@ bool VehicleDataViewerWindow::parseJson(property_tree::ptree jsonDoc, QVector<do
                 QDateTime dateTime =QDateTime::fromMSecsSinceEpoch(timeStamp);
                 QString dateTimeFormat = dateTime.toString("hh:mm:ss:zzz");
 
-                if( id == "54" )    //rpm
+                if( id == "58" )    //rpm
                 {
                     rpmIndex++;
 
@@ -248,7 +248,7 @@ bool VehicleDataViewerWindow::parseJson(property_tree::ptree jsonDoc, QVector<do
                     rpmY.push_back(value.toInt());
                     rpmLable.push_back(dateTimeFormat);
                 }
-                else if( id == "63" )   //speed
+                else if( id == "68" )   //speed
                 {
                     speedIndex++;
 

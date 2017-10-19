@@ -24,14 +24,6 @@
 
 #define VSI_DOMAIN_ID 0
 #define VSI_DATA_MAX_SIZE 1024
-#define AIR_CONDITION_ID            132    //Signal.Cabin.HVAC.isAirConditioningActive         132
-#define AIR_INTAKE_ID               109    //Signal.Cabin.HVAC.Row1.Recirculation              109
-#define DEFROST_WIND_SHIELD_ID      130    //Signal.Cabin.HVAC.IsFrontDefrosterActive          130
-#define DRIVER_TEMPERATURE_ID       111    //Signal.Cabin.HVAC.Row1.LeftTemperature            111
-#define PASSENGER_TEMPERATURE_ID    112    //Signal.Cabin.HVAC.Row1.RightTemperature           112
-#define DUAL_MODE_ID                1092   //Signal.Cabin.HVAC.IsDualModeActive                1092
-#define FAN_DIRECTION_ID            113    //Signal.Cabin.HVAC.Row1.AirDistribution            113
-#define FAN_SPEED_ID                110    //Signal.Cabin.HVAC.Row1.FanSpeed                   110
 
 #define UNUSED(x) (void)(x)
 
@@ -48,16 +40,18 @@ VSIWatcher::VSIWatcher(VssItemManager *vssItemManager, DataCollectConfiguration 
 VSIWatcher::~VSIWatcher()
 {
     m_cycleIOService.stop();
-//    m_eventIOService.stop();
+    m_eventIOService.stop();
+
     deleteTimerObject();
 
     stopCycleDataCollectionThread();
-//    stopEventDataCollectionThread();
+    stopEventDataCollectionThread();
 }
 
 bool VSIWatcher::init()
 {
     m_vsiHandle = vsi_initialize();
+    m_managerEventData.clear();
 
     if ( !m_vsiHandle )
     {
@@ -66,7 +60,7 @@ bool VSIWatcher::init()
     }
 
     createCycleDataCollectionThread();
-//    createEventDataCollectionThread();
+    createEventDataCollectionThread();
 
     return true;
 }
@@ -104,7 +98,9 @@ void VSIWatcher::collectCycleData(int interval, int groupID, int signalCount)
 
                 if ( item != NULL )
                 {
+                    m_storeDataMutex.lock();
                     storeData(item, results[i].data, signalID, results[i].dataLength);
+                    m_storeDataMutex.unlock();
                 }
             }
         }
@@ -121,18 +117,55 @@ void VSIWatcher::collectCycleData(int interval, int groupID, int signalCount)
 
 void VSIWatcher::collectEventData(int interval, int groupID, int signalCount)
 {
-    UNUSED(interval);
-    UNUSED(groupID);
-    UNUSED(signalCount);
-    //not implemented yet
-}
+    vsi_result* results = (vsi_result*)malloc( sizeof(vsi_result) * signalCount );
+    memset ( results, 0, sizeof(vsi_result) * signalCount );
 
-bool VSIWatcher::isChangedEventData(VssItem *item, int signalID, const char* data)
-{
-    UNUSED(item);
-    UNUSED(signalID);
-    UNUSED(data);
-    //not implemented yet
+    for ( int i = 0; i < signalCount; i++ )
+    {
+        results[i].data = (char*)malloc(VSI_DATA_MAX_SIZE);
+        results[i].dataLength = VSI_DATA_MAX_SIZE;
+        *(results[i].data) = 0;
+        results[i].status = -61;
+    }
+
+    int get_newest_in_group_status = vsi_get_newest_in_group(m_vsiHandle, groupID, results);
+
+    if ( get_newest_in_group_status )
+    {
+//        LOGE() << "[Event Data] Failed to get the newest data in group " << groupID << " ( Error code : " << get_newest_in_group_status << " )";
+    }
+    else
+    {
+        for ( int i = 0; i < signalCount; i++ )
+        {
+            if ( results[i].status == 0 )
+            {
+                signal_t signalID = results[i].signalId;
+
+                VssItem * item = m_vssItemManager->getVSSItem(signalID);
+
+                if( m_managerEventData[signalID] != item->convertToValueString(results[i].data) )
+                {
+                    m_storeDataMutex.lock();
+                    storeData(item, results[i].data, signalID, results[i].dataLength);
+                    m_managerEventData[signalID] = item->convertToValueString(results[i].data);
+                    m_storeDataMutex.unlock();
+                }
+                else
+                {
+                    //not changed event type data
+                }
+            }
+        }
+    }
+
+    // delete result array
+    for ( int i = 0; i < signalCount; i++ )
+    {
+        free(results[i].data);
+    }
+
+    free(results);
 }
 
 bool VSIWatcher::validateData(VssItem *item, const char *data)
@@ -207,7 +240,10 @@ void VSIWatcher::stopCycleDataCollectionThread()
 
 void VSIWatcher::stopEventDataCollectionThread()
 {
-    // not implemented yet.
+    if ( m_eventDataThread != NULL )
+    {
+        m_eventDataThread->join();
+    }
 }
 
 void VSIWatcher::deleteTimerObject()
@@ -217,8 +253,10 @@ void VSIWatcher::deleteTimerObject()
         delete m_vsi_cycle_timer.at(count);
     }
 
-    delete m_vsi_event_timer;
-    m_vsi_event_timer = NULL;
+    for( unsigned int count=0; count<m_vsi_event_timer.size(); count++ )
+    {
+        delete m_vsi_event_timer.at(count);
+    }
 }
 
 void VSIWatcher::registerCDLDaemonCallBack(cdlDaemonCallBack callback)
@@ -249,7 +287,7 @@ void VSIWatcher::cycleDataCollectionThread()
             continue;
         }
 
-        for (unsigned int i = 0; i < item->nameList.size(); i++)
+        for( unsigned int i = 0; i < item->nameList.size(); i++ )
         {
             signal_t signalID = m_nameToIdConvertor->convertToID( item->nameList.at(i) );
 
@@ -281,5 +319,41 @@ void VSIWatcher::cycleDataCollectionThread()
 
 void VSIWatcher::eventDataCollectionThread()
 {
-    //not implemented yet
+    group_t groupId = 50;
+    domain_t domainId = VSI_DOMAIN_ID;
+    int interval = 400;
+
+    EventDataList & eventDataList = m_dataCollectionConfiguration->getEventDataList();
+
+    for( unsigned int index = 0; index < eventDataList.size(); index++ )
+    {
+        int status = vsi_create_signal_group(m_vsiHandle, groupId);
+        if( status != 0 )
+        {
+            LOGE() << "Failed to create signal group with event interval : " << groupId;
+
+            continue;
+        }
+
+        signal_t signalId = m_nameToIdConvertor->convertToID(eventDataList.at(index));
+
+        if( signalId != NameToIdConvertor::INVALID_ID )
+        {
+            status = vsi_add_signal_to_group(m_vsiHandle, domainId, signalId, groupId);
+
+            if ( status != 0 )
+            {
+                LOGE() << "Failed to add event signal Info ( name : " << eventDataList.at(index) << " , signalID : " << signalId
+                       << ", groupID(interval) : " << groupId << ", Error Code : " << status;
+            }
+        }
+
+        CycleDataTimer * timer = new CycleDataTimer(interval, groupId, 1, m_eventIOService);
+        timer->registerCollectDataCallback(std::bind(&VSIWatcher::collectEventData, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+        m_vsi_event_timer.push_back(timer);
+
+        groupId++;
+    }
+
+    m_eventIOService.run();
 }

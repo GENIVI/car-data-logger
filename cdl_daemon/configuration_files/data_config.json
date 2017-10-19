@@ -12,13 +12,29 @@
     },
     "Event":
     [
+        "Signal.Cabin.HVAC.Row1.Left.AirDistribution",
+	"Signal.Cabin.HVAC.Row1.Right.AirDistribution",
+        "Signal.Cabin.HVAC.Row1.Left.Temperature",
+        "Signal.Cabin.HVAC.Row1.Right.Temperature",
+        "Signal.Cabin.HVAC.FanSpeed",
         "Signal.Cabin.HVAC.IsAirConditioningActive",
-        "Signal.Cabin.HVAC.Row1.Recirculation",
+        "Signal.Cabin.HVAC.IsSyncModeActive",
         "Signal.Cabin.HVAC.IsFrontDefrosterActive",
-        "Signal.Cabin.HVAC.Row1.LeftTemperature",
-        "Signal.Cabin.HVAC.Row1.RightTemperature",
-        "Signal.Cabin.HVAC.IsDualModeActive",
-        "Signal.Cabin.HVAC.Row1.AirDistribution",
-        "Signal.Cabin.HVAC.Row1.FanSpeed"
+	"Signal.Cabin.HVAC.IsRearDefrosterActive",
+	"Signal.Cabin.HVAC.IsRecirculationActive",
+	"Signal.Cabin.HVAC.AutoModeActive",
+	"Signal.Cabin.HVAC.AmbientAirTemperature",
+	"Signal.Cabin.Seat.Row1.Pos1.Airbag.IsDeployed",
+	"Signal.Drivetrain.FuelSystem.Level",
+	"Signal.Body.Windshield.Front.WasherFluid.LevelLow",
+	"Signal.Chassis.ParkingBrake.IsEngaged",
+	"Signal.Cabin.Seat.Row1.Pos1.IsBelted",
+	"Signal.Body.Lights.IsFrontFogOn",
+	"Signal.Body.Lights.IsLowBeamOn",
+	"Signal.Body.Lights.IsHighBeamOn",
+	"Signal.Body.Lights.IsLeftIndicatorOn",
+	"Signal.Body.Lights.IsRightIndicatorOn",
+	"Signal.Drivetrain.InternalCombustionEngine.ECT",
+	"Signal.Drivetrain.Transmission.Gear"
     ]
 }

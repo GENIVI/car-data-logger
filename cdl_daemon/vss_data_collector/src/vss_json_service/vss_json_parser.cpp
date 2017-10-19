@@ -42,6 +42,8 @@ bool VssJsonParser::read( const string vssJsonFilePath )
     boost::property_tree::ptree & attribute = jsonDoc.get_child("Attribute");
     if(!attribute.empty())
     {
+        m_signalPath.clear();
+        m_signalPath = "Attribute";
         parseVSSJson(attribute, m_signalPath);
     }
     else
@@ -53,6 +55,8 @@ bool VssJsonParser::read( const string vssJsonFilePath )
     boost::property_tree::ptree & signal = jsonDoc.get_child("Signal");
     if(!signal.empty())
     {
+        m_signalPath.clear();
+        m_signalPath = "Signal";
         parseVSSJson(signal, m_signalPath);
     }
     else
@@ -64,7 +68,7 @@ bool VssJsonParser::read( const string vssJsonFilePath )
     return true;
 }
 
-void VssJsonParser::readVSSJsonFile( const string vssJsonFilePath, property_tree::ptree & jsonDoc )
+void VssJsonParser::readVSSJsonFile(const string vssJsonFilePath, property_tree::ptree & jsonDoc)
 {
     try
     {
@@ -90,22 +94,15 @@ void VssJsonParser::parseVSSJson(property_tree::ptree &jsonTree, string signalPa
 
             boost::property_tree::ptree& childrenKey = jsonTree.get_child(childrenPath+"."+key);
 
-            if(signalPath == "")
-            {
-                signalPath.append(key);
-            }
-            else
-            {
-                signalPath.append("."+key);
-            }
+            signalPath.append("."+key);
 
             m_keyDepth++;
             parseVSSJson(childrenKey, signalPath);
             m_keyDepth--;
 
-            if(m_keyDepth==0)
+            if ( m_keyDepth==0 )
             {
-                signalPath = "";
+                signalPath = m_signalPath;
             }
             else
             {
@@ -150,7 +147,7 @@ void VssJsonParser::parseVSSJson(property_tree::ptree &jsonTree, string signalPa
         if(!vssEnumValueList.empty())   vssItem->setVssEnumValueList(vssEnumValueList);
 
         /* Set Data in Map Value*/
-        if(m_vssItemManager!=NULL)
+        if( m_vssItemManager!=NULL )
         {
             m_vssItemManager->addVssItem(vssItem->getID(), vssItem);
         }
@@ -163,7 +160,8 @@ string VssJsonParser::stringSplit(string str, string delimiter)
     string token;
     string strResult;
 
-    while((pos = str.find(delimiter)) != string::npos){
+    while( (pos = str.find(delimiter)) != string::npos )
+    {
         token = str.substr(0, pos);
         strResult.append(token);
         str.erase(0, pos+delimiter.length());
@@ -177,7 +175,7 @@ string VssJsonParser::getChildData(string path, property_tree::ptree &jsonTree)
 {
     auto child = jsonTree.find(path);
 
-    if(child == jsonTree.not_found())
+    if( child == jsonTree.not_found() )
     {
         return "";
     }

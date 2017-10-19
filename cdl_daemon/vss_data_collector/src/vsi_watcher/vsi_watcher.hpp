@@ -35,6 +35,7 @@ extern "C"
 
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 /**
@@ -70,7 +71,6 @@ private:
 
     /* Function for event data */
     void collectEventData(int interval, int groupID, int signalCount);
-    bool isChangedEventData(VssItem * item, int signalID, const char* data);
 
     /**
      * @brief Validate the data to store in database.
@@ -116,7 +116,7 @@ private:
     vsi_handle m_vsiHandle;
 
     vector<CycleDataTimer*> m_vsi_cycle_timer;
-    CycleDataTimer * m_vsi_event_timer;
+    vector<CycleDataTimer*> m_vsi_event_timer;
     VssItemManager * m_vssItemManager;
     DataCollectConfiguration * m_dataCollectionConfiguration;
     NameToIdConvertor * m_nameToIdConvertor;
@@ -125,6 +125,8 @@ private:
     cdlDaemonCallBack onCDLDaemonCallBack;
 
     boost::posix_time::ptime m_epoch;
+    boost::mutex m_storeDataMutex;
+    map<signal_t, string> m_managerEventData;
 };
 
 #endif // VSIWATCHER_H
