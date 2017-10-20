@@ -1,0 +1,14 @@
+# Result of build
+Makefile
+build/
+debug/
+release/
+
+# Result of install
+deploy/
+
+# Etc
+pkg-config-wrapper.sh
+*.user
+*.user.*
+*.~
